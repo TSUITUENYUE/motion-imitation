@@ -1,0 +1,17 @@
+{"time":"2025-05-12T19:46:26.303537289-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"/home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250512_194626-wuga1zdu/logs/debug-core.log"}
+{"time":"2025-05-12T19:46:26.588353652-04:00","level":"INFO","msg":"created new stream","id":"wuga1zdu"}
+{"time":"2025-05-12T19:46:26.588377236-04:00","level":"INFO","msg":"stream: started","id":"wuga1zdu"}
+{"time":"2025-05-12T19:46:26.588393515-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"wuga1zdu"}
+{"time":"2025-05-12T19:46:26.58840152-04:00","level":"INFO","msg":"sender: started","stream_id":"wuga1zdu"}
+{"time":"2025-05-12T19:46:26.588463002-04:00","level":"INFO","msg":"handler: started","stream_id":"wuga1zdu"}
+{"time":"2025-05-12T19:46:26.916559811-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-12T19:46:36.996921148-04:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-05-12T19:49:26.122621536-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-12T19:49:26.122676689-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-12T19:49:27.124008975-04:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading logs/go2-imitate-run_retargeted/events.out.tfevents.1747093586.jeff.8599.0","runtime_seconds":0.25025944,"progress":"1.1MB/1.1MB"}],"total_operations":1}}
+{"time":"2025-05-12T19:49:27.132874731-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-12T19:49:27.421089943-04:00","level":"INFO","msg":"stream: closing","id":"wuga1zdu"}
+{"time":"2025-05-12T19:49:27.421096966-04:00","level":"INFO","msg":"handler: closed","stream_id":"wuga1zdu"}
+{"time":"2025-05-12T19:49:27.421100553-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"wuga1zdu"}
+{"time":"2025-05-12T19:49:27.421108848-04:00","level":"INFO","msg":"sender: closed","stream_id":"wuga1zdu"}
+{"time":"2025-05-12T19:49:27.421129967-04:00","level":"INFO","msg":"stream: closed","id":"wuga1zdu"}
