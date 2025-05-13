@@ -1,0 +1,23 @@
+name: genesis
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - pip=24.0
+  - numpy=1.26.4
+  - scipy=1.15.2
+  - matplotlib=3.10.1
+  - tqdm=4.67.1
+  - pillow=10.4.0
+  - pyyaml=6.0.2
+  - pip:
+    - torch==2.7.0+cu128
+    - torchvision==0.22.0+cu128
+    - torchaudio==2.7.0+cu128
+    - genesis-world==0.2.1
+    - rsl-rl-lib==2.2.4
+    - wandb==0.19.11
+    - tensorboard==2.19.0 

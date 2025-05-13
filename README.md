@@ -2,6 +2,39 @@
 
 This walkthrough provides step-by-step instructions for training a Go2 robot to imitate walking motion using the Genesis simulator.
 
+## Environment Setup
+
+### Option 1: Using Conda (Recommended)
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/motion_imitation.git
+cd motion_imitation
+
+# Create and activate the conda environment
+conda env create -f environment.yml
+conda activate genesis
+
+# Verify installation
+python -c "import genesis; print(f'Genesis version: {genesis.__version__}')"
+python -c "import torch; print(f'PyTorch version: {torch.__version__}, CUDA available: {torch.cuda.is_available()}')"
+```
+
+### Option 2: Using pip
+
+```bash
+# Create a virtual environment (optional but recommended)
+python -m venv motion_env
+source motion_env/bin/activate  # On Windows: motion_env\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### Note on CUDA
+
+The PyTorch packages in the requirements use CUDA 12.8. If you have a different CUDA version, you'll need to install PyTorch compatible with your CUDA version. See [PyTorch installation guide](https://pytorch.org/get-started/locally/) for details.
+
 ## Quick Start (5 minutes)
 
 If you want to quickly see results with a pre-trained model:
@@ -14,8 +47,6 @@ python visualize_trained_policy.py --model_path logs/go2-motion-imitation/model_
 ## Complete Walkthrough
 
 ### Step 1: Set Up Your Environment
-
-Ensure you have the Genesis environment set up:
 
 ```bash
 # Make sure you're in the right environment
@@ -37,98 +68,98 @@ mkdir -p data
 ```bash
 # Convert motion data to PyTorch tensor format
 python export_pose/export_pose.py "breed-name"
+```
 
 This creates `data/hound_joint_pos.pt`
 
 ### Step 4: Retarget Motion to Go2 Robot
 
 ```bash
-# Retarget motion data to match Go2 robot joint structure
-python retarget_hound_motion.py
+# Generate retargeted motion with the run retargeter
+python rl_train/go2_run_retarget.py
+
+# Or specify custom parameters
+python rl_train/go2_run_retarget.py --output output/custom_run.npy
 ```
 
-This creates `data/hound_joint_pos_retargeted.pt`
+This creates `output/run_retargeted.npy`
 
-### Step 5: Train Motion Imitation Policy
+### Step 5: Visualize the Motion (Optional)
+
+Before training, you can visualize the retargeted motion:
 
 ```bash
-# Train the policy with a PyTorch tensor file (.pt)
-python genesis_motion_imitation.py --exp_name go2_walking \
-    --motion_file data/hound_joint_pos_retargeted.pt \
-    --max_iterations 1000 \
-    --num_envs 256
+# Visualize the retargeted motion
+python rl_train/visualize.py --file output/run_retargeted.npy
 
-# OR directly use a NumPy array file (.npy) - recommended
-python genesis_motion_imitation.py --exp_name dog_walk_npy \
-    --motion_file dog_walk_retargeted.npy \
-    --max_iterations 1000 \
-    --num_envs 256
+# Adjust playback speed and duration
+python rl_train/visualize.py --file output/run_retargeted.npy --speed 1.5 --time 20.0
 ```
 
-The script now directly supports both .pt and .npy files, so you can use whichever format you have available. 
-
-Using .npy files:
-- No conversion needed if you already have .npy files
-- Format should be [num_frames, 12] where 12 is the number of joint angles for the Go2 robot
-- Values should be in radians
-
-The trained models will be saved to `logs/go2_walking/`
-
-### Step 6: Visualize Trained Policy
+### Step 6: Train Motion Imitation Policy
 
 ```bash
-# Visualize using the original motion file (same format as used for training)
-python visualize/visualize_hound_policy.py --model_path logs/go2_walking/model_999.pt \
-    --motion_file data/hound_joint_pos_retargeted.pt \
-    --duration 30
+# Train with the simplified training script
+python rl_train/train.py
 
-# If you trained with a .npy file, use it for visualization too
-python visualize/visualize_hound_policy.py --model_path logs/dog_walk_npy/model_999.pt \
-    --motion_file dog_walk_retargeted.npy \
-    --duration 30
+# Or specify different motion file, environments, and iterations
+python rl_train/train.py --file output/custom_run.npy --envs 512 --iters 2000
 
-# OR use the policy-only visualizer which doesn't need the reference motion
-# This demonstrates that the policy works completely independently
-python visualize/visualize_policy_only.py --model_path logs/dog_walk_npy/model_999.pt --duration 30
+# Enable visualization during training
+python rl_train/train.py --file output/run_retargeted.npy --viz
 ```
 
-The first two visualization methods use the reference motion for environment setup, but the policy-only version shows that the trained policy works entirely on its own without needing the reference motion data.
+The trained models will be saved to the `logs` directory, with the experiment name automatically generated from the motion file.
 
-### Step 7: Deploy to MuJoCo (Optional)
+### Step 7: Monitor Training Progress
 
-For deployment in MuJoCo:
+You can monitor training progress using TensorBoard or Weights & Biases:
 
 ```bash
-# Export policy to MuJoCo-compatible format
-python genesis_to_mujoco.py --model logs/go2_walking/model_999.pt \
-    --output mujoco_models/go2_walking_policy.pt \
-    --export_onnx
+# Using TensorBoard
+tensorboard --logdir logs/
 
-# Run in MuJoCo
-python mujoco_run_go2_policy.py --model mujoco_models/go2_walking_policy.pt \
-    --duration 30
+# Using Weights & Biases (enabled by default)
+# Visit: https://wandb.ai/
+# To disable W&B logging, use:
+python rl_train/train.py --no-wandb
 ```
 
-## Additional Options
+## Reward Functions
+
+The training uses the following reward components:
+
+1. **Joint Pose Matching** (weight: 1.0)
+   - Main reward for imitating the reference motion
+   - Calculated as exp(-MSE/1.0) where MSE is the mean squared error between joints
+
+2. **Tracking Linear Velocity** (weight: 1.0)
+   - Encourages the robot to maintain the commanded linear velocity
+
+3. **Tracking Angular Velocity** (weight: 0.2)
+   - Encourages the robot to maintain the commanded angular velocity
+
+4. **Linear Velocity Z** (weight: -1.0)
+   - Penalizes vertical motion (bouncing)
+
+5. **Base Height** (weight: -50.0)
+   - Penalizes deviation from target height
+
+6. **Action Rate** (weight: -0.005)
+   - Penalizes rapid changes in actions
+   - Smooths motion by discouraging jerky movements
+
+7. **Default Pose Similarity** (weight: -0.1)
+   - Penalizes deviation from default pose
+   - Encourages return to neutral pose when appropriate
+
+## Additional Options and Tips
 
 ### Training with Different Parameters
 
-```bash
-# Train with different learning rate
-python genesis_motion_imitation.py --exp_name go2_walking_lr0001 \
-    --motion_file data/hound_joint_pos_retargeted.pt \
-    --max_iterations 1000 \
-    --num_envs 256 \
-    --learning_rate 0.0001
-```
-
-### Visualizing During Training
-
-You can monitor training progress using TensorBoard:
-
-```bash
-tensorboard --logdir logs/go2_walking
-```
+- Increase `--envs` for faster training (requires more GPU memory)
+- Increase `--iters` for potentially better results
+- Use `--viz` to visualize during training (slows down training)
 
 ### Using Your Own Motion Data
 
@@ -137,14 +168,48 @@ tensorboard --logdir logs/go2_walking
 3. Retarget to Go2 joint space
 4. Train as normal
 
-## Common Issues
+### Common Issues
 
-- **Out of memory errors**: Reduce `--num_envs` to use less GPU memory
-- **Unstable training**: Reduce learning rate or increase iterations
+- **Out of memory errors**: Reduce `--envs` to use less GPU memory
+- **Unstable training**: Add more training iterations
 - **Poor motion quality**: Ensure motion retargeting is accurate
+- **W&B errors**: If you encounter W&B initialization errors, you can:
+  - Make sure you've logged in with `wandb login`
+  - Disable W&B with the `--no-wandb` flag
+  - Check if your W&B API key is properly set in the environment
 
-## Next Steps
+## Troubleshooting
 
-- Try different motion styles (trotting, bounding, etc.)
-- Adjust reward functions for smoother motion
-- Combine multiple motions into a single policy 
+### AttributeError: 'OnPolicyRunner' object has no attribute 'train_cfg'
+
+This error might occur with older versions of the code. The solution is to update the WandbCallback class to use the experiment name directly instead of trying to access it through runner.train_cfg.
+
+### ImportError: No module named 'wandb'
+
+Install Weights & Biases with:
+```bash
+pip install wandb
+```
+
+### CUDA-related errors
+
+If you encounter CUDA errors, make sure the PyTorch version in your environment matches your CUDA version. You may need to modify the PyTorch installation in environment.yml:
+
+```yaml
+- pip:
+    - torch==2.7.0+cuXXX  # Replace XXX with your CUDA version (e.g., cu118)
+```
+
+## Project Structure
+
+- `rl_train/`: Contains the main training and visualization scripts
+  - `train.py`: Main training script
+  - `visualize.py`: Motion visualization
+  - `go2_run_retarget.py`: Motion retargeting
+
+- `output/`: Default output directory for retargeted motions
+- `logs/`: Training logs and saved models
+
+## Requirements
+
+See `requirements.txt` for complete package requirements or use the provided `environment.yml` file to create a conda environment with all dependencies. 
