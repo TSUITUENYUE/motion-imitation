@@ -1,0 +1,123 @@
+_wandb:
+    value:
+        cli_version: 0.19.11
+        m: []
+        python_version: 3.10.16
+        t:
+            "1":
+                - 1
+                - 55
+            "2":
+                - 1
+                - 55
+            "3":
+                - 2
+                - 13
+                - 16
+                - 23
+                - 35
+                - 55
+            "4": 3.10.16
+            "5": 0.19.11
+            "8":
+                - 5
+            "12": 0.19.11
+            "13": linux-x86_64
+algorithm:
+    value:
+        clip_param: 0.2
+        desired_kl: 0.01
+        entropy_coef: 0.01
+        gamma: 0.99
+        lam: 0.95
+        learning_rate: 0.001
+        max_grad_norm: 1
+        num_learning_epochs: 5
+        num_mini_batches: 4
+        schedule: adaptive
+        use_clipped_value_loss: true
+        value_loss_coef: 1
+env_cfg:
+    value:
+        action_scale: 0.3
+        base_init_pos:
+            - 0
+            - 0
+            - 0.3
+        base_init_quat:
+            - 1
+            - 0
+            - 0
+            - 0
+        clip_actions: 1
+        default_joint_angles:
+            FL_calf_joint: -1.4
+            FL_hip_joint: 0.05
+            FL_thigh_joint: 0.7
+            FR_calf_joint: -1.4
+            FR_hip_joint: -0.05
+            FR_thigh_joint: 0.7
+            RL_calf_joint: -1.4
+            RL_hip_joint: 0.05
+            RL_thigh_joint: 0.7
+            RR_calf_joint: -1.4
+            RR_hip_joint: -0.05
+            RR_thigh_joint: 0.7
+        enable_stabilizer: true
+        episode_length_s: 20
+        foot_friction: 0.9
+        ground_friction: 0.9
+        ground_restitution: 0.05
+        joint_friction: 0.02
+        joint_names:
+            - FR_hip_joint
+            - FR_thigh_joint
+            - FR_calf_joint
+            - FL_hip_joint
+            - FL_thigh_joint
+            - FL_calf_joint
+            - RR_hip_joint
+            - RR_thigh_joint
+            - RR_calf_joint
+            - RL_hip_joint
+            - RL_thigh_joint
+            - RL_calf_joint
+        kd: 0.75
+        kp: 45
+        num_actions: 12
+        simulate_action_latency: false
+        termination_if_pitch_greater_than: 20
+        termination_if_roll_greater_than: 20
+max_iterations:
+    value: 500
+motion_file:
+    value: data/canter.npy
+num_envs:
+    value: 256
+policy:
+    value:
+        activation: elu
+        actor_hidden_dims:
+            - 512
+            - 256
+            - 128
+        critic_hidden_dims:
+            - 512
+            - 256
+            - 128
+        init_noise_std: 1
+reward_scales:
+    value:
+        action_rate: -0.0002
+        chassis_height: 0.015
+        forward_motion: 0.04
+        ground_contact: 0.04
+        joint_pose_matching: 0.08
+        leg_symmetry: 0.02
+        lin_vel_z: -0.03
+        similar_to_default: -0.001
+        tracking_ang_vel: 0.006
+        tracking_lin_vel: 0.01
+        velocity_profile: 0.03
+seed:
+    value: 1

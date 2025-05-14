@@ -1,0 +1,8 @@
+W&B logging initialized for project: go2-motion-imitation
+
+==================================================
+Starting training for 500 iterations
+Motion file: data/pace.npy
+Log directory: logs/go2-imitate-pace
+W&B logging enabled for project: go2-motion-imitation
+==================================================

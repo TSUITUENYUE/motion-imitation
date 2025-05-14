@@ -1,0 +1,30 @@
+2025-05-13 21:36:01,700 INFO    MainThread:34774 [wandb_setup.py:_flush():70] Current SDK version is 0.19.11
+2025-05-13 21:36:01,700 INFO    MainThread:34774 [wandb_setup.py:_flush():70] Configure stats pid to 34774
+2025-05-13 21:36:01,700 INFO    MainThread:34774 [wandb_setup.py:_flush():70] Loading settings from /home/jeff/.config/wandb/settings
+2025-05-13 21:36:01,700 INFO    MainThread:34774 [wandb_setup.py:_flush():70] Loading settings from /home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/settings
+2025-05-13 21:36:01,700 INFO    MainThread:34774 [wandb_setup.py:_flush():70] Loading settings from environment variables
+2025-05-13 21:36:01,700 INFO    MainThread:34774 [wandb_init.py:setup_run_log_directory():724] Logging user logs to /home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250513_213601-y39ul088/logs/debug.log
+2025-05-13 21:36:01,700 INFO    MainThread:34774 [wandb_init.py:setup_run_log_directory():725] Logging internal logs to /home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250513_213601-y39ul088/logs/debug-internal.log
+2025-05-13 21:36:01,701 INFO    MainThread:34774 [wandb_init.py:init():852] calling init triggers
+2025-05-13 21:36:01,701 INFO    MainThread:34774 [wandb_init.py:init():857] wandb.init called with sweep_config: {}
+config: {'motion_file': 'data/pace.npy', 'num_envs': 256, 'max_iterations': 1000, 'seed': 1, 'reward_scales': {'tracking_lin_vel': 0.016, 'tracking_ang_vel': 0.016, 'lin_vel_z': -0.02, 'base_height': -0.1, 'action_rate': -4e-05, 'similar_to_default': -0.001, 'leg_symmetry': 3.0, 'legs_apart': 2.5, 'joint_pose_matching': 4.0, 'forward_motion': 1.0, 'chassis_height': 1.0}, 'policy': {'activation': 'elu', 'actor_hidden_dims': [512, 256, 128], 'critic_hidden_dims': [512, 256, 128], 'init_noise_std': 1.0}, 'algorithm': {'clip_param': 0.2, 'desired_kl': 0.01, 'entropy_coef': 0.01, 'gamma': 0.99, 'lam': 0.95, 'learning_rate': 0.001, 'max_grad_norm': 1.0, 'num_learning_epochs': 5, 'num_mini_batches': 4, 'schedule': 'adaptive', 'use_clipped_value_loss': True, 'value_loss_coef': 1.0}, '_wandb': {}}
+2025-05-13 21:36:01,701 INFO    MainThread:34774 [wandb_init.py:init():893] starting backend
+2025-05-13 21:36:01,701 INFO    MainThread:34774 [wandb_init.py:init():897] sending inform_init request
+2025-05-13 21:36:01,702 INFO    MainThread:34774 [backend.py:_multiprocessing_setup():101] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2025-05-13 21:36:01,702 INFO    MainThread:34774 [wandb_init.py:init():907] backend started and connected
+2025-05-13 21:36:01,702 INFO    MainThread:34774 [wandb_init.py:init():1005] updated telemetry
+2025-05-13 21:36:01,705 INFO    MainThread:34774 [wandb_init.py:init():1029] communicating run to backend with 90.0 second timeout
+2025-05-13 21:36:02,151 INFO    MainThread:34774 [wandb_init.py:init():1104] starting run threads in backend
+2025-05-13 21:36:02,193 INFO    MainThread:34774 [wandb_run.py:_console_start():2573] atexit reg
+2025-05-13 21:36:02,193 INFO    MainThread:34774 [wandb_run.py:_redirect():2421] redirect: wrap_raw
+2025-05-13 21:36:02,193 INFO    MainThread:34774 [wandb_run.py:_redirect():2490] Wrapping output streams.
+2025-05-13 21:36:02,193 INFO    MainThread:34774 [wandb_run.py:_redirect():2513] Redirects installed.
+2025-05-13 21:36:02,195 INFO    MainThread:34774 [wandb_init.py:init():1150] run started, returning control to user process
+2025-05-13 21:36:02,195 INFO    MainThread:34774 [wandb_run.py:_tensorboard_callback():1645] tensorboard callback: logs/go2-imitate-pace, True
+2025-05-13 21:39:14,590 INFO    MainThread:34774 [wandb_run.py:_finish():2321] finishing run jefferzn-penn/go2-motion-imitation/y39ul088
+2025-05-13 21:39:14,590 INFO    MainThread:34774 [wandb_run.py:_atexit_cleanup():2538] got exitcode: 0
+2025-05-13 21:39:14,590 INFO    MainThread:34774 [wandb_run.py:_restore():2520] restore
+2025-05-13 21:39:14,590 INFO    MainThread:34774 [wandb_run.py:_restore():2526] restore done
+2025-05-13 21:39:15,949 INFO    MainThread:34774 [wandb_run.py:_footer_history_summary_info():4188] rendering history
+2025-05-13 21:39:15,950 INFO    MainThread:34774 [wandb_run.py:_footer_history_summary_info():4220] rendering summary
+2025-05-13 21:39:15,950 INFO    MainThread:34774 [wandb_run.py:_footer_sync_info():4149] logging synced files

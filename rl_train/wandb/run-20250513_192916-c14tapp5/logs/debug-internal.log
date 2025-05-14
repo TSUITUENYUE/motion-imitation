@@ -1,0 +1,17 @@
+{"time":"2025-05-13T19:29:16.19119521-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"/home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250513_192916-c14tapp5/logs/debug-core.log"}
+{"time":"2025-05-13T19:29:16.389307812-04:00","level":"INFO","msg":"created new stream","id":"c14tapp5"}
+{"time":"2025-05-13T19:29:16.389330895-04:00","level":"INFO","msg":"stream: started","id":"c14tapp5"}
+{"time":"2025-05-13T19:29:16.389344641-04:00","level":"INFO","msg":"handler: started","stream_id":"c14tapp5"}
+{"time":"2025-05-13T19:29:16.38934914-04:00","level":"INFO","msg":"sender: started","stream_id":"c14tapp5"}
+{"time":"2025-05-13T19:29:16.389351194-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"c14tapp5"}
+{"time":"2025-05-13T19:29:16.650874626-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-13T19:29:26.732291788-04:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-05-13T19:36:09.245648965-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-13T19:36:09.2456887-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-13T19:36:10.246727781-04:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading output.log","runtime_seconds":0.358290825,"progress":"2.0MB/2.0MB"},{"desc":"uploading logs/go2-imitate-canter/events.out.tfevents.1747178956.jeff.20296.0","runtime_seconds":0.357968999,"progress":"2.3MB/2.3MB"}],"total_operations":2}}
+{"time":"2025-05-13T19:36:10.503417067-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-13T19:36:10.921311206-04:00","level":"INFO","msg":"stream: closing","id":"c14tapp5"}
+{"time":"2025-05-13T19:36:10.921323479-04:00","level":"INFO","msg":"handler: closed","stream_id":"c14tapp5"}
+{"time":"2025-05-13T19:36:10.921331134-04:00","level":"INFO","msg":"sender: closed","stream_id":"c14tapp5"}
+{"time":"2025-05-13T19:36:10.921330362-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"c14tapp5"}
+{"time":"2025-05-13T19:36:10.921369947-04:00","level":"INFO","msg":"stream: closed","id":"c14tapp5"}

@@ -1,0 +1,1687 @@
+W&B logging initialized for project: go2-motion-imitation
+
+==================================================
+Starting training for 500 iterations
+Motion file: data/canter.npy
+Log directory: logs/go2-imitate-canter
+W&B logging enabled for project: go2-motion-imitation
+==================================================
+
+WARNING: Bouncing detected in environment 0! Base height: 0.354
+  Foot 0 height: -0.037
+  Foot 1 height: -0.037
+  Foot 2 height: -0.037
+  Foot 3 height: -0.037
+WARNING: Bouncing detected in environment 0! Base height: 0.424
+  Foot 0 height: 0.048
+  Foot 1 height: 0.048
+  Foot 2 height: 0.047
+  Foot 3 height: 0.047
+WARNING: Bouncing detected in environment 0! Base height: 0.490
+  Foot 0 height: 0.130
+  Foot 1 height: 0.129
+  Foot 2 height: 0.128
+  Foot 3 height: 0.127
+WARNING: Bouncing detected in environment 0! Base height: 0.552
+  Foot 0 height: 0.206
+  Foot 1 height: 0.205
+  Foot 2 height: 0.202
+  Foot 3 height: 0.201
+WARNING: Bouncing detected in environment 0! Base height: 0.611
+  Foot 0 height: 0.277
+  Foot 1 height: 0.275
+  Foot 2 height: 0.271
+  Foot 3 height: 0.270
+WARNING: Bouncing detected in environment 0! Base height: 0.665
+  Foot 0 height: 0.341
+  Foot 1 height: 0.339
+  Foot 2 height: 0.334
+  Foot 3 height: 0.334
+WARNING: Bouncing detected in environment 0! Base height: 0.715
+  Foot 0 height: 0.399
+  Foot 1 height: 0.396
+  Foot 2 height: 0.391
+  Foot 3 height: 0.392
+WARNING: Bouncing detected in environment 0! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 0! Base height: 0.296
+  Foot 0 height: 0.014
+  Foot 1 height: 0.009
+  Foot 2 height: 0.011
+  Foot 3 height: 0.006
+################################################################################
+                       [1m Learning iteration 0/500 [0m
+
+                       Computation: 4549 steps/s (collection: 1.244s, learning 0.107s)
+               Value function loss: 3860.4410
+                    Surrogate loss: 0.0085
+             Mean action noise std: 1.00
+                 Mean total reward: -172.53
+               Mean episode length: 8.00
+ Mean episode rew_tracking_lin_vel: 0.0003
+ Mean episode rew_tracking_ang_vel: 0.0029
+        Mean episode rew_lin_vel_z: -0.2734
+      Mean episode rew_base_height: -0.0002
+      Mean episode rew_action_rate: -0.0005
+Mean episode rew_similar_to_default: -0.0012
+Mean episode rew_joint_pose_matching: 0.0001
+ Mean episode rew_velocity_profile: 0.0013
+        Mean episode rew_stability: -4.2447
+   Mean episode rew_ground_contact: 0.0000
+   Mean episode rew_forward_motion: -0.8739
+   Mean episode rew_chassis_height: -0.7729
+     Mean episode rew_leg_symmetry: 0.1498
+--------------------------------------------------------------------------------
+                   Total timesteps: 6144
+                    Iteration time: 1.35s
+                        Total time: 1.35s
+                               ETA: 675.3s
+
+Could not find git repository in /home/jeff/anaconda3/envs/genesis/lib/python3.10/site-packages/rsl_rl/__init__.py. Skipping.
+################################################################################
+                       [1m Learning iteration 1/500 [0m
+
+                       Computation: 6350 steps/s (collection: 0.931s, learning 0.037s)
+               Value function loss: 1917.8708
+                    Surrogate loss: 0.0045
+             Mean action noise std: 1.00
+                 Mean total reward: -172.53
+               Mean episode length: 8.00
+ Mean episode rew_tracking_lin_vel: 0.0003
+ Mean episode rew_tracking_ang_vel: 0.0035
+        Mean episode rew_lin_vel_z: -0.3192
+      Mean episode rew_base_height: -0.0003
+      Mean episode rew_action_rate: -0.0006
+Mean episode rew_similar_to_default: -0.0014
+Mean episode rew_joint_pose_matching: 0.0001
+ Mean episode rew_velocity_profile: 0.0014
+        Mean episode rew_stability: -5.0173
+   Mean episode rew_ground_contact: 0.0000
+   Mean episode rew_forward_motion: -1.0500
+   Mean episode rew_chassis_height: -0.9823
+     Mean episode rew_leg_symmetry: 0.1672
+--------------------------------------------------------------------------------
+                   Total timesteps: 12288
+                    Iteration time: 0.97s
+                        Total time: 2.32s
+                               ETA: 578.3s
+
+################################################################################
+                       [1m Learning iteration 2/500 [0m
+
+                       Computation: 6374 steps/s (collection: 0.930s, learning 0.034s)
+               Value function loss: 1993.8199
+                    Surrogate loss: 0.0060
+             Mean action noise std: 1.00
+                 Mean total reward: -172.53
+               Mean episode length: 8.00
+ Mean episode rew_tracking_lin_vel: 0.0003
+ Mean episode rew_tracking_ang_vel: 0.0035
+        Mean episode rew_lin_vel_z: -0.3192
+      Mean episode rew_base_height: -0.0003
+      Mean episode rew_action_rate: -0.0006
+Mean episode rew_similar_to_default: -0.0014
+Mean episode rew_joint_pose_matching: 0.0001
+ Mean episode rew_velocity_profile: 0.0014
+        Mean episode rew_stability: -5.0173
+   Mean episode rew_ground_contact: 0.0000
+   Mean episode rew_forward_motion: -1.0500
+   Mean episode rew_chassis_height: -0.9823
+     Mean episode rew_leg_symmetry: 0.1672
+--------------------------------------------------------------------------------
+                   Total timesteps: 18432
+                    Iteration time: 0.96s
+                        Total time: 3.28s
+                               ETA: 544.8s
+
+################################################################################
+                       [1m Learning iteration 3/500 [0m
+
+                       Computation: 6356 steps/s (collection: 0.931s, learning 0.035s)
+               Value function loss: 1872.1963
+                    Surrogate loss: 0.0152
+             Mean action noise std: 1.00
+                 Mean total reward: -172.53
+               Mean episode length: 8.00
+ Mean episode rew_tracking_lin_vel: 0.0003
+ Mean episode rew_tracking_ang_vel: 0.0035
+        Mean episode rew_lin_vel_z: -0.3192
+      Mean episode rew_base_height: -0.0003
+      Mean episode rew_action_rate: -0.0006
+Mean episode rew_similar_to_default: -0.0014
+Mean episode rew_joint_pose_matching: 0.0001
+ Mean episode rew_velocity_profile: 0.0014
+        Mean episode rew_stability: -5.0173
+   Mean episode rew_ground_contact: 0.0000
+   Mean episode rew_forward_motion: -1.0500
+   Mean episode rew_chassis_height: -0.9823
+     Mean episode rew_leg_symmetry: 0.1672
+--------------------------------------------------------------------------------
+                   Total timesteps: 24576
+                    Iteration time: 0.97s
+                        Total time: 4.25s
+                               ETA: 527.9s
+
+################################################################################
+                       [1m Learning iteration 4/500 [0m
+
+                       Computation: 6352 steps/s (collection: 0.931s, learning 0.037s)
+               Value function loss: 1796.7265
+                    Surrogate loss: -0.0001
+             Mean action noise std: 1.00
+                 Mean total reward: -172.53
+               Mean episode length: 8.00
+ Mean episode rew_tracking_lin_vel: 0.0003
+ Mean episode rew_tracking_ang_vel: 0.0035
+        Mean episode rew_lin_vel_z: -0.3192
+      Mean episode rew_base_height: -0.0003
+      Mean episode rew_action_rate: -0.0006
+Mean episode rew_similar_to_default: -0.0014
+Mean episode rew_joint_pose_matching: 0.0001
+ Mean episode rew_velocity_profile: 0.0014
+        Mean episode rew_stability: -5.0173
+   Mean episode rew_ground_contact: 0.0000
+   Mean episode rew_forward_motion: -1.0500
+   Mean episode rew_chassis_height: -0.9823
+     Mean episode rew_leg_symmetry: 0.1672
+--------------------------------------------------------------------------------
+                   Total timesteps: 30720
+                    Iteration time: 0.97s
+                        Total time: 5.22s
+                               ETA: 517.4s
+
+################################################################################
+                       [1m Learning iteration 5/500 [0m
+
+                       Computation: 6359 steps/s (collection: 0.930s, learning 0.036s)
+               Value function loss: 1974.2771
+                    Surrogate loss: 0.0023
+             Mean action noise std: 1.00
+                 Mean total reward: -172.53
+               Mean episode length: 8.00
+ Mean episode rew_tracking_lin_vel: 0.0003
+ Mean episode rew_tracking_ang_vel: 0.0035
+        Mean episode rew_lin_vel_z: -0.3192
+      Mean episode rew_base_height: -0.0003
+      Mean episode rew_action_rate: -0.0006
+Mean episode rew_similar_to_default: -0.0014
+Mean episode rew_joint_pose_matching: 0.0001
+ Mean episode rew_velocity_profile: 0.0014
+        Mean episode rew_stability: -5.0173
+   Mean episode rew_ground_contact: 0.0000
+   Mean episode rew_forward_motion: -1.0500
+   Mean episode rew_chassis_height: -0.9823
+     Mean episode rew_leg_symmetry: 0.1672
+--------------------------------------------------------------------------------
+                   Total timesteps: 36864
+                    Iteration time: 0.97s
+                        Total time: 6.18s
+                               ETA: 510.0s
+
+################################################################################
+                       [1m Learning iteration 6/500 [0m
+
+                       Computation: 6357 steps/s (collection: 0.931s, learning 0.036s)
+               Value function loss: 1740.7609
+                    Surrogate loss: -0.0003
+             Mean action noise std: 1.00
+                 Mean total reward: -172.53
+               Mean episode length: 8.00
+ Mean episode rew_tracking_lin_vel: 0.0003
+ Mean episode rew_tracking_ang_vel: 0.0035
+        Mean episode rew_lin_vel_z: -0.3192
+      Mean episode rew_base_height: -0.0003
+      Mean episode rew_action_rate: -0.0006
+Mean episode rew_similar_to_default: -0.0014
+Mean episode rew_joint_pose_matching: 0.0001
+ Mean episode rew_velocity_profile: 0.0014
+        Mean episode rew_stability: -5.0173
+   Mean episode rew_ground_contact: 0.0000
+   Mean episode rew_forward_motion: -1.0500
+   Mean episode rew_chassis_height: -0.9823
+     Mean episode rew_leg_symmetry: 0.1672
+--------------------------------------------------------------------------------
+                   Total timesteps: 43008
+                    Iteration time: 0.97s
+                        Total time: 7.15s
+                               ETA: 504.5s
+
+################################################################################
+                       [1m Learning iteration 7/500 [0m
+
+                       Computation: 6360 steps/s (collection: 0.931s, learning 0.035s)
+               Value function loss: 1588.7897
+                    Surrogate loss: -0.0044
+             Mean action noise std: 1.00
+                 Mean total reward: -172.53
+               Mean episode length: 8.00
+ Mean episode rew_tracking_lin_vel: 0.0003
+ Mean episode rew_tracking_ang_vel: 0.0035
+        Mean episode rew_lin_vel_z: -0.3192
+      Mean episode rew_base_height: -0.0003
+      Mean episode rew_action_rate: -0.0006
+Mean episode rew_similar_to_default: -0.0014
+Mean episode rew_joint_pose_matching: 0.0001
+ Mean episode rew_velocity_profile: 0.0014
+        Mean episode rew_stability: -5.0173
+   Mean episode rew_ground_contact: 0.0000
+   Mean episode rew_forward_motion: -1.0500
+   Mean episode rew_chassis_height: -0.9823
+     Mean episode rew_leg_symmetry: 0.1672
+--------------------------------------------------------------------------------
+                   Total timesteps: 49152
+                    Iteration time: 0.97s
+                        Total time: 8.11s
+                               ETA: 500.0s
+
+################################################################################
+                       [1m Learning iteration 8/500 [0m
+
+                       Computation: 6355 steps/s (collection: 0.930s, learning 0.036s)
+               Value function loss: 1425.0196
+                    Surrogate loss: -0.0023
+             Mean action noise std: 1.01
+                 Mean total reward: -172.53
+               Mean episode length: 8.00
+ Mean episode rew_tracking_lin_vel: 0.0003
+ Mean episode rew_tracking_ang_vel: 0.0035
+        Mean episode rew_lin_vel_z: -0.3192
+      Mean episode rew_base_height: -0.0003
+      Mean episode rew_action_rate: -0.0006
+Mean episode rew_similar_to_default: -0.0014
+Mean episode rew_joint_pose_matching: 0.0001
+ Mean episode rew_velocity_profile: 0.0014
+        Mean episode rew_stability: -5.0173
+   Mean episode rew_ground_contact: 0.0000
+   Mean episode rew_forward_motion: -1.0500
+   Mean episode rew_chassis_height: -0.9823
+     Mean episode rew_leg_symmetry: 0.1672
+--------------------------------------------------------------------------------
+                   Total timesteps: 55296
+                    Iteration time: 0.97s
+                        Total time: 9.08s
+                               ETA: 496.4s
+
+################################################################################
+                       [1m Learning iteration 9/500 [0m
+
+                       Computation: 6366 steps/s (collection: 0.931s, learning 0.034s)
+               Value function loss: 1229.3111
+                    Surrogate loss: -0.0055
+             Mean action noise std: 1.01
+                 Mean total reward: -172.53
+               Mean episode length: 8.00
+ Mean episode rew_tracking_lin_vel: 0.0003
+ Mean episode rew_tracking_ang_vel: 0.0035
+        Mean episode rew_lin_vel_z: -0.3192
+      Mean episode rew_base_height: -0.0003
+      Mean episode rew_action_rate: -0.0006
+Mean episode rew_similar_to_default: -0.0014
+Mean episode rew_joint_pose_matching: 0.0001
+ Mean episode rew_velocity_profile: 0.0014
+        Mean episode rew_stability: -5.0173
+   Mean episode rew_ground_contact: 0.0000
+   Mean episode rew_forward_motion: -1.0500
+   Mean episode rew_chassis_height: -0.9823
+     Mean episode rew_leg_symmetry: 0.1672
+--------------------------------------------------------------------------------
+                   Total timesteps: 61440
+                    Iteration time: 0.97s
+                        Total time: 10.05s
+                               ETA: 493.2s
+
+################################################################################
+                      [1m Learning iteration 10/500 [0m
+
+                       Computation: 6353 steps/s (collection: 0.931s, learning 0.036s)
+               Value function loss: 1037.8511
+                    Surrogate loss: -0.0052
+             Mean action noise std: 1.01
+                 Mean total reward: -172.53
+               Mean episode length: 8.00
+ Mean episode rew_tracking_lin_vel: 0.0003
+ Mean episode rew_tracking_ang_vel: 0.0035
+        Mean episode rew_lin_vel_z: -0.3192
+      Mean episode rew_base_height: -0.0003
+      Mean episode rew_action_rate: -0.0006
+Mean episode rew_similar_to_default: -0.0014
+Mean episode rew_joint_pose_matching: 0.0001
+ Mean episode rew_velocity_profile: 0.0014
+        Mean episode rew_stability: -5.0173
+   Mean episode rew_ground_contact: 0.0000
+   Mean episode rew_forward_motion: -1.0500
+   Mean episode rew_chassis_height: -0.9823
+     Mean episode rew_leg_symmetry: 0.1672
+--------------------------------------------------------------------------------
+                   Total timesteps: 67584
+                    Iteration time: 0.97s
+                        Total time: 11.01s
+                               ETA: 490.6s
+
+################################################################################
+                      [1m Learning iteration 11/500 [0m
+
+                       Computation: 6369 steps/s (collection: 0.930s, learning 0.035s)
+               Value function loss: 872.6251
+                    Surrogate loss: -0.0025
+             Mean action noise std: 1.01
+                 Mean total reward: -172.53
+               Mean episode length: 8.00
+ Mean episode rew_tracking_lin_vel: 0.0003
+ Mean episode rew_tracking_ang_vel: 0.0035
+        Mean episode rew_lin_vel_z: -0.3192
+      Mean episode rew_base_height: -0.0003
+      Mean episode rew_action_rate: -0.0006
+Mean episode rew_similar_to_default: -0.0014
+Mean episode rew_joint_pose_matching: 0.0001
+ Mean episode rew_velocity_profile: 0.0014
+        Mean episode rew_stability: -5.0173
+   Mean episode rew_ground_contact: 0.0000
+   Mean episode rew_forward_motion: -1.0500
+   Mean episode rew_chassis_height: -0.9823
+     Mean episode rew_leg_symmetry: 0.1672
+--------------------------------------------------------------------------------
+                   Total timesteps: 73728
+                    Iteration time: 0.96s
+                        Total time: 11.98s
+                               ETA: 488.1s
+
+################################################################################
+                      [1m Learning iteration 12/500 [0m
+
+                       Computation: 6344 steps/s (collection: 0.931s, learning 0.038s)
+               Value function loss: 631.6396
+                    Surrogate loss: 0.0080
+             Mean action noise std: 1.01
+                 Mean total reward: -172.53
+               Mean episode length: 8.00
+ Mean episode rew_tracking_lin_vel: 0.0003
+ Mean episode rew_tracking_ang_vel: 0.0035
+        Mean episode rew_lin_vel_z: -0.3192
+      Mean episode rew_base_height: -0.0003
+      Mean episode rew_action_rate: -0.0006
+Mean episode rew_similar_to_default: -0.0014
+Mean episode rew_joint_pose_matching: 0.0001
+ Mean episode rew_velocity_profile: 0.0014
+        Mean episode rew_stability: -5.0173
+   Mean episode rew_ground_contact: 0.0000
+   Mean episode rew_forward_motion: -1.0500
+   Mean episode rew_chassis_height: -0.9823
+     Mean episode rew_leg_symmetry: 0.1672
+--------------------------------------------------------------------------------
+                   Total timesteps: 79872
+                    Iteration time: 0.97s
+                        Total time: 12.95s
+                               ETA: 486.0s
+
+################################################################################
+                      [1m Learning iteration 13/500 [0m
+
+                       Computation: 6345 steps/s (collection: 0.931s, learning 0.037s)
+               Value function loss: 520.6416
+                    Surrogate loss: -0.0087
+             Mean action noise std: 1.01
+                 Mean total reward: -172.53
+               Mean episode length: 8.00
+ Mean episode rew_tracking_lin_vel: 0.0003
+ Mean episode rew_tracking_ang_vel: 0.0035
+        Mean episode rew_lin_vel_z: -0.3192
+      Mean episode rew_base_height: -0.0003
+      Mean episode rew_action_rate: -0.0006
+Mean episode rew_similar_to_default: -0.0014
+Mean episode rew_joint_pose_matching: 0.0001
+ Mean episode rew_velocity_profile: 0.0014
+        Mean episode rew_stability: -5.0173
+   Mean episode rew_ground_contact: 0.0000
+   Mean episode rew_forward_motion: -1.0500
+   Mean episode rew_chassis_height: -0.9823
+     Mean episode rew_leg_symmetry: 0.1672
+--------------------------------------------------------------------------------
+                   Total timesteps: 86016
+                    Iteration time: 0.97s
+                        Total time: 13.91s
+                               ETA: 484.0s
+
+################################################################################
+                      [1m Learning iteration 14/500 [0m
+
+                       Computation: 6351 steps/s (collection: 0.930s, learning 0.037s)
+               Value function loss: 487.3877
+                    Surrogate loss: 0.0114
+             Mean action noise std: 1.01
+                 Mean total reward: -172.53
+               Mean episode length: 8.00
+ Mean episode rew_tracking_lin_vel: 0.0003
+ Mean episode rew_tracking_ang_vel: 0.0035
+        Mean episode rew_lin_vel_z: -0.3192
+      Mean episode rew_base_height: -0.0003
+      Mean episode rew_action_rate: -0.0006
+Mean episode rew_similar_to_default: -0.0014
+Mean episode rew_joint_pose_matching: 0.0001
+ Mean episode rew_velocity_profile: 0.0014
+        Mean episode rew_stability: -5.0173
+   Mean episode rew_ground_contact: 0.0000
+   Mean episode rew_forward_motion: -1.0500
+   Mean episode rew_chassis_height: -0.9823
+     Mean episode rew_leg_symmetry: 0.1672
+--------------------------------------------------------------------------------
+                   Total timesteps: 92160
+                    Iteration time: 0.97s
+                        Total time: 14.88s
+                               ETA: 482.2s
+
+################################################################################
+                      [1m Learning iteration 15/500 [0m
+
+                       Computation: 6369 steps/s (collection: 0.930s, learning 0.034s)
+               Value function loss: 369.2599
+                    Surrogate loss: -0.0043
+             Mean action noise std: 1.01
+                 Mean total reward: -172.53
+               Mean episode length: 8.00
+ Mean episode rew_tracking_lin_vel: 0.0003
+ Mean episode rew_tracking_ang_vel: 0.0035
+        Mean episode rew_lin_vel_z: -0.3192
+      Mean episode rew_base_height: -0.0003
+      Mean episode rew_action_rate: -0.0006
+Mean episode rew_similar_to_default: -0.0014
+Mean episode rew_joint_pose_matching: 0.0001
+ Mean episode rew_velocity_profile: 0.0014
+        Mean episode rew_stability: -5.0173
+   Mean episode rew_ground_contact: 0.0000
+   Mean episode rew_forward_motion: -1.0500
+   Mean episode rew_chassis_height: -0.9823
+     Mean episode rew_leg_symmetry: 0.1672
+--------------------------------------------------------------------------------
+                   Total timesteps: 98304
+                    Iteration time: 0.96s
+                        Total time: 15.85s
+                               ETA: 480.3s
+
+################################################################################
+                      [1m Learning iteration 16/500 [0m
+
+                       Computation: 6359 steps/s (collection: 0.932s, learning 0.035s)
+               Value function loss: 322.0709
+                    Surrogate loss: 0.0315
+             Mean action noise std: 1.01
+                 Mean total reward: -172.53
+               Mean episode length: 8.00
+ Mean episode rew_tracking_lin_vel: 0.0003
+ Mean episode rew_tracking_ang_vel: 0.0035
+        Mean episode rew_lin_vel_z: -0.3192
+      Mean episode rew_base_height: -0.0003
+      Mean episode rew_action_rate: -0.0006
+Mean episode rew_similar_to_default: -0.0014
+Mean episode rew_joint_pose_matching: 0.0001
+ Mean episode rew_velocity_profile: 0.0014
+        Mean episode rew_stability: -5.0173
+   Mean episode rew_ground_contact: 0.0000
+   Mean episode rew_forward_motion: -1.0500
+   Mean episode rew_chassis_height: -0.9823
+     Mean episode rew_leg_symmetry: 0.1672
+--------------------------------------------------------------------------------
+                   Total timesteps: 104448
+                    Iteration time: 0.97s
+                        Total time: 16.81s
+                               ETA: 478.6s
+
+################################################################################
+                      [1m Learning iteration 17/500 [0m
+
+                       Computation: 6362 steps/s (collection: 0.931s, learning 0.035s)
+               Value function loss: 371.5071
+                    Surrogate loss: -0.0007
+             Mean action noise std: 1.01
+                 Mean total reward: -172.53
+               Mean episode length: 8.00
+ Mean episode rew_tracking_lin_vel: 0.0003
+ Mean episode rew_tracking_ang_vel: 0.0035
+        Mean episode rew_lin_vel_z: -0.3192
+      Mean episode rew_base_height: -0.0003
+      Mean episode rew_action_rate: -0.0006
+Mean episode rew_similar_to_default: -0.0014
+Mean episode rew_joint_pose_matching: 0.0001
+ Mean episode rew_velocity_profile: 0.0014
+        Mean episode rew_stability: -5.0173
+   Mean episode rew_ground_contact: 0.0000
+   Mean episode rew_forward_motion: -1.0500
+   Mean episode rew_chassis_height: -0.9823
+     Mean episode rew_leg_symmetry: 0.1672
+--------------------------------------------------------------------------------
+                   Total timesteps: 110592
+                    Iteration time: 0.97s
+                        Total time: 17.78s
+                               ETA: 477.0s
+
+################################################################################
+                      [1m Learning iteration 18/500 [0m
+
+                       Computation: 6360 steps/s (collection: 0.931s, learning 0.035s)
+               Value function loss: 311.6332
+                    Surrogate loss: -0.0052
+             Mean action noise std: 1.01
+                 Mean total reward: -172.53
+               Mean episode length: 8.00
+ Mean episode rew_tracking_lin_vel: 0.0003
+ Mean episode rew_tracking_ang_vel: 0.0035
+        Mean episode rew_lin_vel_z: -0.3192
+      Mean episode rew_base_height: -0.0003
+      Mean episode rew_action_rate: -0.0006
+Mean episode rew_similar_to_default: -0.0014
+Mean episode rew_joint_pose_matching: 0.0001
+ Mean episode rew_velocity_profile: 0.0014
+        Mean episode rew_stability: -5.0173
+   Mean episode rew_ground_contact: 0.0000
+   Mean episode rew_forward_motion: -1.0500
+   Mean episode rew_chassis_height: -0.9823
+     Mean episode rew_leg_symmetry: 0.1672
+--------------------------------------------------------------------------------
+                   Total timesteps: 116736
+                    Iteration time: 0.97s
+                        Total time: 18.74s
+                               ETA: 475.5s
+
+################################################################################
+                      [1m Learning iteration 19/500 [0m
+
+                       Computation: 6355 steps/s (collection: 0.930s, learning 0.037s)
+               Value function loss: 285.6594
+                    Surrogate loss: -0.0046
+             Mean action noise std: 1.01
+                 Mean total reward: -172.53
+               Mean episode length: 8.00
+ Mean episode rew_tracking_lin_vel: 0.0003
+ Mean episode rew_tracking_ang_vel: 0.0035
+        Mean episode rew_lin_vel_z: -0.3192
+      Mean episode rew_base_height: -0.0003
+      Mean episode rew_action_rate: -0.0006
+Mean episode rew_similar_to_default: -0.0014
+Mean episode rew_joint_pose_matching: 0.0001
+ Mean episode rew_velocity_profile: 0.0014
+        Mean episode rew_stability: -5.0173
+   Mean episode rew_ground_contact: 0.0000
+   Mean episode rew_forward_motion: -1.0500
+   Mean episode rew_chassis_height: -0.9823
+     Mean episode rew_leg_symmetry: 0.1672
+--------------------------------------------------------------------------------
+                   Total timesteps: 122880
+                    Iteration time: 0.97s
+                        Total time: 19.71s
+                               ETA: 474.0s
+
+################################################################################
+                      [1m Learning iteration 20/500 [0m
+
+                       Computation: 6354 steps/s (collection: 0.931s, learning 0.035s)
+               Value function loss: 314.9936
+                    Surrogate loss: 0.0021
+             Mean action noise std: 1.01
+                 Mean total reward: -172.53
+               Mean episode length: 8.00
+ Mean episode rew_tracking_lin_vel: 0.0003
+ Mean episode rew_tracking_ang_vel: 0.0035
+        Mean episode rew_lin_vel_z: -0.3192
+      Mean episode rew_base_height: -0.0003
+      Mean episode rew_action_rate: -0.0006
+Mean episode rew_similar_to_default: -0.0014
+Mean episode rew_joint_pose_matching: 0.0001
+ Mean episode rew_velocity_profile: 0.0014
+        Mean episode rew_stability: -5.0173
+   Mean episode rew_ground_contact: 0.0000
+   Mean episode rew_forward_motion: -1.0500
+   Mean episode rew_chassis_height: -0.9823
+     Mean episode rew_leg_symmetry: 0.1672
+--------------------------------------------------------------------------------
+                   Total timesteps: 129024
+                    Iteration time: 0.97s
+                        Total time: 20.68s
+                               ETA: 472.6s
+
+################################################################################
+                      [1m Learning iteration 21/500 [0m
+
+                       Computation: 6373 steps/s (collection: 0.930s, learning 0.034s)
+               Value function loss: 337.0778
+                    Surrogate loss: 0.0250
+             Mean action noise std: 1.01
+                 Mean total reward: -172.53
+               Mean episode length: 8.00
+ Mean episode rew_tracking_lin_vel: 0.0003
+ Mean episode rew_tracking_ang_vel: 0.0035
+        Mean episode rew_lin_vel_z: -0.3192
+      Mean episode rew_base_height: -0.0003
+      Mean episode rew_action_rate: -0.0006
+Mean episode rew_similar_to_default: -0.0014
+Mean episode rew_joint_pose_matching: 0.0001
+ Mean episode rew_velocity_profile: 0.0014
+        Mean episode rew_stability: -5.0173
+   Mean episode rew_ground_contact: 0.0000
+   Mean episode rew_forward_motion: -1.0500
+   Mean episode rew_chassis_height: -0.9823
+     Mean episode rew_leg_symmetry: 0.1672
+--------------------------------------------------------------------------------
+                   Total timesteps: 135168
+                    Iteration time: 0.96s
+                        Total time: 21.64s
+                               ETA: 471.2s
+
+WARNING: Bouncing detected in environment 228! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 228! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+################################################################################
+                      [1m Learning iteration 22/500 [0m
+
+                       Computation: 6351 steps/s (collection: 0.931s, learning 0.037s)
+               Value function loss: 318.2596
+                    Surrogate loss: -0.0013
+             Mean action noise std: 1.01
+                 Mean total reward: -184.36
+               Mean episode length: 13.24
+ Mean episode rew_tracking_lin_vel: 0.0036
+ Mean episode rew_tracking_ang_vel: 0.1343
+        Mean episode rew_lin_vel_z: -0.1509
+      Mean episode rew_base_height: -0.0002
+      Mean episode rew_action_rate: -0.0227
+Mean episode rew_similar_to_default: -0.0148
+Mean episode rew_joint_pose_matching: 0.9691
+ Mean episode rew_velocity_profile: 2.4069
+        Mean episode rew_stability: -40.2499
+   Mean episode rew_ground_contact: 10.0048
+   Mean episode rew_forward_motion: -24.4903
+   Mean episode rew_chassis_height: 9.7000
+     Mean episode rew_leg_symmetry: 1.3524
+--------------------------------------------------------------------------------
+                   Total timesteps: 141312
+                    Iteration time: 0.97s
+                        Total time: 22.61s
+                               ETA: 469.9s
+
+WARNING: Bouncing detected in environment 142! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 90! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 90! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 163! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 163! Base height: 0.296
+  Foot 0 height: 0.014
+  Foot 1 height: 0.009
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 199! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+################################################################################
+                      [1m Learning iteration 23/500 [0m
+
+                       Computation: 6362 steps/s (collection: 0.931s, learning 0.035s)
+               Value function loss: 416.3461
+                    Surrogate loss: -0.0027
+             Mean action noise std: 1.01
+                 Mean total reward: -228.04
+               Mean episode length: 35.24
+ Mean episode rew_tracking_lin_vel: 0.0066
+ Mean episode rew_tracking_ang_vel: 0.2520
+        Mean episode rew_lin_vel_z: -0.0081
+      Mean episode rew_base_height: -0.0002
+      Mean episode rew_action_rate: -0.0433
+Mean episode rew_similar_to_default: -0.0263
+Mean episode rew_joint_pose_matching: 1.8997
+ Mean episode rew_velocity_profile: 4.5794
+        Mean episode rew_stability: -65.8091
+   Mean episode rew_ground_contact: 19.2836
+   Mean episode rew_forward_motion: -45.5060
+   Mean episode rew_chassis_height: 19.1842
+     Mean episode rew_leg_symmetry: 2.4043
+--------------------------------------------------------------------------------
+                   Total timesteps: 147456
+                    Iteration time: 0.97s
+                        Total time: 23.57s
+                               ETA: 468.5s
+
+WARNING: Bouncing detected in environment 118! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 118! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 40! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 40! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 66! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 66! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.009
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+WARNING: Bouncing detected in environment 62! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 11! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 10! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 10! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 184! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 184! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 253! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 253! Base height: 0.296
+  Foot 0 height: 0.014
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+################################################################################
+                      [1m Learning iteration 24/500 [0m
+
+                       Computation: 6343 steps/s (collection: 0.932s, learning 0.037s)
+               Value function loss: 376.4719
+                    Surrogate loss: 0.0037
+             Mean action noise std: 1.01
+                 Mean total reward: -333.85
+               Mean episode length: 92.45
+ Mean episode rew_tracking_lin_vel: 0.0070
+ Mean episode rew_tracking_ang_vel: 0.2636
+        Mean episode rew_lin_vel_z: -0.0083
+      Mean episode rew_base_height: -0.0002
+      Mean episode rew_action_rate: -0.0463
+Mean episode rew_similar_to_default: -0.0286
+Mean episode rew_joint_pose_matching: 1.8533
+ Mean episode rew_velocity_profile: 4.8654
+        Mean episode rew_stability: -58.9581
+   Mean episode rew_ground_contact: 20.2912
+   Mean episode rew_forward_motion: -48.0272
+   Mean episode rew_chassis_height: 20.5341
+     Mean episode rew_leg_symmetry: 1.9401
+--------------------------------------------------------------------------------
+                   Total timesteps: 153600
+                    Iteration time: 0.97s
+                        Total time: 24.54s
+                               ETA: 467.3s
+
+WARNING: Bouncing detected in environment 5! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 5! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 65! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 65! Base height: 0.297
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 110! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 110! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 206! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 206! Base height: 0.297
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+WARNING: Bouncing detected in environment 113! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 113! Base height: 0.296
+  Foot 0 height: 0.014
+  Foot 1 height: 0.009
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+WARNING: Bouncing detected in environment 185! Base height: 0.297
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 154! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+################################################################################
+                      [1m Learning iteration 25/500 [0m
+
+                       Computation: 6357 steps/s (collection: 0.935s, learning 0.032s)
+               Value function loss: 422.0013
+                    Surrogate loss: 0.0045
+             Mean action noise std: 1.01
+                 Mean total reward: -415.91
+               Mean episode length: 140.25
+ Mean episode rew_tracking_lin_vel: 0.0075
+ Mean episode rew_tracking_ang_vel: 0.2743
+        Mean episode rew_lin_vel_z: -0.0080
+      Mean episode rew_base_height: -0.0002
+      Mean episode rew_action_rate: -0.0476
+Mean episode rew_similar_to_default: -0.0295
+Mean episode rew_joint_pose_matching: 2.0177
+ Mean episode rew_velocity_profile: 5.1018
+        Mean episode rew_stability: -62.4583
+   Mean episode rew_ground_contact: 21.2436
+   Mean episode rew_forward_motion: -49.9364
+   Mean episode rew_chassis_height: 21.2020
+     Mean episode rew_leg_symmetry: 2.1696
+--------------------------------------------------------------------------------
+                   Total timesteps: 159744
+                    Iteration time: 0.97s
+                        Total time: 25.51s
+                               ETA: 466.0s
+
+WARNING: Bouncing detected in environment 154! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 146! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 146! Base height: 0.296
+  Foot 0 height: 0.014
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+WARNING: Bouncing detected in environment 116! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 101! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 101! Base height: 0.296
+  Foot 0 height: 0.014
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+WARNING: Bouncing detected in environment 208! Base height: 0.296
+  Foot 0 height: 0.014
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+WARNING: Bouncing detected in environment 86! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 86! Base height: 0.296
+  Foot 0 height: 0.014
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+WARNING: Bouncing detected in environment 9! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 9! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+WARNING: Bouncing detected in environment 18! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 18! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+################################################################################
+                      [1m Learning iteration 26/500 [0m
+
+                       Computation: 6316 steps/s (collection: 0.935s, learning 0.038s)
+               Value function loss: 417.9131
+                    Surrogate loss: -0.0004
+             Mean action noise std: 1.01
+                 Mean total reward: -533.95
+               Mean episode length: 208.71
+ Mean episode rew_tracking_lin_vel: 0.0078
+ Mean episode rew_tracking_ang_vel: 0.2864
+        Mean episode rew_lin_vel_z: -0.0084
+      Mean episode rew_base_height: -0.0002
+      Mean episode rew_action_rate: -0.0493
+Mean episode rew_similar_to_default: -0.0309
+Mean episode rew_joint_pose_matching: 2.0380
+ Mean episode rew_velocity_profile: 5.2785
+        Mean episode rew_stability: -62.9475
+   Mean episode rew_ground_contact: 21.8373
+   Mean episode rew_forward_motion: -52.0204
+   Mean episode rew_chassis_height: 22.0501
+     Mean episode rew_leg_symmetry: 2.1612
+--------------------------------------------------------------------------------
+                   Total timesteps: 165888
+                    Iteration time: 0.97s
+                        Total time: 26.48s
+                               ETA: 464.9s
+
+WARNING: Bouncing detected in environment 92! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 92! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 203! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 39! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 39! Base height: 0.297
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+WARNING: Bouncing detected in environment 232! Base height: 0.296
+  Foot 0 height: 0.014
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 61! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 61! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 147! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 147! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 207! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 207! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+################################################################################
+                      [1m Learning iteration 27/500 [0m
+
+                       Computation: 6354 steps/s (collection: 0.932s, learning 0.035s)
+               Value function loss: 485.4817
+                    Surrogate loss: -0.0028
+             Mean action noise std: 1.01
+                 Mean total reward: -633.14
+               Mean episode length: 266.50
+ Mean episode rew_tracking_lin_vel: 0.0081
+ Mean episode rew_tracking_ang_vel: 0.2971
+        Mean episode rew_lin_vel_z: -0.0083
+      Mean episode rew_base_height: -0.0002
+      Mean episode rew_action_rate: -0.0503
+Mean episode rew_similar_to_default: -0.0321
+Mean episode rew_joint_pose_matching: 2.1294
+ Mean episode rew_velocity_profile: 5.5094
+        Mean episode rew_stability: -67.7629
+   Mean episode rew_ground_contact: 22.9296
+   Mean episode rew_forward_motion: -53.9293
+   Mean episode rew_chassis_height: 22.9509
+     Mean episode rew_leg_symmetry: 2.1350
+--------------------------------------------------------------------------------
+                   Total timesteps: 172032
+                    Iteration time: 0.97s
+                        Total time: 27.45s
+                               ETA: 463.7s
+
+WARNING: Bouncing detected in environment 249! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 249! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+WARNING: Bouncing detected in environment 251! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 50! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 15! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 15! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 150! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 195! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 176! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 176! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+WARNING: Bouncing detected in environment 240! Base height: 0.296
+  Foot 0 height: 0.014
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+WARNING: Bouncing detected in environment 97! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 97! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.011
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 227! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 193! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 193! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 145! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+################################################################################
+                      [1m Learning iteration 28/500 [0m
+
+                       Computation: 6324 steps/s (collection: 0.934s, learning 0.037s)
+               Value function loss: 474.3217
+                    Surrogate loss: -0.0024
+             Mean action noise std: 1.01
+                 Mean total reward: -750.12
+               Mean episode length: 353.33
+ Mean episode rew_tracking_lin_vel: 0.0084
+ Mean episode rew_tracking_ang_vel: 0.3078
+        Mean episode rew_lin_vel_z: -0.0085
+      Mean episode rew_base_height: -0.0002
+      Mean episode rew_action_rate: -0.0523
+Mean episode rew_similar_to_default: -0.0335
+Mean episode rew_joint_pose_matching: 2.1686
+ Mean episode rew_velocity_profile: 5.7233
+        Mean episode rew_stability: -57.7371
+   Mean episode rew_ground_contact: 23.8368
+   Mean episode rew_forward_motion: -55.9923
+   Mean episode rew_chassis_height: 23.8363
+     Mean episode rew_leg_symmetry: 2.1659
+--------------------------------------------------------------------------------
+                   Total timesteps: 178176
+                    Iteration time: 0.97s
+                        Total time: 28.42s
+                               ETA: 462.6s
+
+WARNING: Bouncing detected in environment 43! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 43! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.009
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+WARNING: Bouncing detected in environment 94! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 94! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 129! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 129! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 180! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 6! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 6! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 32! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 32! Base height: 0.297
+  Foot 0 height: 0.014
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.006
+WARNING: Bouncing detected in environment 93! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 161! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 225! Base height: 0.296
+  Foot 0 height: 0.014
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+################################################################################
+                      [1m Learning iteration 29/500 [0m
+
+                       Computation: 6362 steps/s (collection: 0.932s, learning 0.033s)
+               Value function loss: 480.7030
+                    Surrogate loss: 0.0020
+             Mean action noise std: 1.01
+                 Mean total reward: -838.15
+               Mean episode length: 415.71
+ Mean episode rew_tracking_lin_vel: 0.0088
+ Mean episode rew_tracking_ang_vel: 0.3190
+        Mean episode rew_lin_vel_z: -0.0083
+      Mean episode rew_base_height: -0.0002
+      Mean episode rew_action_rate: -0.0536
+Mean episode rew_similar_to_default: -0.0354
+Mean episode rew_joint_pose_matching: 2.1838
+ Mean episode rew_velocity_profile: 5.9554
+        Mean episode rew_stability: -59.0331
+   Mean episode rew_ground_contact: 24.8128
+   Mean episode rew_forward_motion: -57.8603
+   Mean episode rew_chassis_height: 24.9586
+     Mean episode rew_leg_symmetry: 2.2328
+--------------------------------------------------------------------------------
+                   Total timesteps: 184320
+                    Iteration time: 0.97s
+                        Total time: 29.39s
+                               ETA: 461.4s
+
+WARNING: Bouncing detected in environment 68! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 68! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 102! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.007
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 213! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 213! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.009
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+WARNING: Bouncing detected in environment 21! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 21! Base height: 0.296
+  Foot 0 height: 0.014
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+WARNING: Bouncing detected in environment 56! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 56! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 53! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 53! Base height: 0.296
+  Foot 0 height: 0.014
+  Foot 1 height: 0.009
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+################################################################################
+                      [1m Learning iteration 30/500 [0m
+
+                       Computation: 6365 steps/s (collection: 0.931s, learning 0.035s)
+               Value function loss: 502.1611
+                    Surrogate loss: 0.0056
+             Mean action noise std: 1.01
+                 Mean total reward: -913.68
+               Mean episode length: 465.51
+ Mean episode rew_tracking_lin_vel: 0.0091
+ Mean episode rew_tracking_ang_vel: 0.3305
+        Mean episode rew_lin_vel_z: -0.0086
+      Mean episode rew_base_height: -0.0002
+      Mean episode rew_action_rate: -0.0550
+Mean episode rew_similar_to_default: -0.0365
+Mean episode rew_joint_pose_matching: 2.3232
+ Mean episode rew_velocity_profile: 6.1685
+        Mean episode rew_stability: -69.4796
+   Mean episode rew_ground_contact: 25.6422
+   Mean episode rew_forward_motion: -59.7560
+   Mean episode rew_chassis_height: 25.6621
+     Mean episode rew_leg_symmetry: 2.3907
+--------------------------------------------------------------------------------
+                   Total timesteps: 190464
+                    Iteration time: 0.97s
+                        Total time: 30.35s
+                               ETA: 460.2s
+
+WARNING: Bouncing detected in environment 221! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 221! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 57! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 57! Base height: 0.296
+  Foot 0 height: 0.014
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+WARNING: Bouncing detected in environment 78! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 78! Base height: 0.297
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+################################################################################
+                      [1m Learning iteration 31/500 [0m
+
+                       Computation: 6370 steps/s (collection: 0.930s, learning 0.035s)
+               Value function loss: 454.0742
+                    Surrogate loss: -0.0030
+             Mean action noise std: 1.01
+                 Mean total reward: -945.81
+               Mean episode length: 495.09
+ Mean episode rew_tracking_lin_vel: 0.0095
+ Mean episode rew_tracking_ang_vel: 0.3412
+        Mean episode rew_lin_vel_z: -0.0085
+      Mean episode rew_base_height: -0.0002
+      Mean episode rew_action_rate: -0.0557
+Mean episode rew_similar_to_default: -0.0375
+Mean episode rew_joint_pose_matching: 2.3839
+ Mean episode rew_velocity_profile: 6.3853
+        Mean episode rew_stability: -56.5374
+   Mean episode rew_ground_contact: 26.4028
+   Mean episode rew_forward_motion: -61.5557
+   Mean episode rew_chassis_height: 26.4592
+     Mean episode rew_leg_symmetry: 2.3416
+--------------------------------------------------------------------------------
+                   Total timesteps: 196608
+                    Iteration time: 0.96s
+                        Total time: 31.32s
+                               ETA: 459.0s
+
+WARNING: Bouncing detected in environment 89! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 89! Base height: 0.297
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 224! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 224! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+################################################################################
+                      [1m Learning iteration 32/500 [0m
+
+                       Computation: 6361 steps/s (collection: 0.931s, learning 0.034s)
+               Value function loss: 469.0669
+                    Surrogate loss: -0.0036
+             Mean action noise std: 1.01
+                 Mean total reward: -959.95
+               Mean episode length: 510.32
+ Mean episode rew_tracking_lin_vel: 0.0098
+ Mean episode rew_tracking_ang_vel: 0.3518
+        Mean episode rew_lin_vel_z: -0.0084
+      Mean episode rew_base_height: -0.0002
+      Mean episode rew_action_rate: -0.0580
+Mean episode rew_similar_to_default: -0.0387
+Mean episode rew_joint_pose_matching: 2.4556
+ Mean episode rew_velocity_profile: 6.5160
+        Mean episode rew_stability: -47.8658
+   Mean episode rew_ground_contact: 27.3917
+   Mean episode rew_forward_motion: -63.2848
+   Mean episode rew_chassis_height: 27.2999
+     Mean episode rew_leg_symmetry: 2.3192
+--------------------------------------------------------------------------------
+                   Total timesteps: 202752
+                    Iteration time: 0.97s
+                        Total time: 32.28s
+                               ETA: 457.8s
+
+WARNING: Bouncing detected in environment 148! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 148! Base height: 0.296
+  Foot 0 height: 0.014
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+WARNING: Bouncing detected in environment 216! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 45! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 45! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 69! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 69! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 190! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+################################################################################
+                      [1m Learning iteration 33/500 [0m
+
+                       Computation: 6360 steps/s (collection: 0.933s, learning 0.033s)
+               Value function loss: 452.9140
+                    Surrogate loss: 0.0496
+             Mean action noise std: 1.01
+                 Mean total reward: -993.95
+               Mean episode length: 549.92
+ Mean episode rew_tracking_lin_vel: 0.0102
+ Mean episode rew_tracking_ang_vel: 0.3632
+        Mean episode rew_lin_vel_z: -0.0089
+      Mean episode rew_base_height: -0.0002
+      Mean episode rew_action_rate: -0.0586
+Mean episode rew_similar_to_default: -0.0400
+Mean episode rew_joint_pose_matching: 2.4782
+ Mean episode rew_velocity_profile: 6.8035
+        Mean episode rew_stability: -42.5956
+   Mean episode rew_ground_contact: 27.9789
+   Mean episode rew_forward_motion: -65.6909
+   Mean episode rew_chassis_height: 28.2670
+     Mean episode rew_leg_symmetry: 2.0675
+--------------------------------------------------------------------------------
+                   Total timesteps: 208896
+                    Iteration time: 0.97s
+                        Total time: 33.25s
+                               ETA: 456.7s
+
+WARNING: Bouncing detected in environment 35! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 35! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+WARNING: Bouncing detected in environment 58! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 58! Base height: 0.296
+  Foot 0 height: 0.014
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 128! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 33! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 33! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 234! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 151! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 151! Base height: 0.296
+  Foot 0 height: 0.014
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 51! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 51! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.008
+WARNING: Bouncing detected in environment 114! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 29! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 13! Base height: 0.280
+  Foot 0 height: -0.012
+  Foot 1 height: -0.012
+  Foot 2 height: -0.012
+  Foot 3 height: -0.012
+WARNING: Bouncing detected in environment 13! Base height: 0.296
+  Foot 0 height: 0.014
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007
+WARNING: Bouncing detected in environment 26! Base height: 0.296
+  Foot 0 height: 0.013
+  Foot 1 height: 0.008
+  Foot 2 height: 0.012
+  Foot 3 height: 0.007

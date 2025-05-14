@@ -1,0 +1,17 @@
+{"time":"2025-05-13T21:59:48.847125606-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"/home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250513_215948-swg6c085/logs/debug-core.log"}
+{"time":"2025-05-13T21:59:49.128306837-04:00","level":"INFO","msg":"created new stream","id":"swg6c085"}
+{"time":"2025-05-13T21:59:49.128325619-04:00","level":"INFO","msg":"stream: started","id":"swg6c085"}
+{"time":"2025-05-13T21:59:49.128333483-04:00","level":"INFO","msg":"sender: started","stream_id":"swg6c085"}
+{"time":"2025-05-13T21:59:49.128332221-04:00","level":"INFO","msg":"handler: started","stream_id":"swg6c085"}
+{"time":"2025-05-13T21:59:49.128339504-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"swg6c085"}
+{"time":"2025-05-13T21:59:49.458962006-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-13T21:59:59.537382138-04:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-05-13T22:00:03.386308113-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-13T22:00:03.386353151-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-13T22:00:04.109566594-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-13T22:00:04.387100006-04:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading history steps 0-311, summary, console lines 0-359","runtime_seconds":0.277219413}],"total_operations":1}}
+{"time":"2025-05-13T22:00:04.405885426-04:00","level":"INFO","msg":"stream: closing","id":"swg6c085"}
+{"time":"2025-05-13T22:00:04.405891387-04:00","level":"INFO","msg":"handler: closed","stream_id":"swg6c085"}
+{"time":"2025-05-13T22:00:04.405894983-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"swg6c085"}
+{"time":"2025-05-13T22:00:04.405901945-04:00","level":"INFO","msg":"sender: closed","stream_id":"swg6c085"}
+{"time":"2025-05-13T22:00:04.405921499-04:00","level":"INFO","msg":"stream: closed","id":"swg6c085"}

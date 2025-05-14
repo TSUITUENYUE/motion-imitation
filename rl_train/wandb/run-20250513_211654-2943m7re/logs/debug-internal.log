@@ -1,0 +1,17 @@
+{"time":"2025-05-13T21:16:54.7209456-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"/home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250513_211654-2943m7re/logs/debug-core.log"}
+{"time":"2025-05-13T21:16:55.008143842-04:00","level":"INFO","msg":"created new stream","id":"2943m7re"}
+{"time":"2025-05-13T21:16:55.008166936-04:00","level":"INFO","msg":"stream: started","id":"2943m7re"}
+{"time":"2025-05-13T21:16:55.008193338-04:00","level":"INFO","msg":"handler: started","stream_id":"2943m7re"}
+{"time":"2025-05-13T21:16:55.008198447-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"2943m7re"}
+{"time":"2025-05-13T21:16:55.00822055-04:00","level":"INFO","msg":"sender: started","stream_id":"2943m7re"}
+{"time":"2025-05-13T21:16:55.332120702-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-13T21:17:05.415334679-04:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-05-13T21:20:22.097646254-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-13T21:20:22.097683205-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-13T21:20:23.098934386-04:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading output.log","runtime_seconds":0.340741629,"progress":"1.0MB/1.0MB"},{"desc":"uploading wandb-summary.json","runtime_seconds":0.340704257,"progress":"867B/867B"},{"desc":"uploading config.yaml","runtime_seconds":0.285259469,"progress":"1.4KB/1.4KB"},{"desc":"uploading logs/go2-imitate-pace/events.out.tfevents.1747185415.jeff.31920.0","runtime_seconds":0.285247186,"progress":"1.2MB/1.2MB"}],"total_operations":4}}
+{"time":"2025-05-13T21:20:23.108211393-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-13T21:20:23.520369358-04:00","level":"INFO","msg":"stream: closing","id":"2943m7re"}
+{"time":"2025-05-13T21:20:23.520378586-04:00","level":"INFO","msg":"handler: closed","stream_id":"2943m7re"}
+{"time":"2025-05-13T21:20:23.520384578-04:00","level":"INFO","msg":"sender: closed","stream_id":"2943m7re"}
+{"time":"2025-05-13T21:20:23.520384568-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"2943m7re"}
+{"time":"2025-05-13T21:20:23.52042723-04:00","level":"INFO","msg":"stream: closed","id":"2943m7re"}

@@ -1,0 +1,17 @@
+{"time":"2025-05-14T11:52:16.113782834-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"/home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250514_115216-s8crfc3f/logs/debug-core.log"}
+{"time":"2025-05-14T11:52:16.402351861-04:00","level":"INFO","msg":"created new stream","id":"s8crfc3f"}
+{"time":"2025-05-14T11:52:16.402383683-04:00","level":"INFO","msg":"stream: started","id":"s8crfc3f"}
+{"time":"2025-05-14T11:52:16.40241257-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"s8crfc3f"}
+{"time":"2025-05-14T11:52:16.4024174-04:00","level":"INFO","msg":"handler: started","stream_id":"s8crfc3f"}
+{"time":"2025-05-14T11:52:16.402436066-04:00","level":"INFO","msg":"sender: started","stream_id":"s8crfc3f"}
+{"time":"2025-05-14T11:52:16.726212413-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-14T11:52:26.80763828-04:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-05-14T12:15:52.437937232-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-14T12:15:52.437968622-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-14T12:15:53.377552193-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-14T12:15:53.43924063-04:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading history steps 24825-24999, summary, console lines 27900-28011","runtime_seconds":0.061396868}],"total_operations":1}}
+{"time":"2025-05-14T12:15:53.583497621-04:00","level":"INFO","msg":"stream: closing","id":"s8crfc3f"}
+{"time":"2025-05-14T12:15:53.583506638-04:00","level":"INFO","msg":"handler: closed","stream_id":"s8crfc3f"}
+{"time":"2025-05-14T12:15:53.583510746-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"s8crfc3f"}
+{"time":"2025-05-14T12:15:53.583519753-04:00","level":"INFO","msg":"sender: closed","stream_id":"s8crfc3f"}
+{"time":"2025-05-14T12:15:53.583547406-04:00","level":"INFO","msg":"stream: closed","id":"s8crfc3f"}

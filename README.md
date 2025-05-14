@@ -213,3 +213,158 @@ If you encounter CUDA errors, make sure the PyTorch version in your environment 
 ## Requirements
 
 See `requirements.txt` for complete package requirements or use the provided `environment.yml` file to create a conda environment with all dependencies. 
+
+## Evaluating Trained Policies
+
+After training a policy, you can evaluate it using the provided evaluation scripts.
+
+> **Note on Paths**: When specifying model paths, make sure they are relative to your current working directory. If you encounter a `FileNotFoundError`, check that your path correctly points to the model file.
+
+### Using go2_eval.py (Genesis Simulator)
+
+The `go2_eval.py` script can automatically find and load the latest checkpoint from your training logs:
+
+```bash
+# Run with automatic checkpoint detection (finds the most recent log directory)
+python policy_test/go2_eval.py
+
+# Specify a particular motion type to load its latest checkpoint
+python policy_test/go2_eval.py --motion canter
+
+# Specify a custom evaluation duration (in seconds)
+python policy_test/go2_eval.py --motion pace --duration 60
+
+# Manually specify a model file (from root directory)
+python policy_test/go2_eval.py --model rl_train/logs/go2-imitate-canter/model_499.pt
+```
+
+### Using go2_mujoco.py (MuJoCo Simulator)
+
+The `go2_mujoco.py` script provides an alternative evaluation in the MuJoCo simulator:
+
+```bash
+# Run with the default model (looks for model_999.pt in the same directory)
+python policy_test/go2_mujoco.py
+
+# Specify a custom model path (from root directory)
+python policy_test/go2_mujoco.py --model rl_train/logs/go2-imitate-pace/model_499.pt
+
+# Adjust the forward velocity command (default is 0.5 m/s)
+python policy_test/go2_mujoco.py --command 0.8
+```
+
+Both evaluation scripts provide similar functionality with different simulation backends, allowing you to see how your trained policy performs in controlling the Go2 robot. 
+
+# Motion Imitation RL Training
+
+This directory contains scripts for training a Go2 robot to imitate reference motions using Reinforcement Learning.
+
+## Setup
+
+Ensure you have the Genesis simulation environment and necessary Python packages (PyTorch, rsl-rl-lib, wandb, etc.) installed in your active Python environment.
+
+## Training
+
+To start a new training run from the `motion-imitation/rl_train/` directory:
+
+```bash
+python train.py --file path/to/your/motion_file.npy --envs <num_environments> --iters <num_iterations> --viz
+```
+
+**Arguments for `train.py`:**
+
+*   `--file`: (Required) Path to the reference motion file (e.g., `data/canter.npy`, `data/trot.npy`).
+*   `--envs`: Number of parallel simulation environments to use for training (default: 256). More environments can speed up data collection but require more resources.
+*   `--iters`: Maximum number of training iterations (default: 1000).
+*   `--viz`: (Optional) Add this flag to enable visualization of one of the training environments. This will slow down training.
+*   `--no-wandb`: (Optional) Add this flag to disable Weights & Biases logging.
+*   `--wandb-project`: (Optional) Specify a custom Weights & Biases project name (default: `go2-motion-imitation`).
+
+**Example Training Command:**
+
+```bash
+# From the motion-imitation/rl_train/ directory
+python train.py --file data/pace.npy --envs 256 --iters 2000 --viz
+```
+
+This command will train a policy to imitate the `pace.npy` motion, using 256 environments for 2000 iterations, with visualization enabled.
+Training logs and model checkpoints will be saved under the `logs/go2-imitate-<motion_filename>/` directory.
+
+## Evaluation
+
+To evaluate a trained policy from the `motion-imitation/rl_train/` directory:
+
+```bash
+python ../policy_test/go2_eval.py --run_dir path/to/your/training_run_directory --model <model_checkpoint_name.pt> --duration <seconds>
+```
+
+**Arguments for `go2_eval.py`:**
+
+*   `--run_dir`: (Required) Path to the specific training run directory that contains the model and `cfgs.pkl` file (e.g., `logs/go2-imitate-canter-grounded/`).
+*   `--model`: (Optional) Name of the model checkpoint file within the `run_dir` (e.g., `model_499.pt`). If not provided, the script will attempt to load the model with the highest iteration number from the specified `run_dir`.
+*   `--duration`: (Optional) Duration of the evaluation in seconds (default: 30).
+
+**Example Evaluation Commands:**
+
+1.  **Evaluate a specific model checkpoint:**
+
+    ```bash
+    # From the motion-imitation/rl_train/ directory
+    python ../policy_test/go2_eval.py --run_dir logs/go2-imitate-canter-grounded/ --model model_499.pt --duration 60
+    ```
+
+2.  **Evaluate the latest model in a run directory:**
+
+    ```bash
+    # From the motion-imitation/rl_train/ directory
+    python ../policy_test/go2_eval.py --run_dir logs/go2-imitate-canter-grounded/ --duration 60
+    ```
+
+This will load the specified policy and run it in the simulation environment with visualization, using the configurations stored during its training.
+
+## Enhanced Evaluation Script
+
+You can now use the new `go2_eval_enhanced.py` script to evaluate any models trained with your enhanced environment. The script can be run with:
+
+```bash
+# From the motion-imitation/rl_train/ directory
+python ../policy_test/go2_eval_enhanced.py -m canter --duration 60
+```
+
+This will automatically find the latest model for the "canter" motion type in either the enhanced or original log directories. You can also specify:
+
+- A specific model file with `--model`
+- A specific run directory with `--run_dir`
+- A specific experiment name with `-e/--experiment`
+- A specific checkpoint iteration with `--ckpt`
+
+The script will handle all the necessary imports and configurations to ensure the enhanced environment works correctly with the trained models. 
+
+**Example Enhanced Evaluation Commands:**
+
+1.  **Find and evaluate the latest model for a specific motion type:**
+
+    ```bash
+    # From the motion-imitation/rl_train/ directory
+    python ../policy_test/go2_eval_enhanced.py -m trot --duration 60
+    ```
+
+2.  **Evaluate a specific experiment by name:**
+
+    ```bash
+    # From the motion-imitation/rl_train/ directory
+    python ../policy_test/go2_eval_enhanced.py -e go2-enhanced-canter --duration 60
+    ```
+
+3.  **Evaluate a specific checkpoint from an experiment:**
+
+    ```bash
+    # From the motion-imitation/rl_train/ directory
+    python ../policy_test/go2_eval_enhanced.py -e go2-enhanced-canter --ckpt 500 --duration 60
+    ```
+
+## Notes
+
+*   Ensure that the paths to motion files and log directories are correct based on your current working directory.
+*   The evaluation scripts rely on the `cfgs.pkl` file being present in the specified `--run_dir` to accurately replicate the training conditions.
+*   For `go2_eval_enhanced.py`, always run from the `rl_train` directory using the path `../policy_test/go2_eval_enhanced.py` 

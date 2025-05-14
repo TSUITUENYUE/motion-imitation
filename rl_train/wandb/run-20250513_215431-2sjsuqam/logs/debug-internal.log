@@ -1,0 +1,17 @@
+{"time":"2025-05-13T21:54:31.830983854-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"/home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250513_215431-2sjsuqam/logs/debug-core.log"}
+{"time":"2025-05-13T21:54:32.118152285-04:00","level":"INFO","msg":"created new stream","id":"2sjsuqam"}
+{"time":"2025-05-13T21:54:32.118170351-04:00","level":"INFO","msg":"stream: started","id":"2sjsuqam"}
+{"time":"2025-05-13T21:54:32.118183878-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"2sjsuqam"}
+{"time":"2025-05-13T21:54:32.118201884-04:00","level":"INFO","msg":"handler: started","stream_id":"2sjsuqam"}
+{"time":"2025-05-13T21:54:32.11817986-04:00","level":"INFO","msg":"sender: started","stream_id":"2sjsuqam"}
+{"time":"2025-05-13T21:54:32.442856582-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-13T21:54:42.52749125-04:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-05-13T21:55:39.071473153-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-13T21:55:39.071530614-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-13T21:55:40.072621634-04:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading logs/go2-imitate-canter/events.out.tfevents.1747187672.jeff.37789.0","runtime_seconds":0.250280462,"progress":"430.3KB/430.3KB"}],"total_operations":1}}
+{"time":"2025-05-13T21:55:40.094549064-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-13T21:55:40.396528682-04:00","level":"INFO","msg":"stream: closing","id":"2sjsuqam"}
+{"time":"2025-05-13T21:55:40.396536247-04:00","level":"INFO","msg":"handler: closed","stream_id":"2sjsuqam"}
+{"time":"2025-05-13T21:55:40.396541197-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"2sjsuqam"}
+{"time":"2025-05-13T21:55:40.39654816-04:00","level":"INFO","msg":"sender: closed","stream_id":"2sjsuqam"}
+{"time":"2025-05-13T21:55:40.396583749-04:00","level":"INFO","msg":"stream: closed","id":"2sjsuqam"}

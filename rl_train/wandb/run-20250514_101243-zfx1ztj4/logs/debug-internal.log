@@ -1,0 +1,17 @@
+{"time":"2025-05-14T10:12:43.507125269-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"/home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250514_101243-zfx1ztj4/logs/debug-core.log"}
+{"time":"2025-05-14T10:12:43.797602031-04:00","level":"INFO","msg":"created new stream","id":"zfx1ztj4"}
+{"time":"2025-05-14T10:12:43.797626258-04:00","level":"INFO","msg":"stream: started","id":"zfx1ztj4"}
+{"time":"2025-05-14T10:12:43.79764317-04:00","level":"INFO","msg":"handler: started","stream_id":"zfx1ztj4"}
+{"time":"2025-05-14T10:12:43.797646457-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"zfx1ztj4"}
+{"time":"2025-05-14T10:12:43.797651787-04:00","level":"INFO","msg":"sender: started","stream_id":"zfx1ztj4"}
+{"time":"2025-05-14T10:12:44.120240492-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-14T10:12:54.201439243-04:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-05-14T10:24:25.751760715-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-14T10:24:25.751794454-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-14T10:24:26.753051242-04:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading output.log","runtime_seconds":0.228468166,"progress":"618.2KB/618.2KB"},{"desc":"uploading wandb-summary.json","runtime_seconds":0.228457184,"progress":"1.0KB/1.0KB"},{"desc":"uploading config.yaml","runtime_seconds":0.158665349,"progress":"3.9KB/3.9KB"},{"desc":"uploading logs/go2-enhanced-trot/events.out.tfevents.1747231964.jeff.8803.0","runtime_seconds":0.158655429,"progress":"757.7KB/757.7KB"}],"total_operations":4}}
+{"time":"2025-05-14T10:24:26.861557821-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-14T10:24:27.23982083-04:00","level":"INFO","msg":"stream: closing","id":"zfx1ztj4"}
+{"time":"2025-05-14T10:24:27.239828336-04:00","level":"INFO","msg":"handler: closed","stream_id":"zfx1ztj4"}
+{"time":"2025-05-14T10:24:27.239832053-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"zfx1ztj4"}
+{"time":"2025-05-14T10:24:27.23983537-04:00","level":"INFO","msg":"sender: closed","stream_id":"zfx1ztj4"}
+{"time":"2025-05-14T10:24:27.239877286-04:00","level":"INFO","msg":"stream: closed","id":"zfx1ztj4"}

@@ -1,0 +1,17 @@
+{"time":"2025-05-14T11:27:42.412161789-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"/home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250514_112742-5hh0fuja/logs/debug-core.log"}
+{"time":"2025-05-14T11:27:42.633267406-04:00","level":"INFO","msg":"created new stream","id":"5hh0fuja"}
+{"time":"2025-05-14T11:27:42.633297623-04:00","level":"INFO","msg":"stream: started","id":"5hh0fuja"}
+{"time":"2025-05-14T11:27:42.633322781-04:00","level":"INFO","msg":"sender: started","stream_id":"5hh0fuja"}
+{"time":"2025-05-14T11:27:42.633366403-04:00","level":"INFO","msg":"handler: started","stream_id":"5hh0fuja"}
+{"time":"2025-05-14T11:27:42.633367806-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"5hh0fuja"}
+{"time":"2025-05-14T11:27:42.832143827-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-14T11:27:47.134199338-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-14T11:27:47.134243672-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-14T11:27:48.1354439-04:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-05-14T11:27:52.91336563-04:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-05-14T11:27:53.602189647-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-14T11:27:53.808954612-04:00","level":"INFO","msg":"stream: closing","id":"5hh0fuja"}
+{"time":"2025-05-14T11:27:53.808962206-04:00","level":"INFO","msg":"handler: closed","stream_id":"5hh0fuja"}
+{"time":"2025-05-14T11:27:53.808966244-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"5hh0fuja"}
+{"time":"2025-05-14T11:27:53.808970562-04:00","level":"INFO","msg":"sender: closed","stream_id":"5hh0fuja"}
+{"time":"2025-05-14T11:27:53.808997012-04:00","level":"INFO","msg":"stream: closed","id":"5hh0fuja"}

@@ -1,0 +1,17 @@
+{"time":"2025-05-13T21:46:01.91400804-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"/home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250513_214601-g9yhbbx4/logs/debug-core.log"}
+{"time":"2025-05-13T21:46:02.115800241-04:00","level":"INFO","msg":"created new stream","id":"g9yhbbx4"}
+{"time":"2025-05-13T21:46:02.11583065-04:00","level":"INFO","msg":"stream: started","id":"g9yhbbx4"}
+{"time":"2025-05-13T21:46:02.115859957-04:00","level":"INFO","msg":"handler: started","stream_id":"g9yhbbx4"}
+{"time":"2025-05-13T21:46:02.115855979-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"g9yhbbx4"}
+{"time":"2025-05-13T21:46:02.115915534-04:00","level":"INFO","msg":"sender: started","stream_id":"g9yhbbx4"}
+{"time":"2025-05-13T21:46:02.444225625-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-13T21:46:12.525424868-04:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-05-13T21:48:51.736863303-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-13T21:48:51.73690813-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-13T21:48:52.737770139-04:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading output.log","runtime_seconds":0.785928109,"progress":"1.1MB/1.1MB"},{"desc":"uploading logs/go2-imitate-canter/events.out.tfevents.1747187162.jeff.36200.0","runtime_seconds":0.687300529,"progress":"432.0KB/1.3MB"}],"total_operations":2}}
+{"time":"2025-05-13T21:48:53.660393191-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-13T21:48:53.869329784-04:00","level":"INFO","msg":"stream: closing","id":"g9yhbbx4"}
+{"time":"2025-05-13T21:48:53.869337449-04:00","level":"INFO","msg":"handler: closed","stream_id":"g9yhbbx4"}
+{"time":"2025-05-13T21:48:53.869341577-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"g9yhbbx4"}
+{"time":"2025-05-13T21:48:53.869369261-04:00","level":"INFO","msg":"sender: closed","stream_id":"g9yhbbx4"}
+{"time":"2025-05-13T21:48:53.869403767-04:00","level":"INFO","msg":"stream: closed","id":"g9yhbbx4"}

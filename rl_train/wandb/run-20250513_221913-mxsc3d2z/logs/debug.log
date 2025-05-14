@@ -1,0 +1,30 @@
+2025-05-13 22:19:13,561 INFO    MainThread:40800 [wandb_setup.py:_flush():70] Current SDK version is 0.19.11
+2025-05-13 22:19:13,561 INFO    MainThread:40800 [wandb_setup.py:_flush():70] Configure stats pid to 40800
+2025-05-13 22:19:13,561 INFO    MainThread:40800 [wandb_setup.py:_flush():70] Loading settings from /home/jeff/.config/wandb/settings
+2025-05-13 22:19:13,561 INFO    MainThread:40800 [wandb_setup.py:_flush():70] Loading settings from /home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/settings
+2025-05-13 22:19:13,561 INFO    MainThread:40800 [wandb_setup.py:_flush():70] Loading settings from environment variables
+2025-05-13 22:19:13,561 INFO    MainThread:40800 [wandb_init.py:setup_run_log_directory():724] Logging user logs to /home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250513_221913-mxsc3d2z/logs/debug.log
+2025-05-13 22:19:13,561 INFO    MainThread:40800 [wandb_init.py:setup_run_log_directory():725] Logging internal logs to /home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250513_221913-mxsc3d2z/logs/debug-internal.log
+2025-05-13 22:19:13,562 INFO    MainThread:40800 [wandb_init.py:init():852] calling init triggers
+2025-05-13 22:19:13,562 INFO    MainThread:40800 [wandb_init.py:init():857] wandb.init called with sweep_config: {}
+config: {'motion_file': 'data/canter.npy', 'num_envs': 256, 'max_iterations': 500, 'seed': 1, 'reward_scales': {'tracking_lin_vel': 0.01, 'tracking_ang_vel': 0.006, 'lin_vel_z': -0.03, 'action_rate': -0.0002, 'similar_to_default': -0.001, 'joint_pose_matching': 0.08, 'forward_motion': 0.04, 'ground_contact': 0.04, 'velocity_profile': 0.03, 'leg_symmetry': 0.02, 'chassis_height': 0.015}, 'env_cfg': {'num_actions': 12, 'default_joint_angles': {'FL_hip_joint': 0.05, 'FR_hip_joint': -0.05, 'RL_hip_joint': 0.05, 'RR_hip_joint': -0.05, 'FL_thigh_joint': 0.7, 'FR_thigh_joint': 0.7, 'RL_thigh_joint': 0.7, 'RR_thigh_joint': 0.7, 'FL_calf_joint': -1.4, 'FR_calf_joint': -1.4, 'RL_calf_joint': -1.4, 'RR_calf_joint': -1.4}, 'joint_names': ['FR_hip_joint', 'FR_thigh_joint', 'FR_calf_joint', 'FL_hip_joint', 'FL_thigh_joint', 'FL_calf_joint', 'RR_hip_joint', 'RR_thigh_joint', 'RR_calf_joint', 'RL_hip_joint', 'RL_thigh_joint', 'RL_calf_joint'], 'kp': 45.0, 'kd': 0.75, 'termination_if_roll_greater_than': 20, 'termination_if_pitch_greater_than': 20, 'base_init_pos': [0.0, 0.0, 0.3], 'base_init_quat': [1.0, 0.0, 0.0, 0.0], 'episode_length_s': 20.0, 'action_scale': 0.3, 'simulate_action_latency': False, 'clip_actions': 1.0, 'ground_friction': 0.9, 'ground_restitution': 0.05, 'joint_friction': 0.02, 'foot_friction': 0.9, 'enable_stabilizer': True}, 'policy': {'activation': 'elu', 'actor_hidden_dims': [512, 256, 128], 'critic_hidden_dims': [512, 256, 128], 'init_noise_std': 1.0}, 'algorithm': {'clip_param': 0.2, 'desired_kl': 0.01, 'entropy_coef': 0.01, 'gamma': 0.99, 'lam': 0.95, 'learning_rate': 0.001, 'max_grad_norm': 1.0, 'num_learning_epochs': 5, 'num_mini_batches': 4, 'schedule': 'adaptive', 'use_clipped_value_loss': True, 'value_loss_coef': 1.0}, '_wandb': {}}
+2025-05-13 22:19:13,562 INFO    MainThread:40800 [wandb_init.py:init():893] starting backend
+2025-05-13 22:19:13,562 INFO    MainThread:40800 [wandb_init.py:init():897] sending inform_init request
+2025-05-13 22:19:13,562 INFO    MainThread:40800 [backend.py:_multiprocessing_setup():101] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2025-05-13 22:19:13,562 INFO    MainThread:40800 [wandb_init.py:init():907] backend started and connected
+2025-05-13 22:19:13,563 INFO    MainThread:40800 [wandb_init.py:init():1005] updated telemetry
+2025-05-13 22:19:13,566 INFO    MainThread:40800 [wandb_init.py:init():1029] communicating run to backend with 90.0 second timeout
+2025-05-13 22:19:14,278 INFO    MainThread:40800 [wandb_init.py:init():1104] starting run threads in backend
+2025-05-13 22:19:14,315 INFO    MainThread:40800 [wandb_run.py:_console_start():2573] atexit reg
+2025-05-13 22:19:14,315 INFO    MainThread:40800 [wandb_run.py:_redirect():2421] redirect: wrap_raw
+2025-05-13 22:19:14,315 INFO    MainThread:40800 [wandb_run.py:_redirect():2490] Wrapping output streams.
+2025-05-13 22:19:14,315 INFO    MainThread:40800 [wandb_run.py:_redirect():2513] Redirects installed.
+2025-05-13 22:19:14,316 INFO    MainThread:40800 [wandb_init.py:init():1150] run started, returning control to user process
+2025-05-13 22:19:14,316 INFO    MainThread:40800 [wandb_run.py:_tensorboard_callback():1645] tensorboard callback: logs/go2-imitate-canter, True
+2025-05-13 22:19:14,547 INFO    MainThread:40800 [wandb_run.py:_finish():2321] finishing run jefferzn-penn/go2-motion-imitation/mxsc3d2z
+2025-05-13 22:19:14,547 INFO    MainThread:40800 [wandb_run.py:_atexit_cleanup():2538] got exitcode: 0
+2025-05-13 22:19:14,548 INFO    MainThread:40800 [wandb_run.py:_restore():2520] restore
+2025-05-13 22:19:14,548 INFO    MainThread:40800 [wandb_run.py:_restore():2526] restore done
+2025-05-13 22:19:25,546 INFO    MainThread:40800 [wandb_run.py:_footer_history_summary_info():4188] rendering history
+2025-05-13 22:19:25,546 INFO    MainThread:40800 [wandb_run.py:_footer_history_summary_info():4220] rendering summary
+2025-05-13 22:19:25,546 INFO    MainThread:40800 [wandb_run.py:_footer_sync_info():4149] logging synced files

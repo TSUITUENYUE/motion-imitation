@@ -1,0 +1,17 @@
+{"time":"2025-05-13T21:11:35.864817935-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"/home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250513_211135-djybdmgy/logs/debug-core.log"}
+{"time":"2025-05-13T21:11:36.113173015-04:00","level":"INFO","msg":"created new stream","id":"djybdmgy"}
+{"time":"2025-05-13T21:11:36.113244554-04:00","level":"INFO","msg":"stream: started","id":"djybdmgy"}
+{"time":"2025-05-13T21:11:36.113285123-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"djybdmgy"}
+{"time":"2025-05-13T21:11:36.113285163-04:00","level":"INFO","msg":"sender: started","stream_id":"djybdmgy"}
+{"time":"2025-05-13T21:11:36.113300393-04:00","level":"INFO","msg":"handler: started","stream_id":"djybdmgy"}
+{"time":"2025-05-13T21:11:36.339696773-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-13T21:11:46.419905821-04:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-05-13T21:14:50.934479481-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-13T21:14:50.934516002-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-13T21:14:51.726377861-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-13T21:14:51.935547286-04:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading history steps 18816-20999, summary, console lines 22089-24008","runtime_seconds":0.207892808}],"total_operations":1}}
+{"time":"2025-05-13T21:14:52.000994003-04:00","level":"INFO","msg":"stream: closing","id":"djybdmgy"}
+{"time":"2025-05-13T21:14:52.001001417-04:00","level":"INFO","msg":"handler: closed","stream_id":"djybdmgy"}
+{"time":"2025-05-13T21:14:52.001005665-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"djybdmgy"}
+{"time":"2025-05-13T21:14:52.001009352-04:00","level":"INFO","msg":"sender: closed","stream_id":"djybdmgy"}
+{"time":"2025-05-13T21:14:52.001035022-04:00","level":"INFO","msg":"stream: closed","id":"djybdmgy"}

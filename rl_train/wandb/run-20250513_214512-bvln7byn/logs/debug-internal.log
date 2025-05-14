@@ -1,0 +1,17 @@
+{"time":"2025-05-13T21:45:12.882481079-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"/home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250513_214512-bvln7byn/logs/debug-core.log"}
+{"time":"2025-05-13T21:45:13.16529966-04:00","level":"INFO","msg":"created new stream","id":"bvln7byn"}
+{"time":"2025-05-13T21:45:13.165320921-04:00","level":"INFO","msg":"stream: started","id":"bvln7byn"}
+{"time":"2025-05-13T21:45:13.165333265-04:00","level":"INFO","msg":"sender: started","stream_id":"bvln7byn"}
+{"time":"2025-05-13T21:45:13.165336301-04:00","level":"INFO","msg":"handler: started","stream_id":"bvln7byn"}
+{"time":"2025-05-13T21:45:13.165364014-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"bvln7byn"}
+{"time":"2025-05-13T21:45:13.494889541-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-13T21:45:23.572635094-04:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-05-13T21:45:29.542875556-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-13T21:45:29.54291897-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-13T21:45:30.024693511-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-13T21:45:30.159613219-04:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-05-13T21:45:30.160828978-04:00","level":"INFO","msg":"stream: closing","id":"bvln7byn"}
+{"time":"2025-05-13T21:45:30.160833938-04:00","level":"INFO","msg":"handler: closed","stream_id":"bvln7byn"}
+{"time":"2025-05-13T21:45:30.160837024-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"bvln7byn"}
+{"time":"2025-05-13T21:45:30.160845059-04:00","level":"INFO","msg":"sender: closed","stream_id":"bvln7byn"}
+{"time":"2025-05-13T21:45:30.160860529-04:00","level":"INFO","msg":"stream: closed","id":"bvln7byn"}

@@ -1,0 +1,17 @@
+{"time":"2025-05-13T22:21:14.801814659-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"/home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250513_222114-npojn7v7/logs/debug-core.log"}
+{"time":"2025-05-13T22:21:15.090205371-04:00","level":"INFO","msg":"created new stream","id":"npojn7v7"}
+{"time":"2025-05-13T22:21:15.090227071-04:00","level":"INFO","msg":"stream: started","id":"npojn7v7"}
+{"time":"2025-05-13T22:21:15.090267596-04:00","level":"INFO","msg":"sender: started","stream_id":"npojn7v7"}
+{"time":"2025-05-13T22:21:15.090270732-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"npojn7v7"}
+{"time":"2025-05-13T22:21:15.090279137-04:00","level":"INFO","msg":"handler: started","stream_id":"npojn7v7"}
+{"time":"2025-05-13T22:21:15.413255978-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-13T22:21:25.494320172-04:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-05-13T22:22:46.975769892-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-13T22:22:46.975810007-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-13T22:22:47.865459407-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-13T22:22:47.976674464-04:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading history steps 10741-11499, summary, console lines 12853-13008","runtime_seconds":0.110753117}],"total_operations":1}}
+{"time":"2025-05-13T22:22:48.081770499-04:00","level":"INFO","msg":"stream: closing","id":"npojn7v7"}
+{"time":"2025-05-13T22:22:48.081779626-04:00","level":"INFO","msg":"handler: closed","stream_id":"npojn7v7"}
+{"time":"2025-05-13T22:22:48.081786398-04:00","level":"INFO","msg":"sender: closed","stream_id":"npojn7v7"}
+{"time":"2025-05-13T22:22:48.081785427-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"npojn7v7"}
+{"time":"2025-05-13T22:22:48.081834548-04:00","level":"INFO","msg":"stream: closed","id":"npojn7v7"}

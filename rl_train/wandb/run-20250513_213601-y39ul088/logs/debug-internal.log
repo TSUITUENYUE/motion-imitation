@@ -1,0 +1,17 @@
+{"time":"2025-05-13T21:36:01.70326452-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"/home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250513_213601-y39ul088/logs/debug-core.log"}
+{"time":"2025-05-13T21:36:01.893308973-04:00","level":"INFO","msg":"created new stream","id":"y39ul088"}
+{"time":"2025-05-13T21:36:01.893335133-04:00","level":"INFO","msg":"stream: started","id":"y39ul088"}
+{"time":"2025-05-13T21:36:01.893348649-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"y39ul088"}
+{"time":"2025-05-13T21:36:01.893350633-04:00","level":"INFO","msg":"sender: started","stream_id":"y39ul088"}
+{"time":"2025-05-13T21:36:01.893362216-04:00","level":"INFO","msg":"handler: started","stream_id":"y39ul088"}
+{"time":"2025-05-13T21:36:02.153027068-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-13T21:36:12.234115666-04:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-05-13T21:39:14.590540288-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-13T21:39:14.590578532-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-13T21:39:15.591830829-04:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading output.log","runtime_seconds":0.306924583,"progress":"1.1MB/1.1MB"},{"desc":"uploading logs/go2-imitate-pace/events.out.tfevents.1747186562.jeff.34774.0","runtime_seconds":0.247594378,"progress":"1.3MB/1.3MB"},{"desc":"uploading config.yaml","runtime_seconds":0.247589709,"progress":"1.5KB/1.5KB"}],"total_operations":3}}
+{"time":"2025-05-13T21:39:15.6948522-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-13T21:39:15.950849394-04:00","level":"INFO","msg":"stream: closing","id":"y39ul088"}
+{"time":"2025-05-13T21:39:15.95085776-04:00","level":"INFO","msg":"handler: closed","stream_id":"y39ul088"}
+{"time":"2025-05-13T21:39:15.95086278-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"y39ul088"}
+{"time":"2025-05-13T21:39:15.950867619-04:00","level":"INFO","msg":"sender: closed","stream_id":"y39ul088"}
+{"time":"2025-05-13T21:39:15.950897988-04:00","level":"INFO","msg":"stream: closed","id":"y39ul088"}

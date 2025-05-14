@@ -1,0 +1,17 @@
+{"time":"2025-05-13T22:19:13.563617059-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"/home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250513_221913-mxsc3d2z/logs/debug-core.log"}
+{"time":"2025-05-13T22:19:14.078186391-04:00","level":"INFO","msg":"created new stream","id":"mxsc3d2z"}
+{"time":"2025-05-13T22:19:14.078211858-04:00","level":"INFO","msg":"stream: started","id":"mxsc3d2z"}
+{"time":"2025-05-13T22:19:14.078227867-04:00","level":"INFO","msg":"sender: started","stream_id":"mxsc3d2z"}
+{"time":"2025-05-13T22:19:14.078227897-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"mxsc3d2z"}
+{"time":"2025-05-13T22:19:14.078243947-04:00","level":"INFO","msg":"handler: started","stream_id":"mxsc3d2z"}
+{"time":"2025-05-13T22:19:14.279806178-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-13T22:19:14.589331937-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-13T22:19:14.589401756-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-13T22:19:15.549132925-04:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-05-13T22:19:24.357205486-04:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-05-13T22:19:25.337161869-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-13T22:19:25.546342772-04:00","level":"INFO","msg":"stream: closing","id":"mxsc3d2z"}
+{"time":"2025-05-13T22:19:25.546349334-04:00","level":"INFO","msg":"handler: closed","stream_id":"mxsc3d2z"}
+{"time":"2025-05-13T22:19:25.546355746-04:00","level":"INFO","msg":"sender: closed","stream_id":"mxsc3d2z"}
+{"time":"2025-05-13T22:19:25.546352881-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"mxsc3d2z"}
+{"time":"2025-05-13T22:19:25.546386893-04:00","level":"INFO","msg":"stream: closed","id":"mxsc3d2z"}
