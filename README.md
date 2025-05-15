@@ -9,7 +9,7 @@ This walkthrough provides step-by-step instructions for training a Go2 robot to 
 ```bash
 # Clone the repository
 git clone https://github.com/TSUITUENYUE/motion-imitation.git
-cd motion_imitation
+cd motion-imitation
 
 # Create and activate the conda environment
 conda env create -f environment.yml
