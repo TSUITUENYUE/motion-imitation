@@ -1,0 +1,51 @@
+{
+  "os": "Linux-6.8.0-59-generic-x86_64-with-glibc2.35",
+  "python": "CPython 3.10.16",
+  "startedAt": "2025-05-15T01:24:03.420802Z",
+  "args": [
+    "--resume",
+    "--run-dir",
+    "logs/go2-enhanced-canter",
+    "--checkpoint",
+    "999",
+    "--iters",
+    "2000"
+  ],
+  "program": "/home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/train_experiment.py",
+  "codePath": "rl_train/train_experiment.py",
+  "git": {
+    "remote": "git@github.com:TSUITUENYUE/motion-imitation.git",
+    "commit": "f00e10d43c4afddaccd1386604100fb10f85369b"
+  },
+  "email": "jefferzn@seas.upenn.edu",
+  "root": "/home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train",
+  "host": "jeff",
+  "executable": "/home/jeff/anaconda3/envs/genesis/bin/python",
+  "codePathLocal": "train_experiment.py",
+  "cpu_count": 6,
+  "cpu_count_logical": 12,
+  "gpu": "NVIDIA GeForce RTX 4070",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "2013992599552",
+      "used": "94406803456"
+    }
+  },
+  "memory": {
+    "total": "32667004928"
+  },
+  "cpu": {
+    "count": 6,
+    "countLogical": 12
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA GeForce RTX 4070",
+      "memoryTotal": "12878610432",
+      "cudaCores": 5888,
+      "architecture": "Ada"
+    }
+  ],
+  "cudaVersion": "12.8"
+}

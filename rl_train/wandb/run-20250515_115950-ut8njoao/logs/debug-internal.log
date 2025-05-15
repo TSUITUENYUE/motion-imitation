@@ -1,0 +1,16 @@
+{"time":"2025-05-15T11:59:50.71972021-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"/home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250515_115950-ut8njoao/logs/debug-core.log"}
+{"time":"2025-05-15T11:59:51.015260981-04:00","level":"INFO","msg":"created new stream","id":"ut8njoao"}
+{"time":"2025-05-15T11:59:51.015277412-04:00","level":"INFO","msg":"stream: started","id":"ut8njoao"}
+{"time":"2025-05-15T11:59:51.015288834-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"ut8njoao"}
+{"time":"2025-05-15T11:59:51.015306698-04:00","level":"INFO","msg":"sender: started","stream_id":"ut8njoao"}
+{"time":"2025-05-15T11:59:51.015310065-04:00","level":"INFO","msg":"handler: started","stream_id":"ut8njoao"}
+{"time":"2025-05-15T11:59:51.33344361-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-15T12:36:38.4669628-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-15T12:36:38.467004889-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-15T12:36:39.46793958-04:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading output.log","runtime_seconds":0.198937776,"progress":"1.6MB/1.6MB"},{"desc":"uploading wandb-summary.json","runtime_seconds":0.198928038,"progress":"27B/27B"},{"desc":"uploading config.yaml","runtime_seconds":0.142476205,"progress":"3.9KB/3.9KB"}],"total_operations":3}}
+{"time":"2025-05-15T12:36:39.579004626-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-15T12:36:39.740915407-04:00","level":"INFO","msg":"stream: closing","id":"ut8njoao"}
+{"time":"2025-05-15T12:36:39.740922621-04:00","level":"INFO","msg":"handler: closed","stream_id":"ut8njoao"}
+{"time":"2025-05-15T12:36:39.740926648-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"ut8njoao"}
+{"time":"2025-05-15T12:36:39.740931087-04:00","level":"INFO","msg":"sender: closed","stream_id":"ut8njoao"}
+{"time":"2025-05-15T12:36:39.740965702-04:00","level":"INFO","msg":"stream: closed","id":"ut8njoao"}

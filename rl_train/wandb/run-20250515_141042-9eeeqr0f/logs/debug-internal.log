@@ -1,0 +1,16 @@
+{"time":"2025-05-15T14:10:42.685571498-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"/home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250515_141042-9eeeqr0f/logs/debug-core.log"}
+{"time":"2025-05-15T14:10:42.974588727-04:00","level":"INFO","msg":"created new stream","id":"9eeeqr0f"}
+{"time":"2025-05-15T14:10:42.974609055-04:00","level":"INFO","msg":"stream: started","id":"9eeeqr0f"}
+{"time":"2025-05-15T14:10:42.974625547-04:00","level":"INFO","msg":"sender: started","stream_id":"9eeeqr0f"}
+{"time":"2025-05-15T14:10:42.974627531-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"9eeeqr0f"}
+{"time":"2025-05-15T14:10:42.974639003-04:00","level":"INFO","msg":"handler: started","stream_id":"9eeeqr0f"}
+{"time":"2025-05-15T14:10:43.298986177-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-15T14:22:49.812275885-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-15T14:22:49.812316379-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-15T14:22:50.813446079-04:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading wandb-summary.json","runtime_seconds":0.271965743,"progress":"26B/26B"},{"desc":"uploading output.log","runtime_seconds":0.271956917,"progress":"544.0KB/544.0KB"},{"desc":"uploading config.yaml","runtime_seconds":0.199759803,"progress":"3.9KB/3.9KB"}],"total_operations":3}}
+{"time":"2025-05-15T14:22:50.949843821-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-15T14:22:51.362921522-04:00","level":"INFO","msg":"stream: closing","id":"9eeeqr0f"}
+{"time":"2025-05-15T14:22:51.362928435-04:00","level":"INFO","msg":"handler: closed","stream_id":"9eeeqr0f"}
+{"time":"2025-05-15T14:22:51.362932352-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"9eeeqr0f"}
+{"time":"2025-05-15T14:22:51.362953751-04:00","level":"INFO","msg":"sender: closed","stream_id":"9eeeqr0f"}
+{"time":"2025-05-15T14:22:51.362976132-04:00","level":"INFO","msg":"stream: closed","id":"9eeeqr0f"}

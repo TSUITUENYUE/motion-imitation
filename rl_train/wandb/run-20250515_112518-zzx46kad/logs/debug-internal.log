@@ -1,0 +1,16 @@
+{"time":"2025-05-15T11:25:18.954144871-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"/home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250515_112518-zzx46kad/logs/debug-core.log"}
+{"time":"2025-05-15T11:25:19.247662994-04:00","level":"INFO","msg":"created new stream","id":"zzx46kad"}
+{"time":"2025-05-15T11:25:19.247678894-04:00","level":"INFO","msg":"stream: started","id":"zzx46kad"}
+{"time":"2025-05-15T11:25:19.247694174-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"zzx46kad"}
+{"time":"2025-05-15T11:25:19.24769754-04:00","level":"INFO","msg":"sender: started","stream_id":"zzx46kad"}
+{"time":"2025-05-15T11:25:19.24772363-04:00","level":"INFO","msg":"handler: started","stream_id":"zzx46kad"}
+{"time":"2025-05-15T11:25:19.567728311-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-15T11:29:31.137528959-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-15T11:29:31.137583822-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-15T11:29:32.082416606-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-15T11:29:32.100851718-04:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading summary, console lines 3301-3461","runtime_seconds":0.018248161}],"total_operations":1}}
+{"time":"2025-05-15T11:29:32.290041509-04:00","level":"INFO","msg":"stream: closing","id":"zzx46kad"}
+{"time":"2025-05-15T11:29:32.290050927-04:00","level":"INFO","msg":"handler: closed","stream_id":"zzx46kad"}
+{"time":"2025-05-15T11:29:32.290060866-04:00","level":"INFO","msg":"sender: closed","stream_id":"zzx46kad"}
+{"time":"2025-05-15T11:29:32.290055876-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"zzx46kad"}
+{"time":"2025-05-15T11:29:32.290088077-04:00","level":"INFO","msg":"stream: closed","id":"zzx46kad"}

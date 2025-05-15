@@ -1,0 +1,17 @@
+{"time":"2025-05-14T21:29:53.976493573-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"/home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250514_212953-enlvy10z/logs/debug-core.log"}
+{"time":"2025-05-14T21:29:54.266715081-04:00","level":"INFO","msg":"created new stream","id":"enlvy10z"}
+{"time":"2025-05-14T21:29:54.266739939-04:00","level":"INFO","msg":"stream: started","id":"enlvy10z"}
+{"time":"2025-05-14T21:29:54.266755058-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"enlvy10z"}
+{"time":"2025-05-14T21:29:54.266754006-04:00","level":"INFO","msg":"sender: started","stream_id":"enlvy10z"}
+{"time":"2025-05-14T21:29:54.266777451-04:00","level":"INFO","msg":"handler: started","stream_id":"enlvy10z"}
+{"time":"2025-05-14T21:29:54.593864519-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-14T21:30:04.676380869-04:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-05-14T22:00:30.974359869-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-14T22:00:30.974396487-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-14T22:00:31.795619989-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-14T22:00:31.975079612-04:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading history steps 28028-28181, summary, console lines 31937-32039","runtime_seconds":0.1792098}],"total_operations":1}}
+{"time":"2025-05-14T22:00:32.005610735-04:00","level":"INFO","msg":"stream: closing","id":"enlvy10z"}
+{"time":"2025-05-14T22:00:32.005616846-04:00","level":"INFO","msg":"handler: closed","stream_id":"enlvy10z"}
+{"time":"2025-05-14T22:00:32.00562439-04:00","level":"INFO","msg":"sender: closed","stream_id":"enlvy10z"}
+{"time":"2025-05-14T22:00:32.005620513-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"enlvy10z"}
+{"time":"2025-05-14T22:00:32.005646812-04:00","level":"INFO","msg":"stream: closed","id":"enlvy10z"}

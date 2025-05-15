@@ -1,0 +1,17 @@
+{"time":"2025-05-14T20:42:56.638896232-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"/home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250514_204256-p6wzk8sq/logs/debug-core.log"}
+{"time":"2025-05-14T20:42:56.845920126-04:00","level":"INFO","msg":"created new stream","id":"p6wzk8sq"}
+{"time":"2025-05-14T20:42:56.845951688-04:00","level":"INFO","msg":"stream: started","id":"p6wzk8sq"}
+{"time":"2025-05-14T20:42:56.845969813-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"p6wzk8sq"}
+{"time":"2025-05-14T20:42:56.845984081-04:00","level":"INFO","msg":"sender: started","stream_id":"p6wzk8sq"}
+{"time":"2025-05-14T20:42:56.845990113-04:00","level":"INFO","msg":"handler: started","stream_id":"p6wzk8sq"}
+{"time":"2025-05-14T20:42:57.177171339-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-14T20:43:07.272413506-04:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-05-14T20:56:52.197462758-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-14T20:56:52.197495919-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-14T20:56:53.198670912-04:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading logs/go2-paper-rewards-canter/events.out.tfevents.1747269777.jeff.6052.0","runtime_seconds":0.408903713,"progress":"1.3MB/1.3MB"}],"total_operations":1}}
+{"time":"2025-05-14T20:56:53.201466282-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-14T20:56:53.408165092-04:00","level":"INFO","msg":"stream: closing","id":"p6wzk8sq"}
+{"time":"2025-05-14T20:56:53.408173314-04:00","level":"INFO","msg":"handler: closed","stream_id":"p6wzk8sq"}
+{"time":"2025-05-14T20:56:53.408181537-04:00","level":"INFO","msg":"sender: closed","stream_id":"p6wzk8sq"}
+{"time":"2025-05-14T20:56:53.40817717-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"p6wzk8sq"}
+{"time":"2025-05-14T20:56:53.40820961-04:00","level":"INFO","msg":"stream: closed","id":"p6wzk8sq"}

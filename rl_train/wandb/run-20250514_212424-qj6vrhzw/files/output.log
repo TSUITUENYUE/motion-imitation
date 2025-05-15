@@ -1,0 +1,365 @@
+W&B logging initialized for project: go2-motion-imitation-enhanced
+
+==================================================
+Resuming training from checkpoint 999 for 2000 additional iterations
+Motion file: data/canter.npy
+Log directory: logs/go2-enhanced-canter
+Domain randomization: enabled
+Curriculum learning: enabled
+Time-dependent rewards: enabled
+W&B logging enabled for project: go2-motion-imitation-enhanced
+==================================================
+
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+################################################################################
+                      [1m Learning iteration 0/2000 [0m
+
+                       Computation: 3040 steps/s (collection: 1.904s, learning 0.116s)
+               Value function loss: 63.1390
+                    Surrogate loss: -0.0022
+             Mean action noise std: 1.00
+                 Mean total reward: -23.97
+               Mean episode length: 17.40
+ Mean episode rew_tracking_lin_vel: 0.0005
+ Mean episode rew_tracking_ang_vel: 0.0020
+        Mean episode rew_lin_vel_z: -0.1237
+      Mean episode rew_action_rate: -0.0012
+Mean episode rew_similar_to_default: -0.0007
+Mean episode rew_joint_pose_matching: -0.2636
+   Mean episode rew_ground_contact: -0.2866
+   Mean episode rew_forward_motion: -0.1142
+   Mean episode rew_chassis_height: 0.0000
+ Mean episode rew_velocity_profile: 0.0001
+     Mean episode rew_leg_symmetry: 0.0000
+Mean episode rew_end_effector_matching: 0.0002
+Mean episode rew_gait_continuation: 0.0000
+--------------------------------------------------------------------------------
+                   Total timesteps: 6144
+                    Iteration time: 2.02s
+                        Total time: 2.02s
+                               ETA: 4041.8s
+
+Could not find git repository in /home/jeff/anaconda3/envs/genesis/lib/python3.10/site-packages/rsl_rl/__init__.py. Skipping.
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+################################################################################
+                      [1m Learning iteration 1/2000 [0m
+
+                       Computation: 3807 steps/s (collection: 1.557s, learning 0.057s)
+               Value function loss: 2.5863
+                    Surrogate loss: -0.0072
+             Mean action noise std: 1.01
+                 Mean total reward: -23.97
+               Mean episode length: 17.40
+ Mean episode rew_tracking_lin_vel: 0.0007
+ Mean episode rew_tracking_ang_vel: 0.0033
+        Mean episode rew_lin_vel_z: -0.1644
+      Mean episode rew_action_rate: -0.0020
+Mean episode rew_similar_to_default: -0.0010
+Mean episode rew_joint_pose_matching: -0.3709
+   Mean episode rew_ground_contact: -0.4830
+   Mean episode rew_forward_motion: -0.1993
+   Mean episode rew_chassis_height: 0.0000
+ Mean episode rew_velocity_profile: 0.0001
+     Mean episode rew_leg_symmetry: 0.0000
+Mean episode rew_end_effector_matching: 0.0006
+Mean episode rew_gait_continuation: 0.0000
+--------------------------------------------------------------------------------
+                   Total timesteps: 12288
+                    Iteration time: 1.61s
+                        Total time: 3.63s
+                               ETA: 3632.8s
+
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+################################################################################
+                      [1m Learning iteration 2/2000 [0m
+
+                       Computation: 3816 steps/s (collection: 1.553s, learning 0.056s)
+               Value function loss: 2.2635
+                    Surrogate loss: -0.0075
+             Mean action noise std: 1.01
+                 Mean total reward: -23.97
+               Mean episode length: 17.40
+ Mean episode rew_tracking_lin_vel: 0.0007
+ Mean episode rew_tracking_ang_vel: 0.0033
+        Mean episode rew_lin_vel_z: -0.1644
+      Mean episode rew_action_rate: -0.0020
+Mean episode rew_similar_to_default: -0.0010
+Mean episode rew_joint_pose_matching: -0.3709
+   Mean episode rew_ground_contact: -0.4830
+   Mean episode rew_forward_motion: -0.1993
+   Mean episode rew_chassis_height: 0.0000
+ Mean episode rew_velocity_profile: 0.0001
+     Mean episode rew_leg_symmetry: 0.0000
+Mean episode rew_end_effector_matching: 0.0006
+Mean episode rew_gait_continuation: 0.0000
+--------------------------------------------------------------------------------
+                   Total timesteps: 18432
+                    Iteration time: 1.61s
+                        Total time: 5.24s
+                               ETA: 3492.7s
+
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height
+Using stub for _reward_leg_symmetry
+Using stub for _reward_gait_continuation
+Using stub for _reward_chassis_height

@@ -1,0 +1,432 @@
+Initialized wandb logging for project: go2-motion-imitation-enhanced, experiment: go2-enhanced-canter_new
+
+==================================================
+Starting training for 20 iterations
+Motion file: data/canter_new.npy
+Log directory: logs/go2-enhanced-canter_new
+Domain randomization: enabled
+Curriculum learning: enabled
+Time-dependent rewards: disabled
+W&B logging enabled for project: go2-motion-imitation-enhanced
+==================================================
+
+################################################################################
+                       [1m Learning iteration 0/20 [0m
+
+                       Computation: 1115 steps/s (collection: 1.282s, learning 0.095s)
+               Value function loss: 0.0305
+                    Surrogate loss: -0.0098
+             Mean action noise std: 1.00
+                 Mean total reward: 0.56
+               Mean episode length: 17.09
+Mean episode rew_joint_pose_matching: 0.0001
+Mean episode rew_joint_velocity_matching: 0.0060
+Mean episode rew_end_effector_matching: 0.0008
+   Mean episode rew_ground_contact: 0.0010
+Mean episode rew_forward_progression: 0.0027
+        Mean episode rew_stability: 0.0003
+--------------------------------------------------------------------------------
+                   Total timesteps: 1536
+                    Iteration time: 1.38s
+                        Total time: 1.38s
+                               ETA: 27.5s
+
+Could not find git repository in /home/jeff/anaconda3/envs/genesis/lib/python3.10/site-packages/rsl_rl/__init__.py. Skipping.
+################################################################################
+                       [1m Learning iteration 1/20 [0m
+
+                       Computation: 1570 steps/s (collection: 0.944s, learning 0.034s)
+               Value function loss: 0.4139
+                    Surrogate loss: -0.0128
+             Mean action noise std: 1.00
+                 Mean total reward: 0.56
+               Mean episode length: 17.09
+Mean episode rew_joint_pose_matching: 0.0004
+Mean episode rew_joint_velocity_matching: 0.0176
+Mean episode rew_end_effector_matching: 0.0023
+   Mean episode rew_ground_contact: 0.0011
+Mean episode rew_forward_progression: 0.0054
+        Mean episode rew_stability: 0.0003
+--------------------------------------------------------------------------------
+                   Total timesteps: 3072
+                    Iteration time: 0.98s
+                        Total time: 2.36s
+                               ETA: 22.4s
+
+################################################################################
+                       [1m Learning iteration 2/20 [0m
+
+                       Computation: 1566 steps/s (collection: 0.946s, learning 0.035s)
+               Value function loss: 0.4814
+                    Surrogate loss: -0.0070
+             Mean action noise std: 1.00
+                 Mean total reward: 0.56
+               Mean episode length: 17.09
+Mean episode rew_joint_pose_matching: 0.0004
+Mean episode rew_joint_velocity_matching: 0.0176
+Mean episode rew_end_effector_matching: 0.0023
+   Mean episode rew_ground_contact: 0.0011
+Mean episode rew_forward_progression: 0.0054
+        Mean episode rew_stability: 0.0003
+--------------------------------------------------------------------------------
+                   Total timesteps: 4608
+                    Iteration time: 0.98s
+                        Total time: 3.34s
+                               ETA: 20.0s
+
+################################################################################
+                       [1m Learning iteration 3/20 [0m
+
+                       Computation: 1569 steps/s (collection: 0.945s, learning 0.033s)
+               Value function loss: 0.4184
+                    Surrogate loss: -0.0131
+             Mean action noise std: 1.00
+                 Mean total reward: 0.56
+               Mean episode length: 17.09
+Mean episode rew_joint_pose_matching: 0.0004
+Mean episode rew_joint_velocity_matching: 0.0176
+Mean episode rew_end_effector_matching: 0.0023
+   Mean episode rew_ground_contact: 0.0011
+Mean episode rew_forward_progression: 0.0054
+        Mean episode rew_stability: 0.0003
+--------------------------------------------------------------------------------
+                   Total timesteps: 6144
+                    Iteration time: 0.98s
+                        Total time: 4.31s
+                               ETA: 18.3s
+
+################################################################################
+                       [1m Learning iteration 4/20 [0m
+
+                       Computation: 1567 steps/s (collection: 0.944s, learning 0.036s)
+               Value function loss: 0.4491
+                    Surrogate loss: -0.0084
+             Mean action noise std: 1.01
+                 Mean total reward: 0.56
+               Mean episode length: 17.09
+Mean episode rew_joint_pose_matching: 0.0004
+Mean episode rew_joint_velocity_matching: 0.0176
+Mean episode rew_end_effector_matching: 0.0023
+   Mean episode rew_ground_contact: 0.0011
+Mean episode rew_forward_progression: 0.0054
+        Mean episode rew_stability: 0.0003
+--------------------------------------------------------------------------------
+                   Total timesteps: 7680
+                    Iteration time: 0.98s
+                        Total time: 5.29s
+                               ETA: 16.9s
+
+################################################################################
+                       [1m Learning iteration 5/20 [0m
+
+                       Computation: 1572 steps/s (collection: 0.943s, learning 0.033s)
+               Value function loss: 0.3505
+                    Surrogate loss: -0.0157
+             Mean action noise std: 1.01
+                 Mean total reward: 0.56
+               Mean episode length: 17.09
+Mean episode rew_joint_pose_matching: 0.0004
+Mean episode rew_joint_velocity_matching: 0.0176
+Mean episode rew_end_effector_matching: 0.0023
+   Mean episode rew_ground_contact: 0.0011
+Mean episode rew_forward_progression: 0.0054
+        Mean episode rew_stability: 0.0003
+--------------------------------------------------------------------------------
+                   Total timesteps: 9216
+                    Iteration time: 0.98s
+                        Total time: 6.27s
+                               ETA: 15.7s
+
+################################################################################
+                       [1m Learning iteration 6/20 [0m
+
+                       Computation: 1569 steps/s (collection: 0.945s, learning 0.034s)
+               Value function loss: 0.2897
+                    Surrogate loss: -0.0127
+             Mean action noise std: 1.01
+                 Mean total reward: 0.56
+               Mean episode length: 17.09
+Mean episode rew_joint_pose_matching: 0.0004
+Mean episode rew_joint_velocity_matching: 0.0176
+Mean episode rew_end_effector_matching: 0.0023
+   Mean episode rew_ground_contact: 0.0011
+Mean episode rew_forward_progression: 0.0054
+        Mean episode rew_stability: 0.0003
+--------------------------------------------------------------------------------
+                   Total timesteps: 10752
+                    Iteration time: 0.98s
+                        Total time: 7.25s
+                               ETA: 14.5s
+
+################################################################################
+                       [1m Learning iteration 7/20 [0m
+
+                       Computation: 1571 steps/s (collection: 0.945s, learning 0.033s)
+               Value function loss: 0.2849
+                    Surrogate loss: -0.0106
+             Mean action noise std: 1.01
+                 Mean total reward: 0.56
+               Mean episode length: 17.09
+Mean episode rew_joint_pose_matching: 0.0004
+Mean episode rew_joint_velocity_matching: 0.0176
+Mean episode rew_end_effector_matching: 0.0023
+   Mean episode rew_ground_contact: 0.0011
+Mean episode rew_forward_progression: 0.0054
+        Mean episode rew_stability: 0.0003
+--------------------------------------------------------------------------------
+                   Total timesteps: 12288
+                    Iteration time: 0.98s
+                        Total time: 8.23s
+                               ETA: 13.4s
+
+################################################################################
+                       [1m Learning iteration 8/20 [0m
+
+                       Computation: 1569 steps/s (collection: 0.945s, learning 0.034s)
+               Value function loss: 0.2015
+                    Surrogate loss: -0.0162
+             Mean action noise std: 1.01
+                 Mean total reward: 0.56
+               Mean episode length: 17.09
+Mean episode rew_joint_pose_matching: 0.0004
+Mean episode rew_joint_velocity_matching: 0.0176
+Mean episode rew_end_effector_matching: 0.0023
+   Mean episode rew_ground_contact: 0.0011
+Mean episode rew_forward_progression: 0.0054
+        Mean episode rew_stability: 0.0003
+--------------------------------------------------------------------------------
+                   Total timesteps: 13824
+                    Iteration time: 0.98s
+                        Total time: 9.21s
+                               ETA: 12.3s
+
+################################################################################
+                       [1m Learning iteration 9/20 [0m
+
+                       Computation: 1572 steps/s (collection: 0.945s, learning 0.032s)
+               Value function loss: 0.2410
+                    Surrogate loss: -0.0055
+             Mean action noise std: 1.01
+                 Mean total reward: 0.56
+               Mean episode length: 17.09
+Mean episode rew_joint_pose_matching: 0.0004
+Mean episode rew_joint_velocity_matching: 0.0176
+Mean episode rew_end_effector_matching: 0.0023
+   Mean episode rew_ground_contact: 0.0011
+Mean episode rew_forward_progression: 0.0054
+        Mean episode rew_stability: 0.0003
+--------------------------------------------------------------------------------
+                   Total timesteps: 15360
+                    Iteration time: 0.98s
+                        Total time: 10.18s
+                               ETA: 11.2s
+
+################################################################################
+                       [1m Learning iteration 10/20 [0m
+
+                       Computation: 1570 steps/s (collection: 0.944s, learning 0.034s)
+               Value function loss: 0.1579
+                    Surrogate loss: -0.0135
+             Mean action noise std: 1.01
+                 Mean total reward: 0.56
+               Mean episode length: 17.09
+Mean episode rew_joint_pose_matching: 0.0004
+Mean episode rew_joint_velocity_matching: 0.0176
+Mean episode rew_end_effector_matching: 0.0023
+   Mean episode rew_ground_contact: 0.0011
+Mean episode rew_forward_progression: 0.0054
+        Mean episode rew_stability: 0.0003
+--------------------------------------------------------------------------------
+                   Total timesteps: 16896
+                    Iteration time: 0.98s
+                        Total time: 11.16s
+                               ETA: 10.1s
+
+################################################################################
+                       [1m Learning iteration 11/20 [0m
+
+                       Computation: 1574 steps/s (collection: 0.944s, learning 0.032s)
+               Value function loss: 0.1712
+                    Surrogate loss: -0.0065
+             Mean action noise std: 1.01
+                 Mean total reward: 0.56
+               Mean episode length: 17.09
+Mean episode rew_joint_pose_matching: 0.0004
+Mean episode rew_joint_velocity_matching: 0.0176
+Mean episode rew_end_effector_matching: 0.0023
+   Mean episode rew_ground_contact: 0.0011
+Mean episode rew_forward_progression: 0.0054
+        Mean episode rew_stability: 0.0003
+--------------------------------------------------------------------------------
+                   Total timesteps: 18432
+                    Iteration time: 0.98s
+                        Total time: 12.14s
+                               ETA: 9.1s
+
+################################################################################
+                       [1m Learning iteration 12/20 [0m
+
+                       Computation: 1569 steps/s (collection: 0.946s, learning 0.033s)
+               Value function loss: 0.1924
+                    Surrogate loss: -0.0068
+             Mean action noise std: 1.01
+                 Mean total reward: 0.56
+               Mean episode length: 17.09
+Mean episode rew_joint_pose_matching: 0.0004
+Mean episode rew_joint_velocity_matching: 0.0176
+Mean episode rew_end_effector_matching: 0.0023
+   Mean episode rew_ground_contact: 0.0011
+Mean episode rew_forward_progression: 0.0054
+        Mean episode rew_stability: 0.0003
+--------------------------------------------------------------------------------
+                   Total timesteps: 19968
+                    Iteration time: 0.98s
+                        Total time: 13.11s
+                               ETA: 8.1s
+
+################################################################################
+                       [1m Learning iteration 13/20 [0m
+
+                       Computation: 1571 steps/s (collection: 0.944s, learning 0.033s)
+               Value function loss: 0.1647
+                    Surrogate loss: -0.0121
+             Mean action noise std: 1.01
+                 Mean total reward: 0.56
+               Mean episode length: 17.09
+Mean episode rew_joint_pose_matching: 0.0004
+Mean episode rew_joint_velocity_matching: 0.0176
+Mean episode rew_end_effector_matching: 0.0023
+   Mean episode rew_ground_contact: 0.0011
+Mean episode rew_forward_progression: 0.0054
+        Mean episode rew_stability: 0.0003
+--------------------------------------------------------------------------------
+                   Total timesteps: 21504
+                    Iteration time: 0.98s
+                        Total time: 14.09s
+                               ETA: 7.0s
+
+################################################################################
+                       [1m Learning iteration 14/20 [0m
+
+                       Computation: 1572 steps/s (collection: 0.944s, learning 0.032s)
+               Value function loss: 0.1521
+                    Surrogate loss: -0.0125
+             Mean action noise std: 1.01
+                 Mean total reward: 0.56
+               Mean episode length: 17.09
+Mean episode rew_joint_pose_matching: 0.0004
+Mean episode rew_joint_velocity_matching: 0.0176
+Mean episode rew_end_effector_matching: 0.0023
+   Mean episode rew_ground_contact: 0.0011
+Mean episode rew_forward_progression: 0.0054
+        Mean episode rew_stability: 0.0003
+--------------------------------------------------------------------------------
+                   Total timesteps: 23040
+                    Iteration time: 0.98s
+                        Total time: 15.07s
+                               ETA: 6.0s
+
+################################################################################
+                       [1m Learning iteration 15/20 [0m
+
+                       Computation: 1572 steps/s (collection: 0.943s, learning 0.034s)
+               Value function loss: 0.1310
+                    Surrogate loss: -0.0059
+             Mean action noise std: 1.01
+                 Mean total reward: 0.56
+               Mean episode length: 17.09
+Mean episode rew_joint_pose_matching: 0.0004
+Mean episode rew_joint_velocity_matching: 0.0176
+Mean episode rew_end_effector_matching: 0.0023
+   Mean episode rew_ground_contact: 0.0011
+Mean episode rew_forward_progression: 0.0054
+        Mean episode rew_stability: 0.0003
+--------------------------------------------------------------------------------
+                   Total timesteps: 24576
+                    Iteration time: 0.98s
+                        Total time: 16.05s
+                               ETA: 5.0s
+
+################################################################################
+                       [1m Learning iteration 16/20 [0m
+
+                       Computation: 1574 steps/s (collection: 0.944s, learning 0.032s)
+               Value function loss: 0.0837
+                    Surrogate loss: -0.0160
+             Mean action noise std: 1.01
+                 Mean total reward: 0.56
+               Mean episode length: 17.09
+Mean episode rew_joint_pose_matching: 0.0004
+Mean episode rew_joint_velocity_matching: 0.0176
+Mean episode rew_end_effector_matching: 0.0023
+   Mean episode rew_ground_contact: 0.0011
+Mean episode rew_forward_progression: 0.0054
+        Mean episode rew_stability: 0.0003
+--------------------------------------------------------------------------------
+                   Total timesteps: 26112
+                    Iteration time: 0.98s
+                        Total time: 17.02s
+                               ETA: 4.0s
+
+################################################################################
+                       [1m Learning iteration 17/20 [0m
+
+                       Computation: 1570 steps/s (collection: 0.946s, learning 0.032s)
+               Value function loss: 0.2065
+                    Surrogate loss: -0.0075
+             Mean action noise std: 1.01
+                 Mean total reward: 0.56
+               Mean episode length: 17.09
+Mean episode rew_joint_pose_matching: 0.0004
+Mean episode rew_joint_velocity_matching: 0.0176
+Mean episode rew_end_effector_matching: 0.0023
+   Mean episode rew_ground_contact: 0.0011
+Mean episode rew_forward_progression: 0.0054
+        Mean episode rew_stability: 0.0003
+--------------------------------------------------------------------------------
+                   Total timesteps: 27648
+                    Iteration time: 0.98s
+                        Total time: 18.00s
+                               ETA: 3.0s
+
+################################################################################
+                       [1m Learning iteration 18/20 [0m
+
+                       Computation: 1571 steps/s (collection: 0.943s, learning 0.035s)
+               Value function loss: 0.0808
+                    Surrogate loss: -0.0126
+             Mean action noise std: 1.01
+                 Mean total reward: 0.56
+               Mean episode length: 17.09
+Mean episode rew_joint_pose_matching: 0.0004
+Mean episode rew_joint_velocity_matching: 0.0176
+Mean episode rew_end_effector_matching: 0.0023
+   Mean episode rew_ground_contact: 0.0011
+Mean episode rew_forward_progression: 0.0054
+        Mean episode rew_stability: 0.0003
+--------------------------------------------------------------------------------
+                   Total timesteps: 29184
+                    Iteration time: 0.98s
+                        Total time: 18.98s
+                               ETA: 2.0s
+
+################################################################################
+                       [1m Learning iteration 19/20 [0m
+
+                       Computation: 1568 steps/s (collection: 0.946s, learning 0.034s)
+               Value function loss: 0.0491
+                    Surrogate loss: -0.0099
+             Mean action noise std: 1.01
+                 Mean total reward: 0.56
+               Mean episode length: 17.09
+Mean episode rew_joint_pose_matching: 0.0004
+Mean episode rew_joint_velocity_matching: 0.0176
+Mean episode rew_end_effector_matching: 0.0023
+   Mean episode rew_ground_contact: 0.0011
+Mean episode rew_forward_progression: 0.0054
+        Mean episode rew_stability: 0.0003
+--------------------------------------------------------------------------------
+                   Total timesteps: 30720
+                    Iteration time: 0.98s
+                        Total time: 19.96s
+                               ETA: 1.0s

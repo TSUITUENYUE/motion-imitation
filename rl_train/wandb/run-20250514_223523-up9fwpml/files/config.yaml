@@ -1,0 +1,154 @@
+_wandb:
+    value:
+        cli_version: 0.19.11
+        m: []
+        python_version: 3.10.16
+        t:
+            "1":
+                - 1
+                - 55
+            "2":
+                - 1
+                - 55
+            "3":
+                - 2
+                - 13
+                - 16
+                - 23
+                - 55
+            "4": 3.10.16
+            "5": 0.19.11
+            "8":
+                - 5
+            "12": 0.19.11
+            "13": linux-x86_64
+algorithm:
+    value:
+        clip_param: 0.2
+        desired_kl: 0.01
+        entropy_coef: 0.01
+        gamma: 0.99
+        lam: 0.95
+        learning_rate: 0.001
+        max_grad_norm: 1
+        num_learning_epochs: 5
+        num_mini_batches: 4
+        schedule: adaptive
+        use_clipped_value_loss: true
+        value_loss_coef: 1
+curriculum_learning:
+    value: true
+domain_randomization:
+    value: true
+env_cfg:
+    value:
+        action_scale: 0.25
+        base_init_pos:
+            - 0
+            - 0
+            - 0.28
+        base_init_quat:
+            - 1
+            - 0
+            - 0
+            - 0
+        clip_actions: 0.75
+        curriculum_eval_period: 50
+        curriculum_stages:
+            - push_force: 0
+              terrain_roughness: 0
+            - push_force: 10
+              terrain_roughness: 0
+            - push_force: 15
+              terrain_roughness: 0.05
+            - push_force: 20
+              terrain_roughness: 0.1
+        curriculum_success_threshold: 0.8
+        default_joint_angles:
+            FL_calf_joint: -1.5
+            FL_hip_joint: 0
+            FL_thigh_joint: 0.75
+            FR_calf_joint: -1.5
+            FR_hip_joint: 0
+            FR_thigh_joint: 0.75
+            RL_calf_joint: -1.5
+            RL_hip_joint: 0
+            RL_thigh_joint: 0.75
+            RR_calf_joint: -1.5
+            RR_hip_joint: 0
+            RR_thigh_joint: 0.75
+        domain_rand:
+            enabled: true
+            friction_range:
+                - 0.9
+                - 1.1
+            gravity_range:
+                - -9.9
+                - -9.7
+            mass_range:
+                - 0.95
+                - 1.05
+            randomize_on_reset: true
+            restitution_range:
+                - 0
+                - 0.05
+        enable_stabilizer: true
+        episode_length_s: 20
+        foot_friction: 1
+        ground_friction: 1
+        ground_restitution: 0
+        joint_friction: 0.03
+        joint_names:
+            - FR_hip_joint
+            - FR_thigh_joint
+            - FR_calf_joint
+            - FL_hip_joint
+            - FL_thigh_joint
+            - FL_calf_joint
+            - RR_hip_joint
+            - RR_thigh_joint
+            - RR_calf_joint
+            - RL_hip_joint
+            - RL_thigh_joint
+            - RL_calf_joint
+        kd: 0.8
+        kp: 50
+        motion_filename: data/canter_new.npy
+        num_actions: 12
+        resampling_time_s: 4
+        simulate_action_latency: false
+        termination_if_pitch_greater_than: 25
+        termination_if_roll_greater_than: 25
+        use_curriculum: true
+        use_time_dependent_rewards: false
+max_iterations:
+    value: 10
+motion_file:
+    value: data/canter_new.npy
+num_envs:
+    value: 32
+policy:
+    value:
+        activation: elu
+        actor_hidden_dims:
+            - 512
+            - 256
+            - 128
+        critic_hidden_dims:
+            - 512
+            - 256
+            - 128
+        init_noise_std: 1
+resume_checkpoint:
+    value: null
+resuming:
+    value: false
+reward_scales:
+    value:
+        end_effector_matching: 0.06
+        forward_progression: 0.12
+        joint_pose_matching: 0.1
+        joint_velocity_matching: 0.08
+        stability: 0.04
+seed:
+    value: 1

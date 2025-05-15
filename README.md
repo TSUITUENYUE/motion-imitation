@@ -368,3 +368,113 @@ The script will handle all the necessary imports and configurations to ensure th
 *   Ensure that the paths to motion files and log directories are correct based on your current working directory.
 *   The evaluation scripts rely on the `cfgs.pkl` file being present in the specified `--run_dir` to accurately replicate the training conditions.
 *   For `go2_eval_enhanced.py`, always run from the `rl_train` directory using the path `../policy_test/go2_eval_enhanced.py` 
+
+# Go2 Motion Imitation with Joint Velocity Matching
+
+This repository contains tools for training a Go2 quadruped robot to imitate reference motions using reinforcement learning with a focus on joint velocity matching for better cyclic motion performance.
+
+## Quick Start Guide
+
+### Training a Motion
+
+```bash
+# Convert original motion file to the joint velocity format
+cd motion-imitation/rl_train
+python convert_existing_npy.py --file data/canter.npy
+
+# Train using the joint velocity-enhanced version
+python train_experiment.py --file data/canter_new.npy --envs 256 --iters 1000
+```
+
+### Visualizing Trained Results
+
+```bash
+# Navigate to the rl_train directory 
+cd motion-imitation/rl_train
+
+# Use the simple test script to visualize canter_new with specific checkpoint:
+python ../policy_test/test_canter_new.py 999  # Checkpoint number 999
+python ../policy_test/test_canter_new.py 500  # Or checkpoint 500
+
+# Or use the full evaluation script with explicit options:
+python ../policy_test/go2_eval_enhanced.py -e go2-enhanced-canter_new --ckpt 999
+python ../policy_test/go2_eval_enhanced.py --run_dir logs/go2-enhanced-canter_new --ckpt 500
+
+# For other motion types:
+python ../policy_test/go2_eval_enhanced.py -m canter --duration 60
+```
+
+### Delete Previous Training Results
+
+```bash
+# Remove a specific training run
+rm -rf motion-imitation/rl_train/logs/go2-enhanced-canter
+
+# Or clean all training runs
+rm -rf motion-imitation/rl_train/logs/go2-enhanced-*
+```
+
+## Enhanced Joint Velocity Training
+
+The enhanced training method focuses on frame-to-frame joint velocity matching, which is critical for cyclic motions like walking and running gaits. This approach:
+
+1. Captures the dynamic nature of motion rather than just static poses
+2. Better handles short, cyclic reference motions by focusing on transitions
+3. Improves motion continuity and natural flow of movement
+
+### Key Features:
+
+- Calculates joint velocities directly from consecutive frames
+- Properly handles cyclic motion boundaries (last-to-first frame transitions)
+- Prioritizes velocity matching over position matching in rewards
+- Weights hip joints higher for better gait coordination
+
+## Available Commands and Options
+
+### Training Options
+
+```bash
+python train_experiment.py --file DATA_FILE [options]
+```
+
+Options:
+- `--file`: Path to motion data file (.npy format)
+- `--envs`: Number of parallel environments (default: 256)
+- `--iters`: Number of training iterations (default: 1000)
+- `--viz`: Enable visualization during training
+- `--no-wandb`: Disable Weights & Biases logging
+- `--wandb-project`: Custom W&B project name
+- `--resume`: Resume from a previous checkpoint
+- `--run-dir`: Training directory to resume from
+- `--checkpoint`: Specific checkpoint to resume from
+
+### Evaluation Options
+
+```bash
+python ../policy_test/go2_eval_enhanced.py [options]
+```
+
+Options:
+- `-m/--motion TYPE`: Motion type (e.g., canter, trot, pace)
+- `--model PATH`: Path to specific model file
+- `--run_dir DIR`: Specific training run directory
+- `-e/--experiment NAME`: Experiment name
+- `--ckpt NUMBER`: Specific checkpoint iteration
+- `--duration SECONDS`: Evaluation duration (default: 30s)
+
+## Motion Data Preparation
+
+The system now uses joint velocity data for better motion quality:
+
+1. Original `.txt` motion files are converted to `.npy` files with `convert_motion_for_training.py`
+2. Existing `.npy` files can be updated to include joint velocities with `convert_existing_npy.py`
+
+```bash
+# Convert txt to npy with joint velocities
+python convert_motion_for_training.py
+
+# Update existing npy files to include joint velocities
+python convert_existing_npy.py --file data/your_motion.npy
+```
+
+For more detailed information, see the full documentation. 

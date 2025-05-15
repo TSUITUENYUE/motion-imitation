@@ -1,0 +1,21 @@
+{"time":"2025-05-14T22:57:25.420356567-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"/home/jeff/Desktop/sim/motion_imitation/motion-imitation/rl_train/wandb/run-20250514_225725-o1uiiae8/logs/debug-core.log"}
+{"time":"2025-05-14T22:57:25.853265539-04:00","level":"INFO","msg":"created new stream","id":"o1uiiae8"}
+{"time":"2025-05-14T22:57:25.85328143-04:00","level":"INFO","msg":"stream: started","id":"o1uiiae8"}
+{"time":"2025-05-14T22:57:25.853299236-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"o1uiiae8"}
+{"time":"2025-05-14T22:57:25.853299225-04:00","level":"INFO","msg":"sender: started","stream_id":"o1uiiae8"}
+{"time":"2025-05-14T22:57:25.853346409-04:00","level":"INFO","msg":"handler: started","stream_id":"o1uiiae8"}
+{"time":"2025-05-14T22:57:26.06126333-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-14T23:06:56.103273574-04:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded"}
+{"time":"2025-05-14T23:07:28.558120416-04:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-14T23:08:03.035343916-04:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-14T23:08:07.84912867-04:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/jefferzn-penn/go2-motion-imitation-enhanced/o1uiiae8/file_stream","body":"{\"error\":\"context deadline exceeded\"}"}
+{"time":"2025-05-14T23:08:15.223500652-04:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/jefferzn-penn/go2-motion-imitation-enhanced/o1uiiae8/file_stream","body":"{\"error\":\"context deadline exceeded\"}"}
+{"time":"2025-05-14T23:11:48.626099123-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-14T23:11:48.626154712-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-14T23:11:49.41821549-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-14T23:11:49.561654627-04:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-05-14T23:11:49.562697745-04:00","level":"INFO","msg":"stream: closing","id":"o1uiiae8"}
+{"time":"2025-05-14T23:11:49.562703206-04:00","level":"INFO","msg":"handler: closed","stream_id":"o1uiiae8"}
+{"time":"2025-05-14T23:11:49.562706463-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"o1uiiae8"}
+{"time":"2025-05-14T23:11:49.562708507-04:00","level":"INFO","msg":"sender: closed","stream_id":"o1uiiae8"}
+{"time":"2025-05-14T23:11:49.56273084-04:00","level":"INFO","msg":"stream: closed","id":"o1uiiae8"}

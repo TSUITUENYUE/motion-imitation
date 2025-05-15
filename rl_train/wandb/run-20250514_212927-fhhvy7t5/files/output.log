@@ -1,0 +1,65 @@
+W&B logging initialized for project: go2-motion-imitation-enhanced
+
+==================================================
+Starting training for 200 iterations
+Motion file: data/canter.npy
+Log directory: logs/go2-paper-rewards-canter
+Domain randomization: enabled
+Curriculum learning: enabled
+Time-dependent rewards: disabled
+W&B logging enabled for project: go2-motion-imitation-enhanced
+==================================================
+
+################################################################################
+                       [1m Learning iteration 0/200 [0m
+
+                       Computation: 3446 steps/s (collection: 1.697s, learning 0.085s)
+               Value function loss: 59.9075
+                    Surrogate loss: -0.0023
+             Mean action noise std: 1.00
+                 Mean total reward: -23.44
+               Mean episode length: 17.40
+ Mean episode rew_tracking_lin_vel: 0.0000
+ Mean episode rew_tracking_ang_vel: 0.0000
+        Mean episode rew_lin_vel_z: -0.1237
+      Mean episode rew_action_rate: -0.0012
+Mean episode rew_similar_to_default: 0.0000
+Mean episode rew_joint_pose_matching: -0.3163
+ Mean episode rew_velocity_profile: 0.0003
+Mean episode rew_end_effector_matching: 0.0003
+   Mean episode rew_forward_motion: -0.1713
+   Mean episode rew_ground_contact: -0.1638
+--------------------------------------------------------------------------------
+                   Total timesteps: 6144
+                    Iteration time: 1.78s
+                        Total time: 1.78s
+                               ETA: 356.5s
+
+Could not find git repository in /home/jeff/anaconda3/envs/genesis/lib/python3.10/site-packages/rsl_rl/__init__.py. Skipping.
+################################################################################
+                       [1m Learning iteration 1/200 [0m
+
+                       Computation: 4412 steps/s (collection: 1.363s, learning 0.029s)
+               Value function loss: 4.8401
+                    Surrogate loss: -0.0042
+             Mean action noise std: 1.01
+                 Mean total reward: -23.44
+               Mean episode length: 17.40
+ Mean episode rew_tracking_lin_vel: 0.0000
+ Mean episode rew_tracking_ang_vel: 0.0000
+        Mean episode rew_lin_vel_z: -0.1644
+      Mean episode rew_action_rate: -0.0020
+Mean episode rew_similar_to_default: 0.0000
+Mean episode rew_joint_pose_matching: -0.4451
+ Mean episode rew_velocity_profile: 0.0005
+Mean episode rew_end_effector_matching: 0.0008
+   Mean episode rew_forward_motion: -0.2990
+   Mean episode rew_ground_contact: -0.2760
+--------------------------------------------------------------------------------
+                   Total timesteps: 12288
+                    Iteration time: 1.39s
+                        Total time: 3.18s
+                               ETA: 315.9s
+
+
+Training interrupted by user

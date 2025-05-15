@@ -12,6 +12,8 @@ import os
 import pickle
 import shutil
 from importlib import metadata
+import glob
+import re
 
 try:
     try:
@@ -45,21 +47,35 @@ from go2_env import Go2Env
 
 class EnhancedMotionImitationEnv(Go2Env):
     """
-    Extension of Go2Env with enhanced motion imitation rewards.
-    Adds time-dependent reward weighting, continuous motion synthesis,
-    domain randomization, and gait pattern analysis.
+    Extension of Go2Env with motion imitation rewards focused on joint angles, velocity profile
+    and end-effector positions, with domain randomization for robustness.
     """
     
-    def __init__(self, num_envs, env_cfg, obs_cfg, reward_cfg, command_cfg, reference_motion=None, show_viewer=False, motion_filename=''):
+    def __init__(self, num_envs, env_cfg, obs_cfg, reward_cfg, command_cfg, reference_motion=None, reference_velocities=None, show_viewer=False, motion_filename=''):
         # Call parent constructor
         super().__init__(num_envs, env_cfg, obs_cfg, reward_cfg, command_cfg, show_viewer=show_viewer)
         
         # Reference motion data
         self.reference_motion = None
+        self.reference_joint_velocities = None
         self.motion_frame_idx = torch.zeros(self.num_envs, dtype=torch.long, device=self.device)
         self.max_motion_frames = 0
         self.motion_filename = motion_filename
-        self.reference_velocities = None
+        
+        # For tracking joint velocities in real-time
+        self.last_dof_pos = None
+        self.current_joint_velocities = None
+        
+        # For tracking absolute position progress
+        self.last_base_position = None
+        self.absolute_position_history = None
+        self.position_progress_tracker = torch.zeros(self.num_envs, device=self.device)  # Tracks cumulative progress
+        
+        # For increasing speed over time
+        self.target_speed = torch.ones(self.num_envs, device=self.device) * 0.5  # Initial target speed
+        self.speed_progression_rate = env_cfg.get("speed_progression_rate", 0.0002)  # Speed increase per step (slowed down)
+        self.max_target_speed = env_cfg.get("max_target_speed", 1.2)  # Maximum target speed (reduced)
+        self.straight_motion_tolerance = env_cfg.get("straight_motion_tolerance", 0.05)  # Y-movement tolerance
         
         # Domain randomization config
         self.domain_rand_cfg = env_cfg.get("domain_rand", {
@@ -70,15 +86,6 @@ class EnhancedMotionImitationEnv(Go2Env):
             "mass_range": [0.9, 1.1],
             "randomize_on_reset": True,
         })
-        
-        # Dynamic reward weighting parameters
-        self.use_time_dependent_rewards = env_cfg.get("use_time_dependent_rewards", True)
-        self.imitation_decay_rate = env_cfg.get("imitation_decay_rate", 5.0)  # Higher = faster decay
-        self.robustness_rise_rate = env_cfg.get("robustness_rise_rate", 8.0)  # Higher = faster rise
-        
-        # Time-dependent reward weights
-        self.imitation_weight = torch.ones((self.num_envs, 1), device=self.device)
-        self.robustness_weight = torch.zeros((self.num_envs, 1), device=self.device)
         
         # Curriculum learning
         self.use_curriculum = env_cfg.get("use_curriculum", True)
@@ -111,51 +118,97 @@ class EnhancedMotionImitationEnv(Go2Env):
             if self.reference_motion is not None:
                 self.max_motion_frames = self.reference_motion.shape[0]
                 print(f"Loaded reference motion with {self.max_motion_frames} frames on device: {self.reference_motion.device}")
-                self._estimate_reference_velocities()
+                
+                # Set reference joint velocities if provided
+                if reference_velocities is not None:
+                    if isinstance(reference_velocities, np.ndarray):
+                        self.reference_joint_velocities = torch.tensor(reference_velocities, device=self.device, dtype=torch.float32)
+                    elif isinstance(reference_velocities, torch.Tensor):
+                        self.reference_joint_velocities = reference_velocities.to(device=self.device)
+                    print(f"Using provided reference joint velocities for training")
+                
+                # Calculate joint velocities if not provided
+                if self.reference_joint_velocities is None:
+                    self._calculate_reference_joint_velocities()
+                
                 self._detect_gait_pattern()
         
-        # Initialize reward functions and scales
+        # Initialize tracking of current joint velocities
+        self.last_dof_pos = self.dof_pos.clone()
+        self.current_joint_velocities = torch.zeros_like(self.dof_pos)
+        
+        # Initialize position tracking for absolute progress
+        self.last_base_position = self.base_pos.clone()
+        self.absolute_position_history = torch.zeros((self.num_envs, 10, 3), device=self.device)  # Store last 10 positions
+        self.position_history_idx = torch.zeros(self.num_envs, dtype=torch.long, device=self.device)
+        
+        # Initialize reward functions and scales - SIMPLIFIED to just core rewards
         # Joint Pose Matching (Primary)
+        self.reward_functions = {}
+        self.episode_sums = {}
+        
         if self.reference_motion is not None:
             print("Initializing joint_pose_matching reward")
             self.reward_functions["joint_pose_matching"] = self._reward_joint_pose_matching
             self.episode_sums["joint_pose_matching"] = torch.zeros((self.num_envs,), device=self.device, dtype=gs.tc_float)
 
-            # Velocity Profile Matching
-            print("Initializing velocity_profile reward")
-            self.reward_functions["velocity_profile"] = self._reward_velocity_profile
-            self.episode_sums["velocity_profile"] = torch.zeros((self.num_envs,), device=self.device, dtype=gs.tc_float)
-
-            # Leg Symmetry
-            print("Initializing leg_symmetry reward")
-            self.reward_functions["leg_symmetry"] = self._reward_leg_symmetry
-            self.episode_sums["leg_symmetry"] = torch.zeros((self.num_envs,), device=self.device, dtype=gs.tc_float)
+            # Joint Velocity Matching
+            print("Initializing joint_velocity_matching reward")
+            self.reward_functions["joint_velocity_matching"] = self._reward_joint_velocity_matching
+            self.episode_sums["joint_velocity_matching"] = torch.zeros((self.num_envs,), device=self.device, dtype=gs.tc_float)
 
             # End-effector position matching
             print("Initializing end_effector_matching reward")
             self.reward_functions["end_effector_matching"] = self._reward_end_effector_matching
             self.episode_sums["end_effector_matching"] = torch.zeros((self.num_envs,), device=self.device, dtype=gs.tc_float)
+            
+            # Ground contact reward
+            print("Initializing ground_contact reward")
+            self.reward_functions["ground_contact"] = self._reward_ground_contact
+            self.episode_sums["ground_contact"] = torch.zeros((self.num_envs,), device=self.device, dtype=gs.tc_float)
+            
+            # Forward progression reward 
+            print("Initializing forward_progression reward")
+            self.reward_functions["forward_progression"] = self._reward_forward_progression
+            self.episode_sums["forward_progression"] = torch.zeros((self.num_envs,), device=self.device, dtype=gs.tc_float)
+            
+            # Absolute position progress reward
+            print("Initializing absolute_position_progress reward")
+            self.reward_functions["absolute_position_progress"] = self._reward_absolute_position_progress
+            self.episode_sums["absolute_position_progress"] = torch.zeros((self.num_envs,), device=self.device, dtype=gs.tc_float)
+            
+            # Straight-line accelerating motion reward
+            print("Initializing straight_line_motion reward")
+            self.reward_functions["straight_line_motion"] = self._reward_straight_line_motion
+            self.episode_sums["straight_line_motion"] = torch.zeros((self.num_envs,), device=self.device, dtype=gs.tc_float)
+            
+            # Front leg movement reward
+            print("Initializing front_leg_movement reward")
+            self.reward_functions["front_leg_movement"] = self._reward_front_leg_movement
+            self.episode_sums["front_leg_movement"] = torch.zeros((self.num_envs,), device=self.device, dtype=gs.tc_float)
 
-        # Forward Motion
-        print("Initializing forward_motion reward")
-        self.reward_functions["forward_motion"] = self._reward_forward_motion
-        self.episode_sums["forward_motion"] = torch.zeros((self.num_envs,), device=self.device, dtype=gs.tc_float)
-        self.position_history = self.base_pos.clone()
-
-        # Chassis Height
-        print("Initializing chassis_height reward")
-        self.reward_functions["chassis_height"] = self._reward_chassis_height
-        self.episode_sums["chassis_height"] = torch.zeros((self.num_envs,), device=self.device, dtype=gs.tc_float)
+        # Base stability (anti-bouncing)
+        print("Initializing stability reward")
+        self.reward_functions["stability"] = self._reward_stability
+        self.episode_sums["stability"] = torch.zeros((self.num_envs,), device=self.device, dtype=gs.tc_float)
         
-        # Ground Contact
-        print("Initializing ground_contact reward")
-        self.reward_functions["ground_contact"] = self._reward_ground_contact
-        self.episode_sums["ground_contact"] = torch.zeros((self.num_envs,), device=self.device, dtype=gs.tc_float)
-
-        # Gait Continuation
-        print("Initializing gait_continuation reward")
-        self.reward_functions["gait_continuation"] = self._reward_gait_continuation
-        self.episode_sums["gait_continuation"] = torch.zeros((self.num_envs,), device=self.device, dtype=gs.tc_float)
+        # Check for reward scales specified in the config but not initialized here
+        if hasattr(self, 'reward_scales'):
+            for reward_name in self.reward_scales.keys():
+                if reward_name not in self.reward_functions:
+                    print(f"Creating stub for unused reward: {reward_name}")
+                    
+                    # Create a dynamic stub method without print spam
+                    def make_stub_method(name):
+                        def stub_method(self):
+                            return torch.zeros(self.num_envs, device=self.device, dtype=gs.tc_float)
+                        return stub_method
+                    
+                    # Add the stub method to the class and the reward_functions dict
+                    stub = make_stub_method(reward_name)
+                    setattr(self.__class__, f"_reward_{reward_name}", stub)
+                    self.reward_functions[reward_name] = getattr(self, f"_reward_{reward_name}")
+                    self.episode_sums[reward_name] = torch.zeros((self.num_envs,), device=self.device, dtype=gs.tc_float)
 
         # Reset obs buffer to match env configuration
         self.obs_buf = torch.zeros((self.num_envs, self.num_obs), device=self.device, dtype=gs.tc_float)
@@ -167,37 +220,340 @@ class EnhancedMotionImitationEnv(Go2Env):
         
         # Apply physics parameters
         self._setup_physics_parameters()
-        
-        # Initial reward weights computation
-        self._compute_reward_weights()
     
-    def _compute_reward_weights(self):
-        """
-        Compute dynamic reward weights based on current progress in motion sequence.
-        Early phase: emphasize imitation
-        Late phase: emphasize robust locomotion
-        """
-        if not self.use_time_dependent_rewards:
-            self.imitation_weight = torch.ones((self.num_envs, 1), device=self.device)
-            self.robustness_weight = torch.ones((self.num_envs, 1), device=self.device)
+    def _calculate_reference_joint_velocities(self):
+        """Calculate reference joint velocities from joint angles for cyclic motion."""
+        if self.reference_motion is None or self.max_motion_frames < 2:
+            self.reference_joint_velocities = None
             return
             
-        # Calculate progress through reference motion (0 to 1)
-        if self.reference_motion is not None and self.max_motion_frames > 0:
-            # Divide by 2x motion length to extend the imitation phase longer
-            progress = torch.clamp(self.motion_frame_idx.float() / (self.max_motion_frames * 2), 0, 1)
+        print("Calculating joint velocities from reference motion")
+        
+        # Initialize joint velocities tensor
+        joint_velocities = torch.zeros_like(self.reference_motion)
+        
+        # Calculate velocities as joint angle differences between consecutive frames
+        # First frame is special case - it gets the velocity as if continuing from last frame
+        joint_velocities[1:] = self.reference_motion[1:] - self.reference_motion[:-1]
+        
+        # For cyclic motion: calculate first frame velocity as if looping from last to first frame
+        joint_velocities[0] = self.reference_motion[0] - self.reference_motion[-1]
+        
+        # Store for later use
+        self.reference_joint_velocities = joint_velocities
+        
+        # Report velocity magnitude statistics
+        vel_magnitudes = torch.norm(joint_velocities, dim=1)
+        print(f"Calculated joint velocities (min/max magnitude): {torch.min(vel_magnitudes):.4f} / {torch.max(vel_magnitudes):.4f}")
+    
+    def _reward_joint_pose_matching(self):
+        """Reward for joint angle matching with reference motion."""
+        if self.reference_motion is None or self.max_motion_frames == 0:
+            return torch.zeros(self.num_envs, device=self.device)
+        
+        # Get target positions with continuous motion handling
+        target_joint_pos = self._get_target_joint_positions()
+        
+        # Weight different joint types differently - give much more importance to front leg joints
+        # Front leg indices
+        fr_hip_joint = 0
+        fr_thigh_joint = 1
+        fr_calf_joint = 2
+        fl_hip_joint = 3
+        fl_thigh_joint = 4
+        fl_calf_joint = 5
+        
+        # Rear leg indices
+        rr_hip_joint = 6
+        rr_thigh_joint = 7
+        rr_calf_joint = 8
+        rl_hip_joint = 9
+        rl_thigh_joint = 10
+        rl_calf_joint = 11
+        
+        # Create joint weights tensor
+        joint_weights = torch.ones_like(self.dof_pos)
+        
+        # Front legs - much higher weights
+        joint_weights[:, fr_hip_joint] = 3.5   # Increased from default
+        joint_weights[:, fr_thigh_joint] = 3.0 # Increased from default
+        joint_weights[:, fr_calf_joint] = 2.5  # Increased from default
+        joint_weights[:, fl_hip_joint] = 3.5   # Increased from default
+        joint_weights[:, fl_thigh_joint] = 3.0 # Increased from default
+        joint_weights[:, fl_calf_joint] = 2.5  # Increased from default
+        
+        # Rear legs - normal weights
+        joint_weights[:, rr_hip_joint] = 2.0
+        joint_weights[:, rr_thigh_joint] = 1.5
+        joint_weights[:, rr_calf_joint] = 1.2
+        joint_weights[:, rl_hip_joint] = 2.0
+        joint_weights[:, rl_thigh_joint] = 1.5
+        joint_weights[:, rl_calf_joint] = 1.2
+        
+        # Calculate error per joint with higher precision - ensure we're truly matching angles
+        joint_errors = torch.square(target_joint_pos - self.dof_pos)
+        weighted_joint_error = torch.sum(joint_weights * joint_errors, dim=1)
+        
+        # Sharper exponential reward for more precise matching
+        return torch.exp(-weighted_joint_error / 0.20) # Even sharper falloff for more precise matching
+    
+    def _reward_joint_velocity_matching(self):
+        """Reward for matching joint velocities from reference motion for cyclic gait."""
+        if self.reference_joint_velocities is None or self.max_motion_frames == 0:
+            return torch.zeros(self.num_envs, device=self.device)
             
-            # Use a more gradual transition (linear instead of exponential)
-            imitation_weight = 1.0 - (progress * 0.7)  # Only decay to 0.3, not all the way to 0
-            robustness_weight = 0.3 + (progress * 0.7)  # Start at 0.3, rise to 1.0
-            
-            # Create weight tensors for all environments
-            self.imitation_weight = imitation_weight.unsqueeze(1)  # Shape for broadcasting
-            self.robustness_weight = robustness_weight.unsqueeze(1)
+        # Update current joint velocities
+        if self.last_dof_pos is None:
+            self.current_joint_velocities = torch.zeros_like(self.dof_pos)
         else:
-            # No reference motion, focus on robustness
-            self.imitation_weight = torch.zeros((self.num_envs, 1), device=self.device)
-            self.robustness_weight = torch.ones((self.num_envs, 1), device=self.device)
+            self.current_joint_velocities = self.dof_pos - self.last_dof_pos
+        
+        # Get target velocity from reference
+        ref_indices = torch.clamp(self.motion_frame_idx, 0, self.max_motion_frames - 1)
+        target_joint_velocities = self.reference_joint_velocities[ref_indices].to(self.dof_pos.device)
+        
+        # Calculate velocity matching error - more importance on hip joints
+        joint_vel_errors = torch.square(target_joint_velocities - self.current_joint_velocities)
+        
+        # Weight different joint types differently for velocity matching
+        hip_joint_indices = [0, 3, 6, 9]    # FR, FL, RR, RL Hip
+        thigh_joint_indices = [1, 4, 7, 10] # Thigh
+        calf_joint_indices = [2, 5, 8, 11]  # Calf
+        
+        joint_weights = torch.ones_like(self.dof_pos)
+        joint_weights[:, hip_joint_indices] = 2.5  # Increased emphasis on hip joints (was 1.8)
+        joint_weights[:, thigh_joint_indices] = 1.5 # Increased weight on thigh (was 1.2)
+        joint_weights[:, calf_joint_indices] = 1.0
+        
+        weighted_vel_error = torch.sum(joint_weights * joint_vel_errors, dim=1)
+        
+        # Sharper exponential reward for more precise velocity matching
+        return torch.exp(-weighted_vel_error / 0.15) # Was 0.2, sharper falloff
+    
+    def _reward_end_effector_matching(self):
+        """Reward for matching end-effector positions."""
+        if self.reference_motion is None or self.max_motion_frames == 0:
+            return torch.zeros(self.num_envs, device=self.device)
+            
+        # Get foot positions from current state
+        current_foot_positions = self._get_foot_positions()
+        
+        # Get target joints with continuous motion handling
+        target_joint_pos = self._get_target_joint_positions()
+        
+        # Focus more on leg extension joints (thigh and calf) which affect foot position
+        thigh_calf_indices = [1, 2, 4, 5, 7, 8, 10, 11]  # Thigh and calf joints
+        
+        # Compute error only on joints most affecting end effector
+        joint_errors = torch.square(target_joint_pos[:, thigh_calf_indices] - self.dof_pos[:, thigh_calf_indices])
+        weighted_error = torch.sum(joint_errors, dim=1)
+        return torch.exp(-weighted_error / 0.3)
+    
+    def _reward_stability(self):
+        """Reward for stable movement without bouncing or falling."""
+        # Penalize vertical velocity (anti-bouncing)
+        vertical_vel_abs = torch.abs(self.base_lin_vel[:, 2])
+        bounce_penalty = torch.exp(-vertical_vel_abs / 0.03) # Sharper penalty for bounce
+        
+        # Penalize angular velocity (anti-rolling/pitching) except around Z axis
+        ang_vel_xy = torch.square(self.base_ang_vel[:, 0]) + torch.square(self.base_ang_vel[:, 1])
+        ang_stability = torch.exp(-ang_vel_xy / 0.1)
+        
+        # Height stability - reward being at appropriate height
+        target_height = self.reward_cfg.get("base_height_target", 0.28)
+        height_error = torch.abs(self.base_pos[:, 2] - target_height)
+        height_reward = torch.exp(-height_error / 0.05)
+        
+        # Combine components
+        return (bounce_penalty + ang_stability + height_reward) / 3.0
+    
+    def _reward_front_leg_movement(self):
+        """
+        Reward for encouraging active front leg movement.
+        Focuses on hip, thigh, and calf joints of both front legs.
+        """
+        # Front leg joint indices
+        fr_leg_indices = [0, 1, 2]  # FR leg: hip, thigh, calf
+        fl_leg_indices = [3, 4, 5]  # FL leg: hip, thigh, calf
+        
+        # Get joint velocities 
+        if self.last_dof_pos is None:
+            return torch.ones(self.num_envs, device=self.device)  # Neutral reward on first call
+            
+        joint_velocities = self.dof_pos - self.last_dof_pos
+            
+        # Calculate magnitude of front leg joint velocities
+        fr_leg_velocity = torch.sum(torch.abs(joint_velocities[:, fr_leg_indices]), dim=1)
+        fl_leg_velocity = torch.sum(torch.abs(joint_velocities[:, fl_leg_indices]), dim=1)
+        
+        # Combine both legs, with more emphasis on lateral movement (hip joints)
+        hip_velocity = torch.abs(joint_velocities[:, 0]) + torch.abs(joint_velocities[:, 3])
+        combined_velocity = (fr_leg_velocity + fl_leg_velocity) + hip_velocity * 2.5  # Increased emphasis on hip motion
+        
+        # Reward is higher when there's more front leg movement
+        # Scale the reward to be between 0 and 1, with lower threshold to encourage more movement
+        min_expected_velocity = 0.005  # Reduced minimum threshold to encourage more movement
+        max_expected_velocity = 0.2
+        normalized_velocity = torch.clamp((combined_velocity - min_expected_velocity) / 
+                                         (max_expected_velocity - min_expected_velocity), 
+                                         0.0, 1.0)
+        
+        # Add stronger bonus for alternating leg movements (walking/running gait)
+        leg_coordination_bonus = torch.where(
+            torch.sign(joint_velocities[:, 0]) != torch.sign(joint_velocities[:, 3]),
+            torch.ones_like(fr_leg_velocity) * 0.5,  # Increased bonus for proper coordination
+            torch.zeros_like(fr_leg_velocity)
+        )
+        
+        # Add extra bonus for any front leg movement at all
+        any_movement_bonus = torch.where(
+            combined_velocity > 0.01,
+            torch.ones_like(fr_leg_velocity) * 0.3,  # Bonus just for having movement
+            torch.zeros_like(fr_leg_velocity)
+        )
+        
+        # Final reward combines normalized velocity with coordination bonus
+        return normalized_velocity + leg_coordination_bonus + any_movement_bonus
+    
+    def _reward_absolute_position_progress(self):
+        """
+        Reward for making progress in absolute position (penalizes not moving).
+        Tracks the robot's position over time and rewards consistent forward progress.
+        Increasingly penalizes side-to-side movement as forward progress increases.
+        """
+        # Get current position
+        current_position = self.base_pos.clone()
+        
+        # If we don't have a previous position, use current as reference
+        if self.last_base_position is None:
+            self.last_base_position = current_position.clone()
+            return torch.ones(self.num_envs, device=self.device)  # Neutral reward on first call
+        
+        # Calculate change in position, focus on forward (x-axis) movement
+        position_change = current_position - self.last_base_position
+        forward_progress = position_change[:, 0]  # X-axis movement
+        
+        # Update position progress tracker - accumulates forward progress for speed progression
+        progress_increase = torch.clamp(forward_progress, 0.0, 0.05)  # Only count positive progress
+        self.position_progress_tracker += progress_increase
+        
+        # Calculate a progress-dependent penalty multiplier for y-direction movement
+        # As progress increases, the penalty for side movement becomes much stronger
+        # Start with base penalty and increase based on accumulated progress
+        progress_penalty_multiplier = 1.0 + torch.clamp(self.position_progress_tracker * 1.0, 0.0, 9.0)  # Increased scaling and max value
+        
+        # Strong penalty for any side-to-side movement (y-axis), increasing with progress
+        side_movement = torch.abs(position_change[:, 1])  # Y-axis movement
+        side_movement_penalty = torch.where(
+            side_movement > 0.02,  # Reduced tolerance threshold for side movement (was 0.03)
+            torch.ones_like(side_movement) * -0.4 * (side_movement / 0.02) * progress_penalty_multiplier,  # Doubled base penalty (-0.2 to -0.4)
+            torch.zeros_like(side_movement)
+        )
+        
+        # Update position history buffer
+        idx = self.position_history_idx % self.absolute_position_history.shape[1]
+        self.absolute_position_history[:, idx] = current_position
+        self.position_history_idx += 1
+        
+        # Calculate longer-term progress (over last ~1 second)
+        # Get oldest stored position with a valid index
+        history_size = min(self.position_history_idx[0].item(), self.absolute_position_history.shape[1])
+        if history_size > 5:  # Only compute if we have enough history
+            old_idx = (self.position_history_idx - history_size) % self.absolute_position_history.shape[1]
+            old_position = torch.zeros_like(current_position)
+            for i in range(self.num_envs):
+                old_position[i] = self.absolute_position_history[i, old_idx[i]]
+            
+            # Calculate medium-term progress
+            medium_term_progress = current_position[:, 0] - old_position[:, 0]
+            
+            # Calculate medium-term side movement - with stronger progress-dependent penalties
+            medium_term_side = torch.abs(current_position[:, 1] - old_position[:, 1])
+            medium_side_penalty = torch.where(
+                medium_term_side > 0.08,  # Reduced tolerance threshold (was 0.1)
+                torch.ones_like(medium_term_side) * -0.8 * progress_penalty_multiplier,  # Doubled penalty (was -0.4)
+                torch.zeros_like(medium_term_side)
+            )
+            
+            # Strong penalty for lack of forward progress over time
+            # We want significant progress over the past 1 second
+            min_expected_progress = 0.3  # At least 0.3 meters progress expected
+            progress_deficit = torch.clamp(min_expected_progress - medium_term_progress, 0.0, float('inf'))
+            
+            # Penalty increases exponentially with lack of progress
+            progress_penalty = torch.exp(-progress_deficit / 0.1) - 1.0
+            
+            # Additional penalty for moving backward over the longer term
+            backward_penalty = torch.where(medium_term_progress < 0.0, 
+                                           torch.ones_like(medium_term_progress) * -0.5, 
+                                           torch.zeros_like(medium_term_progress))
+        else:
+            # Not enough history yet, use short-term only
+            progress_penalty = torch.zeros_like(forward_progress)
+            backward_penalty = torch.zeros_like(forward_progress)
+            medium_side_penalty = torch.zeros_like(forward_progress)
+        
+        # Short-term immediate penalty for not moving or moving backward
+        immediate_penalty = torch.where(forward_progress < 0.01,
+                                       torch.ones_like(forward_progress) * -0.2,
+                                       torch.zeros_like(forward_progress))
+        
+        # Update last position for next time
+        self.last_base_position = current_position.clone()
+        
+        # Final reward combines penalties (negative values) with neutral baseline
+        return 1.0 + progress_penalty + backward_penalty + immediate_penalty + side_movement_penalty + medium_side_penalty
+    
+    def _reward_straight_line_motion(self):
+        """
+        Reward for maintaining straight-line motion with speed based on position progress.
+        Only increases speed after position progress has been made.
+        Heavily penalizes any side movement.
+        """
+        # Only update target speed if position progress has been made
+        # Use the position_progress_tracker to determine speed increase
+        progress_threshold = 1.0  # Meters of cumulative forward progress needed for speed increase
+        
+        # Apply speed increase only when progression threshold is reached
+        increase_speed_mask = self.position_progress_tracker > progress_threshold
+        if torch.any(increase_speed_mask):
+            # Reset counters for envs that reached the threshold
+            self.position_progress_tracker[increase_speed_mask] = 0.0
+            
+            # Increase target speed for those envs
+            self.target_speed[increase_speed_mask] += self.speed_progression_rate * progress_threshold * 100
+            self.target_speed = torch.clamp(self.target_speed, 0.5, self.max_target_speed)
+        
+        # Get current velocities
+        forward_vel = self.base_lin_vel[:, 0]  # X-axis velocity
+        side_vel = self.base_lin_vel[:, 1]     # Y-axis velocity
+        
+        # Calculate progression-dependent side movement penalty factor
+        # Higher target speed = stricter penalty
+        side_penalty_factor = 1.0 + (self.target_speed - 0.5) * 4.0  # Doubled scaling factor (was 2.0)
+        
+        # Calculate forward velocity matching component - match current target
+        vel_diff = torch.abs(forward_vel - self.target_speed)
+        forward_match_reward = torch.exp(-vel_diff / 0.3)
+        
+        # Much stronger penalty for side-to-side motion, increasing with target speed
+        side_motion_penalty = torch.where(
+            torch.abs(side_vel) > self.straight_motion_tolerance,  # Reduced tolerance (was 2x tolerance)
+            (torch.exp(-torch.abs(side_vel) / 0.03) - 1.0) * side_penalty_factor,  # Sharper falloff (was 0.05)
+            torch.zeros_like(side_vel)
+        )
+        
+        # Strong penalty for angular velocity around vertical axis (yaw)
+        # Also scales with target speed
+        yaw_vel = self.base_ang_vel[:, 2]  # Z-axis angular velocity
+        yaw_penalty = torch.where(
+            torch.abs(yaw_vel) > 0.15,  # Reduced tolerance (was 0.2)
+            (torch.exp(-torch.abs(yaw_vel) / 0.07) - 1.0) * side_penalty_factor,  # Sharper falloff (was 0.1)
+            torch.zeros_like(yaw_vel)
+        )
+        
+        # Combine all components
+        return forward_match_reward + side_motion_penalty + yaw_penalty
     
     def _detect_gait_pattern(self):
         """
@@ -253,266 +609,20 @@ class EnhancedMotionImitationEnv(Go2Env):
             "detected": len(periods) > 0
         }
     
-    def _estimate_reference_velocities(self):
-        if self.reference_motion is None or self.max_motion_frames < 2:
-            self.reference_velocities = None
-            return
-            
-        velocities = torch.zeros(self.max_motion_frames, device=self.device)
-        # Simplified: assume hip joints reflect forward movement
-        hip_indices = [0, 3, 6, 9] # FR, FL, RR, RL hip
-        for i in range(1, self.max_motion_frames):
-            prev_frame_hips = self.reference_motion[i-1, hip_indices]
-            curr_frame_hips = self.reference_motion[i, hip_indices]
-            hip_diff = torch.mean(torch.abs(curr_frame_hips - prev_frame_hips))
-            velocities[i-1] = hip_diff * 5.0 # Heuristic scaling factor
-        
-        velocities[-1] = velocities[-2] # Extrapolate last frame
-        
-        # Smooth and scale
-        kernel_size = 3
-        if self.max_motion_frames > kernel_size:
-            smoothed = torch.zeros_like(velocities)
-            for i in range(self.max_motion_frames):
-                start = max(0, i - kernel_size // 2)
-                end = min(self.max_motion_frames, i + kernel_size // 2 + 1)
-                smoothed[i] = torch.mean(velocities[start:end])
-            velocities = smoothed
-        
-        min_vel, max_vel = torch.min(velocities), torch.max(velocities)
-        if max_vel > min_vel:
-             # Scale to a typical walking speed range, e.g., 0.3 to 0.8 m/s for this reference
-            self.reference_velocities = 0.3 + (velocities - min_vel) * (0.5 / (max_vel - min_vel))
-        else:
-            self.reference_velocities = torch.full_like(velocities, 0.5) # Default if no variation
-        print(f"Estimated reference velocity profile (min/max): {torch.min(self.reference_velocities):.2f} / {torch.max(self.reference_velocities):.2f} m/s") 
-
     def _get_target_joint_positions(self):
         """
-        Get target joint positions with motion synthesis after reference motion ends.
-        Either loops reference motion or generates synthetic continuation based on gait pattern.
+        Get target joint positions with continuous looping motion.
+        Always loops reference motion for perfect cyclic behavior.
         """
         if self.reference_motion is None or self.max_motion_frames == 0:
             return self.dof_pos.clone()  # Fallback to current position
             
-        # For environments within reference motion length, use actual reference
-        ref_indices = torch.clamp(self.motion_frame_idx, 0, self.max_motion_frames - 1)
-        target_joint_pos = self.reference_motion[ref_indices].clone()
-        
-        # For environments that have exceeded reference motion length
-        exceeded_mask = (self.motion_frame_idx >= self.max_motion_frames).unsqueeze(1)
-        if torch.any(exceeded_mask):
-            # Loop the reference motion (better for cyclic gaits)
-            if self.gait_pattern is not None and self.gait_pattern["detected"]:
-                # Use detected gait period for more precise looping
-                adjusted_indices = ((self.motion_frame_idx - self.max_motion_frames) % self.gait_period) + (self.max_motion_frames - self.gait_period)
-                looped_positions = self.reference_motion[adjusted_indices]
-            else:
-                # Simple looping if no gait detected
-                looped_indices = (self.motion_frame_idx % self.max_motion_frames)
-                looped_positions = self.reference_motion[looped_indices]
-            
-            # Apply the looped positions where needed
-            target_joint_pos = torch.where(exceeded_mask, looped_positions, target_joint_pos)
+        # Always use modulo indexing for perfect looping of cyclic motion
+        looped_indices = (self.motion_frame_idx % self.max_motion_frames)
+        target_joint_pos = self.reference_motion[looped_indices].clone()
         
         return target_joint_pos
     
-    def _reward_joint_pose_matching(self):
-        """Reward for joint angle matching with reference motion, weighted by time progress."""
-        if self.reference_motion is None or self.max_motion_frames == 0:
-            return torch.zeros(self.num_envs, device=self.device)
-        
-        # Get target positions with continuous motion handling
-        target_joint_pos = self._get_target_joint_positions()
-        
-        hip_joint_indices = [0, 3, 6, 9]    # FR, FL, RR, RL Hip
-        thigh_joint_indices = [1, 4, 7, 10] # Thigh
-        calf_joint_indices = [2, 5, 8, 11]  # Calf
-        
-        joint_weights = torch.ones_like(self.dof_pos)
-        joint_weights[:, hip_joint_indices] = 1.5 # Emphasize hip joints
-        joint_weights[:, thigh_joint_indices] = 1.2
-        joint_weights[:, calf_joint_indices] = 1.0
-        
-        joint_errors = torch.square(target_joint_pos - self.dof_pos)
-        weighted_joint_error = torch.sum(joint_weights * joint_errors, dim=1)
-        
-        # Add a stronger penalty for large errors to prevent accumulating deviation
-        cumulative_error_threshold = 0.8
-        cumulative_error_penalty = torch.where(
-            weighted_joint_error > cumulative_error_threshold,
-            -2.0 * (weighted_joint_error - cumulative_error_threshold),
-            torch.zeros_like(weighted_joint_error)
-        )
-        
-        # Base reward combines exponential part and error penalty
-        base_reward = torch.exp(-weighted_joint_error / 0.4) + cumulative_error_penalty
-        
-        # Scale by imitation weight if time-dependent rewards are enabled
-        return base_reward * self.imitation_weight.squeeze()
-    
-    def _reward_velocity_profile(self):
-        """Reward for matching velocity profile from reference, weighted by time progress."""
-        if self.reference_velocities is None:
-            return torch.ones(self.num_envs, device=self.device) # Neutral reward
-            
-        ref_indices = torch.clamp(self.motion_frame_idx, 0, self.max_motion_frames - 1)
-        target_velocity = self.reference_velocities[ref_indices].to(self.base_lin_vel.device)
-        current_velocity = self.base_lin_vel[:, 0] # Forward velocity (x-axis)
-        
-        vel_error = torch.abs(current_velocity - target_velocity)
-        base_reward = torch.exp(-vel_error / 0.25) # Adjusted sigma
-        
-        # Scale by imitation weight
-        return base_reward * self.imitation_weight.squeeze()
-    
-    def _reward_leg_symmetry(self):
-        """Reward for maintaining appropriate leg symmetry, weighted by time progress."""
-        if self.reference_motion is None or self.max_motion_frames == 0:
-            return torch.zeros(self.num_envs, device=self.device)
-
-        # Get target positions with continuous motion handling
-        target_joint_pos = self._get_target_joint_positions()
-
-        target_front_hip_diff = target_joint_pos[:, 0] - target_joint_pos[:, 3]
-        current_front_hip_diff = self.dof_pos[:, 0] - self.dof_pos[:, 3]
-        front_hip_error = torch.square(current_front_hip_diff - target_front_hip_diff)
-
-        target_rear_hip_diff = target_joint_pos[:, 6] - target_joint_pos[:, 9]
-        current_rear_hip_diff = self.dof_pos[:, 6] - self.dof_pos[:, 9]
-        rear_hip_error = torch.square(current_rear_hip_diff - target_rear_hip_diff)
-        
-        symmetry_error = front_hip_error + rear_hip_error
-        base_reward = torch.exp(-symmetry_error / 0.15) # Adjusted sigma
-        
-        # Scale by imitation weight
-        return base_reward * self.imitation_weight.squeeze()
-    
-    def _reward_end_effector_matching(self):
-        """Reward for matching end-effector positions, weighted by time progress."""
-        if self.reference_motion is None or self.max_motion_frames == 0:
-            return torch.zeros(self.num_envs, device=self.device)
-            
-        # Get foot positions from current state
-        current_foot_positions = self._get_foot_positions()
-        
-        # We need to compute feet positions for target joint angles
-        # This is complex and would require duplicating FK logic
-        # For simplicity, we'll use a proxy reward:
-        
-        # Get target joints with continuous motion handling
-        target_joint_pos = self._get_target_joint_positions()
-        
-        # Focus more on leg extension joints (thigh and calf) which affect foot position
-        thigh_calf_indices = [1, 2, 4, 5, 7, 8, 10, 11]  # Thigh and calf joints
-        
-        # Compute error only on joints most affecting end effector
-        joint_errors = torch.square(target_joint_pos[:, thigh_calf_indices] - self.dof_pos[:, thigh_calf_indices])
-        weighted_error = torch.sum(joint_errors, dim=1)
-        base_reward = torch.exp(-weighted_error / 0.3)  # Adjusted sigma
-        
-        # Scale by imitation weight
-        return base_reward * self.imitation_weight.squeeze()
-        
-    def _reward_forward_motion(self):
-        """Reward for forward motion, weighted more as reference motion ends."""
-        forward_vel = self.base_lin_vel[:, 0]
-        vertical_vel_abs = torch.abs(self.base_lin_vel[:, 2])
-        target_fwd_vel = self.command_cfg["lin_vel_x_range"][0]
-        
-        # Reward for achieving or maintaining forward velocity
-        # Positive reward scaled by how close to target, penalty for being slow/backwards
-        fwd_progress_reward = torch.where(forward_vel > 0.05, 
-                                        1.0 - torch.clamp(torch.abs(forward_vel - target_fwd_vel) / target_fwd_vel, 0, 1),
-                                        -1.0 + forward_vel * 10) # Penalize no/reverse motion
-
-        # Strong penalty for vertical velocity (bouncing)
-        bounce_penalty_val = vertical_vel_abs
-        bounce_penalty_reward = torch.exp(-bounce_penalty_val / 0.03) # Sharper penalty for bounce
-        
-        # Combine: prioritize forward progress, strongly penalize bouncing
-        base_reward = fwd_progress_reward * 0.6 + (bounce_penalty_reward -1.0) * 0.4
-        
-        # Scale by robustness weight - more important as reference motion progresses
-        return base_reward * self.robustness_weight.squeeze()
-
-    def _reward_chassis_height(self):
-        """Reward for maintaining appropriate chassis height, weighted by time progress."""
-        base_height = self.base_pos[:, 2]
-        target_height = self.reward_cfg["base_height_target"] 
-        height_error = torch.abs(base_height - target_height)
-        
-        # Allow small deviations, penalize larger ones. Sigma of 0.03 means +-3cm is tolerable.
-        height_reward = torch.exp(-height_error / 0.03)
-        # Add a stronger penalty if significantly below target (e.g. > 5cm below)
-        too_low_penalty = torch.where(base_height < (target_height - 0.05), -1.0, 0.0)
-        base_reward = height_reward + too_low_penalty
-        
-        # Scale by robustness weight - more important as reference motion progresses
-        return base_reward * self.robustness_weight.squeeze()
-
-    def _reward_ground_contact(self):
-        """Reward for appropriate foot contact patterns, weighted by time progress."""
-        foot_positions = self._get_foot_positions() # Shape: (num_envs, 4, 3)
-        foot_heights_z = foot_positions[:, :, 2]
-        
-        # Average foot height error from ground
-        avg_foot_height_error = torch.mean(torch.abs(foot_heights_z), dim=1)
-        # Reward for feet being close to ground
-        foot_on_ground_reward = torch.exp(-avg_foot_height_error / 0.02)
-
-        # Penalize if any foot is too high
-        max_foot_height = torch.max(foot_heights_z, dim=1)[0]
-        floating_penalty = torch.where(max_foot_height > 0.05, -1.0 * (max_foot_height - 0.05) / 0.1, 0.0)
-        
-        # Penalize vertical base velocity (anti-bouncing)
-        base_vertical_vel_abs = torch.abs(self.base_lin_vel[:, 2])
-        stability_penalty = -2.0 * base_vertical_vel_abs
-
-        # Combine rewards
-        base_reward = foot_on_ground_reward + floating_penalty + stability_penalty
-        
-        # Scale by robustness weight - more important as reference motion progresses
-        return base_reward * self.robustness_weight.squeeze()
-    
-    def _reward_gait_continuation(self):
-        """Reward for continuing the gait pattern after reference motion ends."""
-        if self.reference_motion is None or self.max_motion_frames == 0 or self.gait_period == 0:
-            return torch.zeros(self.num_envs, device=self.device)
-            
-        # Only apply this reward when beyond reference motion
-        beyond_ref = (self.motion_frame_idx >= self.max_motion_frames)
-        
-        if not torch.any(beyond_ref):
-            return torch.zeros(self.num_envs, device=self.device)
-        
-        # For each environment that's beyond reference, check if the current motion
-        # maintains the gait frequency and pattern
-        
-        # Simple approach: reward left-right alternation at appropriate frequency
-        left_hip_pos = self.dof_pos[:, 3] # Front left hip
-        right_hip_pos = self.dof_pos[:, 0] # Front right hip
-        
-        # Current frame within gait cycle
-        cycle_phase = ((self.motion_frame_idx - self.max_motion_frames) % self.gait_period) / self.gait_period
-        
-        # Approximation: in quadruped gaits, opposite legs are often 180° out of phase
-        # If we're in the first half of the gait cycle, left should be ahead of right, and vice versa
-        phase_appropriate = torch.where(
-            cycle_phase < 0.5,
-            left_hip_pos > right_hip_pos,  # First half: left forward
-            right_hip_pos > left_hip_pos   # Second half: right forward
-        )
-        
-        # Simple binary reward for now
-        gait_reward = torch.where(phase_appropriate, 0.5, -0.1)
-        
-        # Apply only to environments beyond reference motion
-        masked_reward = torch.where(beyond_ref, gait_reward, torch.zeros_like(gait_reward))
-        
-        # Always apply full weight to this reward (it only triggers after reference motion ends)
-        return masked_reward
-
     def _get_foot_positions(self):
         """
         Estimate the world positions of the four feet using base position and joint angles.
@@ -722,14 +832,18 @@ class EnhancedMotionImitationEnv(Go2Env):
                 print(f"Could not set gravity: {e}")
     
     def reset(self):
-        """Reset the environment with domain randomization and initial motion frame."""
+        """Reset the environment with better initialization for forward motion."""
         # Store the original DOF state before resetting
         original_dof_pos = None
         if hasattr(self, 'dof_pos') and self.dof_pos is not None:
             original_dof_pos = self.dof_pos.clone()
         
-        # Reset motion frame indices
-        self.motion_frame_idx.zero_()
+        # Reset motion frame indices - use random starting frames for variety
+        self.motion_frame_idx = torch.randint(0, self.max_motion_frames, (self.num_envs,), device=self.device)
+        
+        # Reset target speed and position progress tracker
+        self.target_speed = torch.ones(self.num_envs, device=self.device) * 0.5
+        self.position_progress_tracker = torch.zeros(self.num_envs, device=self.device)
         
         # Reset curriculum parameters if needed
         if self.use_curriculum:
@@ -744,24 +858,35 @@ class EnhancedMotionImitationEnv(Go2Env):
         
         # Apply reference motion's first frame for joint positions
         if self.reference_motion is not None and self.max_motion_frames > 0:
-            first_frame = self.reference_motion[0].clone()
+            # Use the motion frame index we just set for variety
+            start_joint_pos = self.reference_motion[self.motion_frame_idx]
+            
             if hasattr(self, 'dof_pos') and self.dof_pos is not None:
-                self.dof_pos[:] = first_frame.unsqueeze(0).repeat(self.num_envs, 1)
+                # Apply the joint positions
+                self.dof_pos[:] = start_joint_pos
                 if hasattr(self, 'dof_targets'): self.dof_targets[:] = self.dof_pos[:]
                 if hasattr(self, 'default_dof_targets'): self.default_dof_targets[:] = self.dof_pos[:]
                 if hasattr(self, 'dof_vel'): self.dof_vel[:] = torch.zeros_like(self.dof_vel)
         
         # Reset base position and velocity
         if hasattr(self, 'root_states'):
-            self.root_states[:, 2] = self.env_cfg["base_init_pos"][2]
-            self.root_states[:, 7:13] = 0.0
+            # Set position
+            self.root_states[:, 0] = 0.0  # X position centered
+            self.root_states[:, 1] = 0.0  # Y position centered
+            self.root_states[:, 2] = self.env_cfg["base_init_pos"][2]  # Z height from config
+            
+            # Set velocity - set to match the target velocity from the current frame
+            if self.reference_motion is not None:
+                adaptive_vel = self._extract_reference_forward_velocity()
+                self.root_states[:, 7] = adaptive_vel  # Initial X velocity matched to reference motion
+            else:
+                self.root_states[:, 7] = 0.6  # Default initial velocity
+                
+            self.root_states[:, 8:13] = 0.0  # Zero other velocities
         
         # Reset position history for reward calculations
         if hasattr(self, 'base_pos') and self.base_pos is not None:
             self.position_history = self.base_pos.clone()
-        
-        # Reset initial reward weights
-        self._compute_reward_weights()
         
         # Physics stabilization
         if hasattr(self, 'scene') and hasattr(self.scene, 'physics'):
@@ -789,36 +914,60 @@ class EnhancedMotionImitationEnv(Go2Env):
         
         return obs
     
+    def _sync_gait_with_commands(self):
+        """
+        Synchronize the robot's gait pattern with locomotion commands.
+        This improves coordination between joint poses and forward motion.
+        """
+        if not hasattr(self, 'commands'):
+            return
+            
+        # Get forward velocity command
+        forward_command = self.commands[:, 0]  # X velocity command
+        
+        # Determine if we need to sync the gait with command
+        needs_sync = torch.any(forward_command > 0.1)
+        
+        if needs_sync and self.reference_motion is not None and self.max_motion_frames > 0:
+            # For environments with low forward velocity, give them a boost
+            envs_to_boost = self.base_lin_vel[:, 0] < 0.2
+            
+            if torch.any(envs_to_boost):
+                # Increment the motion frame more quickly for these environments
+                # This helps them break out of static positions
+                boost_idx = envs_to_boost.nonzero().flatten()
+                self.motion_frame_idx[boost_idx] += 1
+    
     def step(self, actions):
-        """Perform one step with time-dependent rewards and curriculum progression."""
-        # Store previous base position for forward motion reward
-        if hasattr(self, 'base_pos') and self.base_pos is not None:
-            self.position_history = self.base_pos.clone()
-        else:
-            if hasattr(self, 'root_states') and self.root_states is not None:
-                 self.position_history = self.root_states[:, 0:3].clone()
+        """Perform one step with curriculum progression and gait synchronization."""
+        # Store previous joint positions for velocity calculation
+        self.last_dof_pos = self.dof_pos.clone()
 
         # Apply random push forces if enabled in curriculum
         self._apply_random_push_forces()
+        
+        # Sync gait with locomotion commands for better coordination
+        self._sync_gait_with_commands()
 
         # Parent step implementation
         obs, rew_buf, reset_buf, extras = super().step(actions)
         
-        # Update motion frame index and compute new reward weights
+        # Update motion frame index
         self.motion_frame_idx += 1
-        self._compute_reward_weights()
         
         # Handle resets
         if torch.any(reset_buf):
             reset_idx = reset_buf.nonzero(as_tuple=False).flatten()
             self.motion_frame_idx[reset_idx] = 0
-            if hasattr(self, 'position_history') and self.base_pos is not None: 
-                self.position_history[reset_idx] = self.base_pos[reset_idx].clone()
-            elif hasattr(self, 'root_states') and self.root_states is not None: 
-                self.position_history[reset_idx] = self.root_states[reset_idx, 0:3].clone()
             
-            # Reset reward weights for reset environments
-            self._compute_reward_weights()
+            # Reset joint velocity tracking
+            if hasattr(self, 'last_dof_pos'):
+                self.last_dof_pos[reset_idx] = self.dof_pos[reset_idx].clone() 
+            
+            # Reset position tracking for absolute progress
+            if hasattr(self, 'last_base_position'):
+                self.last_base_position[reset_idx] = self.base_pos[reset_idx].clone()
+                self.position_history_idx[reset_idx] = 0
             
         # Update curriculum if enabled
         if self.use_curriculum:
@@ -836,6 +985,258 @@ class EnhancedMotionImitationEnv(Go2Env):
                 except Exception as e:
                     print(f"Exception while closing viewer: {e}")
             # Alternatively, the scene might be closed by its __del__ or a similar mechanism 
+
+    def _reward_ground_contact(self):
+        """Reward for ensuring all four feet have proper ground contact during the gait cycle."""
+        # Get the foot positions
+        foot_positions = self._get_foot_positions()  # Shape: [num_envs, 4, 3]
+        
+        # Get foot heights (z-coordinate)
+        foot_heights = foot_positions[:, :, 2]  # Shape: [num_envs, 4]
+        
+        # Determine which feet should be on the ground based on gait phase
+        # For cyclic gaits, typically diagonal legs contact together
+        if self.reference_motion is not None and self.max_motion_frames > 0:
+            frame_idx = self.motion_frame_idx % self.max_motion_frames
+            
+            # Create phase-dependent contact pattern
+            # For a canter-like gait:
+            # 1. FL and RR should contact in first half of cycle
+            # 2. FR and RL should contact in second half
+            phase = frame_idx.float() / self.max_motion_frames
+            
+            # Create target height pattern for each foot based on phase
+            # Lower value = closer to ground = better contact
+            target_heights = torch.ones_like(foot_heights) * 0.05  # Small clearance for all feet
+            
+            # Front feet should be on ground for higher reward
+            front_feet_idx = [0, 1]  # FR, FL 
+            target_heights[:, front_feet_idx] = 0.01  # Very close to ground
+            
+            # Calculate distance to target height
+            height_error = torch.abs(foot_heights - target_heights)
+            
+            # Stronger penalty for front feet being too high
+            height_error[:, front_feet_idx] *= 2.0
+            
+            # Overall ground contact score
+            contact_score = torch.exp(-torch.sum(height_error, dim=1) / 0.1)
+            
+            return contact_score
+        
+        # Fallback behavior if no reference motion
+        return torch.ones(self.num_envs, device=self.device)
+    
+    def _extract_reference_forward_velocity(self):
+        """
+        Calculate the adaptive forward velocity directly from reference motion frames.
+        This makes velocity target match exactly with the frame-to-frame motion.
+        """
+        if self.reference_motion is None or self.max_motion_frames < 2:
+            # Default velocity if no reference motion
+            return 0.7
+            
+        # Calculate frame-to-frame velocity directly from joint changes
+        # Use current frame index to get a time-appropriate velocity
+        current_frame = self.motion_frame_idx % self.max_motion_frames
+        next_frame = (current_frame + 1) % self.max_motion_frames
+        
+        # Focus on hip joint changes which most directly correlate with forward motion
+        hip_indices = [0, 3, 6, 9]  # Hip joints
+        
+        # Get the relevant frames for velocity calculation
+        current_hip_angles = self.reference_motion[current_frame][:, hip_indices]
+        next_hip_angles = self.reference_motion[next_frame][:, hip_indices]
+        
+        # Calculate the magnitude of hip angle changes
+        angle_diffs = torch.abs(next_hip_angles - current_hip_angles)
+        angle_change_magnitude = torch.sum(angle_diffs, dim=1)
+        
+        # Convert angle change to appropriate velocity
+        # Scale factor determined empirically based on gait patterns
+        # Higher angle changes = higher velocity
+        velocity_scale = 5.0  # Scaling factor to convert angle change to m/s
+        adaptive_velocity = angle_change_magnitude * velocity_scale
+        
+        # Apply reasonable limits
+        min_velocity = 0.4  # Minimum forward velocity
+        max_velocity = 1.2  # Maximum forward velocity
+        adaptive_velocity = torch.clamp(adaptive_velocity, min_velocity, max_velocity)
+        
+        return adaptive_velocity
+    
+    def _reward_forward_progression(self):
+        """Reward for moving forward based on reference motion velocity."""
+        # Get linear velocity in X direction (forward)
+        forward_vel = self.base_lin_vel[:, 0]  # X-axis velocity
+        
+        # Get adaptive target velocity from reference motion
+        target_vel = self._extract_reference_forward_velocity()
+        
+        # Calculate reward based on how close we are to target velocity
+        vel_diff = torch.abs(forward_vel - target_vel)
+        vel_rew = torch.exp(-vel_diff / 0.3)
+        
+        # Add stronger bonus specifically for any positive forward motion
+        # This helps overcome the initial static position
+        forward_bonus = torch.zeros_like(forward_vel)
+        forward_bonus = torch.where(forward_vel > 0.1, 
+                                  torch.ones_like(forward_vel), 
+                                  torch.zeros_like(forward_vel))
+        
+        # Add extra bonus for getting closer to target velocity
+        close_to_target = torch.where(vel_diff < 0.3,
+                                    torch.ones_like(forward_vel),
+                                    torch.zeros_like(forward_vel))
+        
+        # Penalize standing still or moving backward
+        stationary_penalty = torch.where(forward_vel < 0.05,
+                                       torch.ones_like(forward_vel) * 0.5,
+                                       torch.zeros_like(forward_vel))
+        
+        # Penalize side motion (y-velocity)
+        side_vel = self.base_lin_vel[:, 1]
+        side_vel_rew = torch.exp(-torch.abs(side_vel) / 0.1)
+        
+        # Penalize rotation except around z-axis (RSL-style)
+        ang_vel_xy = torch.square(self.base_ang_vel[:, 0]) + torch.square(self.base_ang_vel[:, 1])
+        ang_vel_rew = torch.exp(-ang_vel_xy / 0.05)
+        
+        # Combine components with more emphasis on forward motion
+        return 0.5 * vel_rew + 0.3 * forward_bonus + 0.15 * close_to_target - 0.5 * stationary_penalty + 0.03 * side_vel_rew + 0.02 * ang_vel_rew
+
+    def visualize_rewards(self):
+        """Visualize reward components for debugging."""
+        with torch.no_grad():
+            # Calculate each reward component
+            pose_reward = self._reward_joint_pose_matching()
+            velocity_reward = self._reward_joint_velocity_matching()
+            end_effector_reward = self._reward_end_effector_matching()
+            stability_reward = self._reward_stability()
+            forward_reward = self._reward_forward_progression()
+            ground_contact_reward = self._reward_ground_contact()
+            
+            # Get scales from reward config
+            pose_scale = self.reward_cfg["reward_scales"].get("joint_pose_matching", 0.0)
+            velocity_scale = self.reward_cfg["reward_scales"].get("joint_velocity_matching", 0.0)
+            end_effector_scale = self.reward_cfg["reward_scales"].get("end_effector_matching", 0.0)
+            stability_scale = self.reward_cfg["reward_scales"].get("stability", 0.0)
+            forward_scale = self.reward_cfg["reward_scales"].get("forward_progression", 0.0)
+            ground_contact_scale = self.reward_cfg["reward_scales"].get("ground_contact", 0.0)
+            
+            # Calculate weighted rewards
+            weighted_pose = pose_reward * pose_scale
+            weighted_velocity = velocity_reward * velocity_scale
+            weighted_end_effector = end_effector_reward * end_effector_scale
+            weighted_stability = stability_reward * stability_scale
+            weighted_forward = forward_reward * forward_scale
+            weighted_ground_contact = ground_contact_reward * ground_contact_scale
+            
+            # Calculate total reward
+            total_reward = (weighted_pose + weighted_velocity + weighted_end_effector + 
+                           weighted_stability + weighted_forward + weighted_ground_contact)
+            
+            # Print reward breakdown for the first environment
+            print("\nReward Components:")
+            print(f"  Forward Progression:  {forward_reward[0]:.4f} × {forward_scale:.1f} = {weighted_forward[0]:.4f}")
+            print(f"  Ground Contact:       {ground_contact_reward[0]:.4f} × {ground_contact_scale:.1f} = {weighted_ground_contact[0]:.4f}")
+            print(f"  Joint Pose Matching:  {pose_reward[0]:.4f} × {pose_scale:.1f} = {weighted_pose[0]:.4f}")
+            print(f"  Joint Velocity Match: {velocity_reward[0]:.4f} × {velocity_scale:.1f} = {weighted_velocity[0]:.4f}")
+            print(f"  End Effector Match:   {end_effector_reward[0]:.4f} × {end_effector_scale:.1f} = {weighted_end_effector[0]:.4f}")
+            print(f"  Stability:            {stability_reward[0]:.4f} × {stability_scale:.1f} = {weighted_stability[0]:.4f}")
+            print(f"  Total Reward:         {total_reward[0]:.4f}")
+            
+            # Print some physics stats
+            print("\nPhysics Stats:")
+            print(f"  Target Velocity:      {self._extract_reference_forward_velocity():.4f} m/s")
+            print(f"  Current Velocity:     {self.base_lin_vel[0, 0]:.4f} m/s")
+            print(f"  Base Height:          {self.base_pos[0, 2]:.4f} m")
+            
+            # Get foot positions to debug ground contact
+            foot_positions = self._get_foot_positions()
+            print("\nFoot Heights:")
+            foot_names = ["FR", "FL", "RR", "RL"]
+            for i, name in enumerate(foot_names):
+                print(f"  {name} foot:            {foot_positions[0, i, 2]:.4f} m")
+            
+            print("\n")
+
+class WandbCallback:
+    """Callback for logging to Weights & Biases during training."""
+    
+    def __init__(self, runner, project_name="go2-motion-imitation", experiment_name=None, config=None):
+        """Initialize the WandbCallback.
+        
+        Args:
+            runner: The training runner instance
+            project_name: Wandb project name
+            experiment_name: Name of the experiment
+            config: Configuration dictionary to log
+        """
+        self.runner = runner
+        self.project_name = project_name
+        self.experiment_name = experiment_name
+        self.config = config
+        self.wandb = None
+        
+        # Initialize wandb if available
+        try:
+            import wandb
+            self.wandb = wandb
+            
+            # Initialize wandb run
+            wandb.init(
+                project=self.project_name,
+                name=self.experiment_name,
+                config=self.config,
+                resume=config.get("resuming", False) if config else False
+            )
+            print(f"Initialized wandb logging for project: {self.project_name}, experiment: {self.experiment_name}")
+        except ImportError:
+            print("Wandb not available. Install with `pip install wandb` for experiment tracking.")
+            self.wandb = None
+        except Exception as e:
+            print(f"Error initializing wandb: {e}")
+            self.wandb = None
+
+    def log_iteration(self, iteration, infos):
+        """Log metrics to wandb."""
+        if self.wandb is None:
+            return
+        
+        # Extract metrics from infos
+        metrics = {
+            "iteration": iteration,
+            "fps": infos["fps"],
+            "time": infos["time"],
+            "total_time": infos["total_time"],
+            "reward/mean": infos["episode_rewards"].mean(),
+            "reward/std": infos["episode_rewards"].std(),
+            "episode/mean_length": infos["episode_lengths"].mean(),
+            "episode/num_completed": infos["num_episodes"],
+            "losses/value_loss": infos["value_loss"],
+            "losses/policy_loss": infos["policy_loss"],
+            "losses/entropy": infos["entropy"],
+            "losses/approx_kl": infos["approx_kl"],
+            "losses/clip_frac": infos["clip_frac"]
+        }
+        
+        # Add reward component breakdown if available
+        if "reward_components" in infos:
+            for key, value in infos["reward_components"].items():
+                metrics[f"reward_components/{key}"] = value
+        
+        # Log to wandb
+        self.wandb.log(metrics)
+    
+    def on_iteration_end(self, iteration, infos):
+        """Called by the runner at the end of each training iteration."""
+        self.log_iteration(iteration, infos)
+
+    def close(self):
+        """Close the wandb run."""
+        if self.wandb is not None:
+            self.wandb.finish()
 
 def get_train_cfg(exp_name, max_iterations):
     train_cfg_dict = {
@@ -909,7 +1310,7 @@ def get_cfgs(with_domain_randomization=True, with_curriculum=True):
         "kd": 0.8,  # Moderate damping
         "termination_if_roll_greater_than": 25, 
         "termination_if_pitch_greater_than": 25,
-        "base_init_pos": [0.0, 0.0, 0.28],  # Start low to encourage ground contact
+        "base_init_pos": [0.0, 0.0, 0.26],  # Lowered from 0.28 to ensure better ground contact
         "base_init_quat": [1.0, 0.0, 0.0, 0.0],
         "episode_length_s": 20.0,
         "resampling_time_s": 4.0, 
@@ -922,10 +1323,8 @@ def get_cfgs(with_domain_randomization=True, with_curriculum=True):
         "joint_friction": 0.03,
         "foot_friction": 1.0,
         "enable_stabilizer": True,
-        # Time-dependent reward weighting
-        "use_time_dependent_rewards": True,
-        "imitation_decay_rate": 1.5,  # Reduced from 5.0 (slower decay = better motion matching)
-        "robustness_rise_rate": 2.0,  # Reduced from 8.0 (slower rise = less focus on walking)
+        # Disable time-dependent reward weighting
+        "use_time_dependent_rewards": False,
     }
     
     # Add domain randomization if enabled
@@ -963,20 +1362,20 @@ def get_cfgs(with_domain_randomization=True, with_curriculum=True):
     
     reward_cfg = {
         "tracking_sigma": 0.25, 
-        "base_height_target": 0.28, # Target height for walking
+        "base_height_target": 0.28, # Keep for reference but won't use height reward
         "reward_scales": {
-            "tracking_lin_vel": 0.4, 
-            "tracking_ang_vel": 0.2, 
-            "lin_vel_z": -2.0, # Strong penalty for vertical base velocity (anti-bounce)
-            "action_rate": -0.015, 
-            "similar_to_default": -0.03, 
-            # Custom rewards will be scaled in main
+            "tracking_lin_vel": 0.0,  # Set to 0 as we'll use our custom velocity_profile instead
+            "tracking_ang_vel": 0.0,  # Not using the default angular velocity tracking
+            "lin_vel_z": -2.0,        # Keep strong penalty for vertical velocity (anti-bounce)
+            "action_rate": -0.015,    # Small penalty for rapid action changes
+            "similar_to_default": 0.0, # Not using default pose matching
+            # Custom rewards will be set in main
         },
     }
     
     command_cfg = {
         "num_commands": 3,
-        "lin_vel_x_range": [0.5, 0.5], # Target moderate forward speed
+        "lin_vel_x_range": [0.9, 0.9], # Increased target forward speed to 0.9 m/s (was 0.7)
         "lin_vel_y_range": [0, 0],
         "ang_vel_range": [0, 0], 
     }
@@ -988,93 +1387,75 @@ def load_reference_motion(motion_file):
     print(f"Loading reference motion from {motion_file}")
     if not os.path.exists(motion_file):
         print(f"Motion file {motion_file} not found, continuing without reference")
-        return None
+        return None, None
     
     try:
         # Try loading as torch file first
         try:
             data = torch.load(motion_file)
             if isinstance(data, dict):
-                # Extract joint angles from dictionary
+                # Extract motion data from dictionary
                 if 'joint_angles' in data:
-                    reference_motion = data['joint_angles']
-                    print(f"Loaded joint angles from key 'joint_angles'")
+                    joint_angles = data['joint_angles']
+                    joint_velocities = data.get('joint_velocities', None)
+                    print(f"Loaded joint angles and velocity data from dictionary format")
                 else:
                     # Try to find tensor data that looks like joint angles
-                    reference_motion = None
+                    joint_angles = None
+                    joint_velocities = None
+                    
                     for key in data:
                         if isinstance(data[key], torch.Tensor) and len(data[key].shape) == 2 and data[key].shape[1] == 12:
-                            reference_motion = data[key]
+                            joint_angles = data[key]
                             print(f"Found joint angles in key: {key}")
                             break
                     
-                    if reference_motion is None:
+                    if joint_angles is None:
                         raise ValueError("Could not find joint angles in the file")
             else:
-                # Direct tensor
-                reference_motion = data
+                # Direct tensor - assume it's just joint angles (old format)
+                joint_angles = data
+                joint_velocities = None
+                print("Loaded legacy format with joint angles only")
         except:
             # If torch loading fails, try numpy
             if motion_file.lower().endswith('.npy'):
-                data_np = np.load(motion_file)
-                reference_motion = torch.tensor(data_np, device=gs.device, dtype=torch.float32)
-                print(f"Loaded NPY motion data with shape: {reference_motion.shape}")
+                data_np = np.load(motion_file, allow_pickle=True)
+                
+                # Check if data is a dictionary (new format) or array (old format)
+                if isinstance(data_np, np.ndarray) and not isinstance(data_np.item(), dict):
+                    # Old format - just joint angles
+                    joint_angles = torch.tensor(data_np, device=gs.device, dtype=torch.float32)
+                    joint_velocities = None
+                    print(f"Loaded NPY motion data with shape: {joint_angles.shape} (old format)")
+                else:
+                    # New format - dictionary with joint angles and velocities
+                    data_dict = data_np.item()
+                    joint_angles = torch.tensor(data_dict['joint_angles'], device=gs.device, dtype=torch.float32)
+                    
+                    # Get joint velocities if available
+                    if 'joint_velocities' in data_dict:
+                        joint_velocities = torch.tensor(data_dict['joint_velocities'], device=gs.device, dtype=torch.float32)
+                        print(f"Loaded NPY motion data with shape: {joint_angles.shape} (new format with joint velocities)")
+                    else:
+                        joint_velocities = None
+                        print(f"Loaded NPY motion data with shape: {joint_angles.shape} (new format without joint velocities)")
             else:
                 raise ValueError("Could not load file as PyTorch or Numpy")
         
-        # Ensure tensor is on the correct device
-        reference_motion = reference_motion.to(device=gs.device)
+        # Ensure tensors are on the correct device
+        joint_angles = joint_angles.to(device=gs.device)
+        if joint_velocities is not None:
+            joint_velocities = joint_velocities.to(device=gs.device)
         
-        print(f"Loaded reference motion with {reference_motion.shape[0]} frames, device: {reference_motion.device}")
-        return reference_motion
+        print(f"Loaded reference motion with {joint_angles.shape[0]} frames, device: {joint_angles.device}")
+        return joint_angles, joint_velocities
     except Exception as e:
         print(f"Error loading motion file: {e}")
-        return None
-
-# Custom TensorBoard callback that logs to both TensorBoard and W&B if enabled
-class WandbCallback:
-    def __init__(self, runner, project_name="go2-motion-imitation", experiment_name=None, config=None):
-        self.runner = runner
-        self.use_wandb = WANDB_AVAILABLE
-        
-        if self.use_wandb:
-            wandb.init(
-                project=project_name,
-                name=experiment_name,
-                config=config or {},
-                sync_tensorboard=True,
-                monitor_gym=False,
-            )
-            print(f"W&B logging initialized for project: {project_name}")
-    
-    def log_iteration(self, iteration, infos):
-        if not self.use_wandb:
-            return
-            
-        metrics = {}
-        if "episode" in infos:
-            for k, v in infos["episode"].items():
-                if isinstance(v, (int, float)):
-                    metrics[f"episode/{k}"] = v
-        if "losses" in infos:
-            for k, v in infos["losses"].items():
-                if isinstance(v, (int, float)):
-                    metrics[f"loss/{k}"] = v
-        if "learning_rate" in infos:
-            metrics["train/learning_rate"] = infos["learning_rate"]
-        metrics["train/iteration"] = iteration
-        wandb.log(metrics)
-    
-    def on_iteration_end(self, iteration, infos):
-        """Called by the runner at the end of each training iteration."""
-        self.log_iteration(iteration, infos)
-
-    def close(self):
-        if self.use_wandb:
-            wandb.finish()
+        return None, None
 
 def main():
-    parser = argparse.ArgumentParser(description="Train Go2 robot with enhanced motion imitation techniques")
+    parser = argparse.ArgumentParser(description="Train Go2 robot with motion imitation techniques")
     parser.add_argument("--file", type=str, default="data/canter.npy", 
                         help="Path to retargeted motion file (.npy or .pt file)")
     parser.add_argument("--envs", type=int, default=256,
@@ -1091,13 +1472,13 @@ def main():
                         help="Disable domain randomization")
     parser.add_argument("--no-curriculum", action="store_true", default=False,
                         help="Disable curriculum learning")
-    # New arguments for motion fidelity
-    parser.add_argument("--imitation-decay", type=float, default=1.5,
-                        help="Imitation reward decay rate (default: 1.5, lower = better matching)")
-    parser.add_argument("--robustness-rise", type=float, default=2.0,
-                        help="Robustness reward rise rate (default: 2.0, lower = slower transition)")
-    parser.add_argument("--motion-focus", action="store_true", default=False,
-                        help="Prioritize motion matching over robustness (increases imitation rewards)")
+    # Add resume training arguments
+    parser.add_argument("--resume", action="store_true", default=False,
+                        help="Resume training from a checkpoint")
+    parser.add_argument("--run-dir", type=str, default=None,
+                        help="Directory of the run to resume (e.g., logs/go2-paper-rewards-canter)")
+    parser.add_argument("--checkpoint", type=int, default=-1,
+                        help="Checkpoint iteration to load (-1 for latest)")
     args = parser.parse_args()
 
     gs.init(logging_level="warning")
@@ -1105,64 +1486,188 @@ def main():
     torch.manual_seed(seed)
     np.random.seed(seed)
 
-    motion_basename = os.path.basename(args.file).split('.')[0]
-    exp_name = f"go2-enhanced-{motion_basename}"
-    log_dir_basename = f"go2-enhanced-{motion_basename}"
-    log_dir = f"logs/{log_dir_basename}"
-    if os.path.exists(log_dir) and not os.listdir(log_dir):
-        shutil.rmtree(log_dir)
-    os.makedirs(log_dir, exist_ok=True)
-
-    reference_motion = load_reference_motion(args.file)
-    if reference_motion is None:
-        print(f"Error: Could not load motion file {args.file}. Aborting training.")
-        return
+    # Handle resuming training
+    resuming = False
+    resume_run_dir = None
+    resume_checkpoint = None
     
-    # Get configurations with options for domain randomization and curriculum
-    env_cfg, obs_cfg, reward_cfg, command_cfg = get_cfgs(
-        with_domain_randomization=not args.no_domain_rand,
-        with_curriculum=not args.no_curriculum
-    )
-    train_cfg = get_train_cfg(exp_name, args.iters)
-
-    # Store motion_filename in env_cfg before saving cfgs.pkl
-    env_cfg["motion_filename"] = args.file
-    
-    # Apply command-line arguments for motion fidelity parameters
-    env_cfg["imitation_decay_rate"] = args.imitation_decay
-    env_cfg["robustness_rise_rate"] = args.robustness_rise
-
-    # Configure reward scales with an emphasis on blending imitation and robustness
-    if args.motion_focus:
-        # Further increase imitation rewards for extreme motion fidelity
-        reward_cfg["reward_scales"]["joint_pose_matching"] = 7.0
-        reward_cfg["reward_scales"]["end_effector_matching"] = 6.0 
-        reward_cfg["reward_scales"]["leg_symmetry"] = 3.0
-        print("Motion focus mode enabled: Increased imitation reward weights")
+    if args.resume:
+        # Try to find the run directory and checkpoint
+        if args.run_dir is not None:
+            # Using provided run directory
+            resume_run_dir = args.run_dir
+            if not os.path.isdir(resume_run_dir):
+                # Try prepending logs/ if just the name was provided
+                alt_run_dir = os.path.join("logs", resume_run_dir)
+                if os.path.isdir(alt_run_dir):
+                    resume_run_dir = alt_run_dir
+                else:
+                    # Try finding a directory that matches in logs/
+                    log_dirs = glob.glob(os.path.join("logs", f"{resume_run_dir}*"))
+                    if log_dirs:
+                        resume_run_dir = log_dirs[0]
+                    else:
+                        print(f"Error: Could not find run directory: {args.run_dir}")
+                        return
+        else:
+            # Try to find latest run for the given motion
+            motion_basename = os.path.basename(args.file).split('.')[0]
+            run_pattern = f"logs/go2-paper-rewards-{motion_basename}*"
+            matching_dirs = glob.glob(run_pattern)
+            
+            if matching_dirs:
+                # Sort by modification time (most recent first)
+                matching_dirs.sort(key=lambda x: os.path.getmtime(x), reverse=True)
+                resume_run_dir = matching_dirs[0]
+                print(f"Found most recent run directory: {resume_run_dir}")
+            else:
+                print(f"Error: Could not find any run directories matching {run_pattern}")
+                return
+        
+        # Determine checkpoint to resume from
+        if args.checkpoint >= 0:
+            # Specific checkpoint requested
+            resume_checkpoint = args.checkpoint
+        else:
+            # Find latest checkpoint
+            checkpoints = glob.glob(os.path.join(resume_run_dir, "model_*.pt"))
+            if not checkpoints:
+                print(f"Error: No checkpoints found in {resume_run_dir}")
+                return
+                
+            # Extract iteration numbers
+            iter_numbers = []
+            for ckpt in checkpoints:
+                match = re.search(r'model_(\d+)\.pt', os.path.basename(ckpt))
+                if match:
+                    iter_numbers.append((int(match.group(1)), ckpt))
+            
+            if not iter_numbers:
+                print(f"Error: Could not parse checkpoint filenames in {resume_run_dir}")
+                return
+                
+            # Get highest iteration
+            iter_numbers.sort(reverse=True)
+            resume_checkpoint = iter_numbers[0][0]
+            
+        print(f"Resuming training from run {resume_run_dir}, checkpoint {resume_checkpoint}")
+        resuming = True
+            
+        # Load the existing configs
+        cfg_path = os.path.join(resume_run_dir, "cfgs.pkl")
+        if not os.path.exists(cfg_path):
+            print(f"Error: Configuration file {cfg_path} not found")
+            return
+            
+        try:
+            with open(cfg_path, 'rb') as f:
+                env_cfg, obs_cfg, reward_cfg, command_cfg, train_cfg = pickle.load(f)
+                print(f"Loaded configuration from {cfg_path}")
+                
+                # Update the training iterations
+                train_cfg["runner"]["resume"] = True
+                train_cfg["runner"]["load_run"] = -1  # This means same directory
+                train_cfg["runner"]["checkpoint"] = resume_checkpoint
+                train_cfg["runner"]["max_iterations"] = args.iters
+                
+                # Override run directory
+                log_dir = resume_run_dir
+                exp_name = train_cfg["runner"]["experiment_name"]
+                
+                # Use loaded motion filename if available
+                if "motion_filename" in env_cfg and os.path.exists(env_cfg["motion_filename"]):
+                    args.file = env_cfg["motion_filename"]
+                    print(f"Using motion file from config: {args.file}")
+        except Exception as e:
+            print(f"Error loading configuration: {e}")
+            return
+            
+        # Load the reference motion
+        reference_motion, joint_velocities = load_reference_motion(args.file)
+        if reference_motion is None:
+            print(f"Error: Could not load motion file {args.file}. Aborting training.")
+            return
     else:
-        # Use the already-increased values from earlier edit
-        reward_cfg["reward_scales"]["joint_pose_matching"] = 5.0
-        reward_cfg["reward_scales"]["ground_contact"] = 3.5
-        reward_cfg["reward_scales"]["forward_motion"] = 2.0
-        reward_cfg["reward_scales"]["chassis_height"] = 1.0
-        reward_cfg["reward_scales"]["velocity_profile"] = 1.0
-        reward_cfg["reward_scales"]["leg_symmetry"] = 2.0
-        reward_cfg["reward_scales"]["end_effector_matching"] = 4.0
-        reward_cfg["reward_scales"]["gait_continuation"] = 1.5
+        # Standard training setup (not resuming)
+        motion_basename = os.path.basename(args.file).split('.')[0]
+        exp_name = f"go2-enhanced-{motion_basename}"
+        log_dir = f"logs/{exp_name}"
+        if os.path.exists(log_dir) and not os.listdir(log_dir):
+            shutil.rmtree(log_dir)
+        os.makedirs(log_dir, exist_ok=True)
 
-    # Remove default base_height if custom chassis_height is used
-    if "base_height" in reward_cfg["reward_scales"]:
-         del reward_cfg["reward_scales"]["base_height"]
-    
-    print("Final Reward Scales:", reward_cfg["reward_scales"])
-    
-    # Save full configuration
-    pickle.dump(
-        [env_cfg, obs_cfg, reward_cfg, command_cfg, train_cfg],
-        open(f"{log_dir}/cfgs.pkl", "wb"),
-    )
+        reference_motion, joint_velocities = load_reference_motion(args.file)
+        if reference_motion is None:
+            print(f"Error: Could not load motion file {args.file}. Aborting training.")
+            return
+        
+        # Get configurations with options for domain randomization and curriculum
+        env_cfg, obs_cfg, reward_cfg, command_cfg = get_cfgs(
+            with_domain_randomization=not args.no_domain_rand,
+            with_curriculum=not args.no_curriculum
+        )
+        train_cfg = get_train_cfg(exp_name, args.iters)
+
+        # Store motion_filename in env_cfg before saving cfgs.pkl
+        env_cfg["motion_filename"] = args.file
+        
+        # Disable time-dependent rewards
+        env_cfg["use_time_dependent_rewards"] = False
+        
+        # Add speed progression parameters
+        env_cfg["speed_progression_rate"] = 0.0002  # Speed increase per step (slowed down)
+        env_cfg["max_target_speed"] = 1.2  # Maximum target speed (reduced)
+        env_cfg["straight_motion_tolerance"] = 0.05  # Y-movement tolerance
+
+        # Configure reward scales to focus on forward motion and joint matching
+        reward_cfg["reward_scales"]["forward_progression"] = 7.0       # Keep as is
+        reward_cfg["reward_scales"]["joint_pose_matching"] = 12.0      # Significantly increased (was 8.0)
+        reward_cfg["reward_scales"]["joint_velocity_matching"] = 9.0   # Significantly increased (was 6.0)
+        reward_cfg["reward_scales"]["end_effector_matching"] = 5.0     # Significantly increased (was 3.5)
+        reward_cfg["reward_scales"]["stability"] = 0.3                 # Keep as is
+        reward_cfg["reward_scales"]["ground_contact"] = 0.5            # Keep as is
+        reward_cfg["reward_scales"]["absolute_position_progress"] = 10.0  # Keep as highest priority
+        reward_cfg["reward_scales"]["straight_line_motion"] = 3.0      # Keep as is
+        reward_cfg["reward_scales"]["front_leg_movement"] = 9.0        # Keep as is
+        
+        # Remove all other rewards
+        for key in list(reward_cfg["reward_scales"].keys()):
+            if key not in [
+                "joint_pose_matching", "joint_velocity_matching", "forward_progression", 
+                "end_effector_matching", "stability", "ground_contact", 
+                "absolute_position_progress", "straight_line_motion", "front_leg_movement"
+            ]:
+                del reward_cfg["reward_scales"][key]
+        
+        print("Final Reward Scales:", reward_cfg["reward_scales"])
+
+        # Save full configuration
+        pickle.dump(
+            [env_cfg, obs_cfg, reward_cfg, command_cfg, train_cfg],
+            open(f"{log_dir}/cfgs.pkl", "wb"),
+        )
 
     print(f"\nCreating {args.envs} environments with enhanced features...")
+    
+    # Create stub methods for missing reward functions if resuming training
+    if resuming:
+        # Check for reward functions that might be required by checkpoint but missing in EnhancedMotionImitationEnv
+        for reward_name in ["chassis_height", "leg_symmetry", "gait_continuation"]:
+            method_name = f"_reward_{reward_name}"
+            if hasattr(EnhancedMotionImitationEnv, method_name):
+                continue  # Skip if method already exists
+            
+            print(f"Adding stub for missing reward method: {method_name}")
+            # Define a stub method for the missing reward
+            def make_stub_method(name):
+                def stub_method(self):
+                    # Silent stub to avoid console spam
+                    return torch.zeros(self.num_envs, device=self.device)
+                return stub_method
+            
+            # Bind the method to the class
+            setattr(EnhancedMotionImitationEnv, method_name, make_stub_method(method_name))
+    
     env = EnhancedMotionImitationEnv(
         num_envs=args.envs, 
         env_cfg=env_cfg, 
@@ -1170,9 +1675,32 @@ def main():
         reward_cfg=reward_cfg, 
         command_cfg=command_cfg,
         reference_motion=reference_motion,
+        reference_velocities=joint_velocities,
         show_viewer=args.viz,
         motion_filename=args.file
     )
+    
+    # Set up viewer for better visualization if enabled
+    if args.viz and hasattr(env, 'scene') and hasattr(env.scene, 'viewer'):
+        try:
+            # Set camera for better viewing angle
+            env.scene.viewer.set_camera_pose(
+                pos=(1.5, -1.5, 1.0),  # Position camera behind and to the side
+                lookat=(0.0, 0.0, 0.3)  # Look at robot's approximate center
+            )
+            
+            # Set window size and position
+            if hasattr(env.scene.viewer, 'set_window_size'):
+                env.scene.viewer.set_window_size(1280, 720)
+            
+            # Position window in a good spot on screen
+            if hasattr(env.scene.viewer, 'set_window_pos'):
+                env.scene.viewer.set_window_pos(50, 50)
+                
+            print("Viewer configured for better visualization")
+        except Exception as e:
+            print(f"Warning: Could not fully configure viewer: {e}")
+    
     print("Environment created successfully")
 
     print(f"\nInitializing PPO runner...")
@@ -1187,8 +1715,10 @@ def main():
         "env_cfg": env_cfg, 
         "policy": train_cfg["policy"],
         "algorithm": train_cfg["algorithm"],
-        "domain_randomization": not args.no_domain_rand,
-        "curriculum_learning": not args.no_curriculum,
+        "domain_randomization": env_cfg.get("domain_rand", {}).get("enabled", False),
+        "curriculum_learning": env_cfg.get("use_curriculum", False),
+        "resuming": resuming,
+        "resume_checkpoint": resume_checkpoint if resuming else None
     }
     
     use_wandb = WANDB_AVAILABLE and not args.no_wandb
@@ -1200,12 +1730,15 @@ def main():
     ) if use_wandb else None
     
     print(f"\n{'='*50}")
-    print(f"Starting enhanced training for {args.iters} iterations")
+    if resuming:
+        print(f"Resuming training from checkpoint {resume_checkpoint} for {args.iters} additional iterations")
+    else:
+        print(f"Starting training for {args.iters} iterations")
     print(f"Motion file: {args.file}")
     print(f"Log directory: {log_dir}")
-    print(f"Domain randomization: {'enabled' if not args.no_domain_rand else 'disabled'}")
-    print(f"Curriculum learning: {'enabled' if not args.no_curriculum else 'disabled'}")
-    print(f"Time-dependent rewards: enabled")
+    print(f"Domain randomization: {'enabled' if env_cfg.get('domain_rand', {}).get('enabled', False) else 'disabled'}")
+    print(f"Curriculum learning: {'enabled' if env_cfg.get('use_curriculum', False) else 'disabled'}")
+    print(f"Time-dependent rewards: {'enabled' if env_cfg.get('use_time_dependent_rewards', False) else 'disabled'}")
     if use_wandb:
         print(f"W&B logging enabled for project: {args.wandb_project}")
     else:

@@ -151,6 +151,48 @@ class RetargetedMotionVisualizer:
         tensor_frames = []
         for frame in frames:
             tensor_frames.append(torch.tensor(frame, device=gs.device))
+            
+        # Calculate joint velocities from consecutive frames to understand natural motion
+        joint_velocities = []
+        for i in range(1, len(tensor_frames)):
+            # Extract joint angles from current and previous frame
+            curr_joints = tensor_frames[i][7:19]  # Joint angles in frame
+            prev_joints = tensor_frames[i-1][7:19]  # Joint angles in previous frame
+            
+            # Calculate velocity (joint change per frame)
+            velocity = curr_joints - prev_joints
+            joint_velocities.append(velocity)
+        
+        # Add first velocity (loop from last to first for cyclic motion)
+        first_joints = tensor_frames[0][7:19]
+        last_joints = tensor_frames[-1][7:19]
+        first_velocity = first_joints - last_joints
+        joint_velocities.insert(0, first_velocity)
+        
+        # Print velocity statistics
+        if joint_velocities:
+            all_velocities = torch.stack(joint_velocities)
+            mean_velocity = torch.mean(torch.abs(all_velocities), dim=0)
+            max_velocity = torch.max(torch.abs(all_velocities), dim=0)[0]
+            
+            print("\nJoint Velocity Analysis (per frame):")
+            print(f"Mean absolute joint velocity: {mean_velocity}")
+            print(f"Max absolute joint velocity: {max_velocity}")
+            print(f"Overall mean velocity magnitude: {torch.mean(torch.abs(all_velocities)):.4f}")
+            print(f"Overall max velocity magnitude: {torch.max(torch.abs(all_velocities)):.4f}")
+            
+            # Calculate expected forward velocity
+            # Assuming X-axis motion corresponds to forward movement
+            pos_diffs = []
+            for i in range(1, len(tensor_frames)):
+                pos_diff = tensor_frames[i][0] - tensor_frames[i-1][0]  # X-position difference
+                pos_diffs.append(pos_diff)
+            
+            if pos_diffs:
+                mean_x_velocity = torch.mean(torch.tensor(pos_diffs))
+                print(f"\nForward Motion Analysis:")
+                print(f"Mean X-axis velocity: {mean_x_velocity:.4f} units per frame")
+                print(f"Estimated forward velocity: {mean_x_velocity/frame_duration:.4f} units per second")
         
         # Reset the environment to start with a clean slate
         self.env.reset()
