@@ -1,6 +1,6 @@
 # Go2 Motion Imitation
 
-This project implements a motion imitation pipeline for the Go2 quadruped robot using the Genesis simulator, focusing on joint velocity matching for high-quality cyclic motions.
+This project implements a motion imitation pipeline for the Go2 quadruped robot using the Genesis simulator, focusing on joint velocity matching for high-quality cyclic motions. Refer to the Report.pdf for more details.
 
 ## Pipeline Overview
 
